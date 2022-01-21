@@ -24,26 +24,24 @@ const Workout = () => {
         dispatch(moveWorkUp({index: index}))
     }
 
-    const workActionsWrapper = (work, index) => {
-        return(
-            <div key={index}>
-                {work}
-                <button onClick={removeWorkByIndex(index)}> Remove work {index}</button>
-                <button data-testid={"moveWork"+index+"UpBtn"} onClick={moveWorkUpByIndex(index)}>Up</button>
-                <button data-testid={"moveWork"+index+"DownBtn"} onClick={moveWorkDownByIndex(index)}>Down</button>
+    const workComponents = workout.work.map((work, i) => {
+
+        return (
+            <div key={i}>
+                <Work
+                    {...work} />
+                <button onClick={removeWorkByIndex(i)}> Remove work {i}</button>
+                <button data-testid={"moveWork"+i+"UpBtn"} onClick={moveWorkUpByIndex(i)}>Up</button>
+                <button data-testid={"moveWork"+i+"DownBtn"} onClick={moveWorkDownByIndex(i)}>Down</button>
             </div>
         )
-    }
-
-    const workComponent = workout.work.map((work, i) => {
-        return workActionsWrapper(<Work num={i} {...work}/>, i)
     })
 
     return (
         <div>
             <p>Workout</p>
             <div>
-                { workComponent }
+                { workComponents }
             </div>
             <button onClick={addNewWork}>Add work</button>
         </div>
