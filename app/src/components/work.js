@@ -51,7 +51,7 @@ const Work = props => {
 
     return (
         <div>
-            <p>{props.exercise.name}</p>
+            <p>{props.exercise.value}</p>
 
             <label htmlFor="restTimeInput">Rest time</label>
             <input id="restTimeInput" onChange={fireChangeRestTime} value={restTime} />
@@ -63,9 +63,8 @@ const Work = props => {
             <div>
                 {props.sets.map((set, index) => {
                     return <div key={index}>
-                        <div>This is set {set.id}</div>
-                        {/*<Set key={index} {...set} />*/}
-                        <button key={index} data-testid={"removeSet" + set.id} onClick={fireRemoveSetById(set.id)}>Remove</button>
+                        <Set index={index} {...set} />
+                        <button data-testid={"removeSet" + set.id} onClick={fireRemoveSetById(set.id)}>Remove</button>
                     </div>
                 })}
             </div>

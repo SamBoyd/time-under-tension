@@ -95,7 +95,64 @@ export const workoutSlice = createSlice({
 
             const workIndex = state.work.findIndex(work => work.id === workId)
             state.work[workIndex].workTime = {start: workStart, end: workEnd}
-        }
+        },
+
+        changeSetReps: (state, action) => {
+            const setId = action.payload.setId
+            const reps = action.payload.reps
+
+            if (!setId || !reps) {
+                return
+            }
+
+
+            for (let iw=0; iw<state.work.length; iw++) {
+                const work = state.work[iw]
+                for (let is=0; is<work.sets.length; is++){
+                    const set = work.sets[is]
+                    if (set.id === setId) {
+                        state.work[iw].sets[is].numberReps = reps
+                    }
+                }
+            }
+        },
+        changeSetWeight: (state, action) => {
+            const setId = action.payload.setId
+            const weight = action.payload.weight
+
+            if (!setId || !weight) {
+                return
+            }
+
+
+            for (let iw=0; iw<state.work.length; iw++) {
+                const work = state.work[iw]
+                for (let is=0; is<work.sets.length; is++){
+                    const set = work.sets[is]
+                    if (set.id === setId) {
+                        state.work[iw].sets[is].weight = weight
+                    }
+                }
+            }
+        },
+        finishSet: (state, action) => {
+            const setId = action.payload.setId
+
+            if (!setId) {
+                return
+            }
+
+
+            for (let iw=0; iw<state.work.length; iw++) {
+                const work = state.work[iw]
+                for (let is=0; is<work.sets.length; is++){
+                    const set = work.sets[is]
+                    if (set.id === setId) {
+                        state.work[iw].sets[is].finished = 'finished' in set ? !set.finished: true
+                    }
+                }
+            }
+        },
     }
 })
 
@@ -103,6 +160,7 @@ export const selectWorkout = state => state.workout
 export const {
     removeWork, addWork, moveWorkUp, moveWorkDown,
     addSet, removeSet, changeRestTime, changeWorkTime,
+    changeSetReps, changeSetWeight, finishSet
 } = workoutSlice.actions
 
 export default workoutSlice.reducer

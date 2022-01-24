@@ -1,7 +1,11 @@
 import workoutReducer, {
     addSet,
     addWork,
-    changeRestTime, changeWorkTime,
+    changeRestTime,
+    changeSetReps,
+    changeSetWeight,
+    changeWorkTime,
+    finishSet,
     moveWorkDown,
     moveWorkUp,
     removeSet,
@@ -355,6 +359,231 @@ describe('For Work can', () => {
                         exercise: {type: 'placeholder', value: 'Choose an exercise'},
                         sets: [],
                         workTime: {start: 35, end: 60}
+                    }
+                ],
+                finished_at: null
+            }
+        )
+    })
+})
+
+describe('For Set can', () => {
+    test('change the number of reps', () => {
+        const previousState = {
+            name: 'New workout',
+            id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
+            created_at: "2022-01-19T17:53:11.336Z",
+            work: [
+                {
+                    id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
+                    exercise: {type: 'placeholder', value: 'Choose an exercise'},
+                    sets: [
+                        {
+                            id: "341de2a2-da16-462a-9fc4-266f7b542234",
+                            numberReps: 12,
+                            weight: 40,
+                            workTime: null
+                        },
+                        {
+                            id: "41479206-10ed-4877-9466-d5c1f122b667",
+                            numberReps: 12,
+                            weight: 40,
+                            workTime: null
+                        },
+                    ]
+                }
+            ],
+            finished_at: null
+        }
+
+        const newState = workoutReducer(previousState, changeSetReps({
+            setId: '341de2a2-da16-462a-9fc4-266f7b542234',
+            reps: 10
+        }))
+
+        expect(newState).toEqual(
+            {
+                name: 'New workout',
+                id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
+                created_at: "2022-01-19T17:53:11.336Z",
+                work: [
+                    {
+                        id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
+                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
+                        sets: [
+                            {
+                                id: "341de2a2-da16-462a-9fc4-266f7b542234",
+                                numberReps: 10,
+                                weight: 40,
+                                workTime: null
+                            },
+                            {
+                                id: "41479206-10ed-4877-9466-d5c1f122b667",
+                                numberReps: 12,
+                                weight: 40,
+                                workTime: null
+                            },
+                        ]
+                    }
+                ],
+                finished_at: null
+            }
+        )
+    })
+
+    test('change the weight', () => {
+        const previousState = {
+            name: 'New workout',
+            id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
+            created_at: "2022-01-19T17:53:11.336Z",
+            work: [
+                {
+                    id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
+                    exercise: {type: 'placeholder', value: 'Choose an exercise'},
+                    sets: [
+                        {
+                            id: "341de2a2-da16-462a-9fc4-266f7b542234",
+                            numberReps: 12,
+                            weight: 40,
+                            workTime: null
+                        },
+                        {
+                            id: "41479206-10ed-4877-9466-d5c1f122b667",
+                            numberReps: 12,
+                            weight: 40,
+                            workTime: null
+                        },
+                    ]
+                }
+            ],
+            finished_at: null
+        }
+
+        const newState = workoutReducer(previousState, changeSetWeight({
+            setId: '341de2a2-da16-462a-9fc4-266f7b542234',
+            weight: 30
+        }))
+
+        expect(newState).toEqual(
+            {
+                name: 'New workout',
+                id: expect.any(String),
+                created_at: expect.any(String),
+                work: [
+                    {
+                        id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
+                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
+                        sets: [
+                            {
+                                id: "341de2a2-da16-462a-9fc4-266f7b542234",
+                                numberReps: 12,
+                                weight: 30,
+                                workTime: null
+                            },
+                            {
+                                id: "41479206-10ed-4877-9466-d5c1f122b667",
+                                numberReps: 12,
+                                weight: 40,
+                                workTime: null
+                            },
+                        ]
+                    }
+                ],
+                finished_at: null
+            }
+        )
+    })
+
+    test('finish the set', () => {
+        const previousState = {
+            name: 'New workout',
+            id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
+            created_at: "2022-01-19T17:53:11.336Z",
+            work: [
+                {
+                    id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
+                    exercise: {type: 'placeholder', value: 'Choose an exercise'},
+                    sets: [
+                        {
+                            id: "341de2a2-da16-462a-9fc4-266f7b542234",
+                            numberReps: 12,
+                            weight: 40,
+                            workTime: null
+                        },
+                        {
+                            id: "41479206-10ed-4877-9466-d5c1f122b667",
+                            numberReps: 12,
+                            weight: 40,
+                            workTime: null
+                        },
+                    ]
+                }
+            ],
+            finished_at: null
+        }
+
+        const newState = workoutReducer(previousState, finishSet({
+            setId: '341de2a2-da16-462a-9fc4-266f7b542234'
+        }))
+
+        expect(newState).toEqual(
+            {
+                name: 'New workout',
+                id: expect.any(String),
+                created_at: expect.any(String),
+                work: [
+                    {
+                        id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
+                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
+                        sets: [
+                            {
+                                id: "341de2a2-da16-462a-9fc4-266f7b542234",
+                                numberReps: 12,
+                                weight: 40,
+                                workTime: null,
+                                finished: true
+                            },
+                            {
+                                id: "41479206-10ed-4877-9466-d5c1f122b667",
+                                numberReps: 12,
+                                weight: 40,
+                                workTime: null
+                            },
+                        ]
+                    }
+                ],
+                finished_at: null
+            }
+        )
+
+        const newerState = workoutReducer(newState, finishSet({
+            setId: '341de2a2-da16-462a-9fc4-266f7b542234'
+        }))
+
+        expect(newerState).toEqual(
+            {
+                name: 'New workout',
+                id: expect.any(String),
+                created_at: expect.any(String),
+                work: [
+                    {
+                        id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
+                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
+                        sets: [
+                            {
+                                id: "341de2a2-da16-462a-9fc4-266f7b542234",
+                                numberReps: 12,
+                                weight: 40,
+                                workTime: null,
+                                finished: false
+                            },
+                            {
+                                id: "41479206-10ed-4877-9466-d5c1f122b667",
+                                numberReps: 12,
+                                weight: 40,
+                                workTime: null
+                            },
+                        ]
                     }
                 ],
                 finished_at: null
