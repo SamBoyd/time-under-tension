@@ -1,15 +1,16 @@
 import React from 'react';
 import { useSelector, useDispatch } from "react-redux";
 
-import {addWork, moveWorkDown, moveWorkUp, removeWork, selectWorkout} from "../reducers/workoutreducers";
+import {moveWorkDown, moveWorkUp, removeWork, selectWorkout} from "../reducers/workoutreducers";
 import Work from './work'
+import {moveToPickExercise} from "../reducers/uiStateReducer";
 
 const Workout = () => {
     const dispatch = useDispatch()
     const workout = useSelector(selectWorkout)
 
     const addNewWork = () => {
-        dispatch(addWork())
+        dispatch(moveToPickExercise())
     }
 
     const removeWorkByIndex = index => () => {

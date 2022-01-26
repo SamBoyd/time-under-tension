@@ -1,17 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
-import {Provider} from "react-redux";
+import {useSelector} from "react-redux";
+
+import {selectUiState} from "./reducers/uiStateReducer";
+import {PAGE} from './constants';
 import Workout from "./components/workout";
-import store from "./store"
+import PickExercise from "./components/pickExercise";
+
+import './App.css';
+
 
 function App() {
-  return (
-      <Provider store={store}>
+    const uiState = useSelector(selectUiState)
+
+    return (
         <div className="App">
-          <Workout />
+            {uiState.page === PAGE.workout && (
+                <Workout />
+            )}
+
+            {uiState.page === PAGE.pickExercise && (
+                <PickExercise />
+            )}
         </div>
-      </Provider>
-  );
+    );
 }
 
 export default App;

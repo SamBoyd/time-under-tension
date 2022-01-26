@@ -51,7 +51,7 @@ const Work = props => {
 
     return (
         <div>
-            <p>{props.exercise.value}</p>
+            <p>{props.exercise.name}</p>
 
             <label htmlFor="restTimeInput">Rest time</label>
             <input id="restTimeInput" onChange={fireChangeRestTime} value={restTime} />

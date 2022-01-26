@@ -9,10 +9,10 @@ const getNewSet = () => {
         workTime: null
     }
 }
-const getNewWork = () => {
+const getNewWork = (exercise) => {
     return {
         id: uuidv4(),
-        exercise: {type: 'bench_press', value: 'Bench Press'},
+        exercise: exercise,
         sets: [
             getNewSet(),
             getNewSet(),
@@ -35,8 +35,12 @@ export const workoutSlice = createSlice({
     name: 'workout',
     initialState: getInitialState(),
     reducers: {
-        addWork: state => {
-            let newWork = getNewWork(state.work.length)
+        addWork: (state, action) => {
+            const exercise = action.payload.exercise;
+            if (!exercise) {
+                return
+            }
+            let newWork = getNewWork(exercise)
             state.work.push(newWork)
         },
         removeWork: (state, action) => {

@@ -1,3 +1,5 @@
+import {v4 as uuidv4} from 'uuid';
+
 import workoutReducer, {
     addSet,
     addWork,
@@ -11,6 +13,7 @@ import workoutReducer, {
     removeSet,
     removeWork
 } from "./workoutreducers";
+import {exerciseCategory} from "../constants";
 
 describe('For Workout can', () => {
     test('test initial state', () => {
@@ -35,7 +38,13 @@ describe('For Workout can', () => {
             finished_at: null
         }
 
-        const newState = workoutReducer(previousState, addWork())
+        const exercise = {
+            id: uuidv4(),
+            name: 'Bench press',
+            category: exerciseCategory.chest
+        }
+
+        const newState = workoutReducer(previousState, addWork({exercise: exercise}))
 
         expect(newState).toEqual(
             {
@@ -45,7 +54,11 @@ describe('For Workout can', () => {
                 work: [
                     {
                         id: expect.any(String),
-                        exercise: {type: 'bench_press', value: 'Bench Press'},
+                        exercise: {
+                            id: expect.any(String),
+                            name: 'Bench press',
+                            category: exerciseCategory.chest
+                        },
                         sets: [
                             {
                                 id: expect.any(String),
