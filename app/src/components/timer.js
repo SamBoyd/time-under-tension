@@ -1,6 +1,9 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {incrementCount, moveToRest, moveToSetup, moveToWork, selectTimer} from "../reducers/timerReducer";
+
+import {incrementCount, moveToSetup, moveToWork, selectTimer} from "../reducers/timerReducer";
+import {finishSetAction} from "../reducers/actions";
+
 import {
     DEFAULT_REST_TIME,
     DEFAULT_SETUP_TIME,
@@ -8,6 +11,7 @@ import {
     DEFAULT_WORK_TIME_UPPER,
     TIMER_STATE
 } from "../constants";
+import {selectWorkout} from "../reducers/workoutreducers";
 
 
 const ready = dispatch => {
@@ -32,14 +36,13 @@ const setup = count => {
     )
 }
 
-const work = (dispatch, count, lower, upper) => {
-    const finish = () => dispatch(moveToRest())
+const work = (dispatch, count, lower, upper, set) => {
     return (
         <div>
             <p>Timer</p>
             <p>Work - {count}</p>
             <p>{lower}s -> {upper}s</p>
-            <p><button onClick={finish}>Finish</button> </p>
+            <p><button onClick={finishSetAction(dispatch, set)}>Finish</button> </p>
         </div>
     )
 }
@@ -52,9 +55,24 @@ const rest = count => {
         </div>
     )}
 
+const findNextSet = workout => {
+    for (const wi in workout.work) {
+        const work = workout.work[wi]
+        for (const si in work.sets) {
+            const set = work.sets[si]
+            if (!set.finished) {
+                return set
+            }
+        }
+    }
+}
+
 const Timer = () => {
     const timer = useSelector(selectTimer)
+    const workout = useSelector(selectWorkout)
     const dispatch = useDispatch()
+
+    const nextSet = findNextSet(workout)
 
     if (timer.state === TIMER_STATE.setup && timer.count >= DEFAULT_SETUP_TIME) {
         dispatch(moveToWork())
@@ -75,7 +93,7 @@ const Timer = () => {
             return setup(timer.count);
             break;
         case TIMER_STATE.work:
-            return work(dispatch, timer.count, DEFAULT_WORK_TIME_LOWER, DEFAULT_WORK_TIME_UPPER);
+            return work(dispatch, timer.count, DEFAULT_WORK_TIME_LOWER, DEFAULT_WORK_TIME_UPPER, nextSet);
             break;
         case TIMER_STATE.rest:
             return rest(timer.count);
