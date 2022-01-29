@@ -3,18 +3,15 @@ import { useDispatch } from "react-redux";
 
 import Set from './set'
 import {addSet, changeRestTime, changeWorkTime, removeSet} from "../reducers/workoutreducers";
-
-const DEFAULT_REST_TIME = 45;
-const DEFAULT_WORK_TIME_START = 40;
-const DEFAULT_WORK_TIME_END = 50;
+import {DEFAULT_REST_TIME, DEFAULT_WORK_TIME_LOWER, DEFAULT_WORK_TIME_UPPER} from "../constants";
 
 const Work = props => {
 
     const dispatch = useDispatch()
 
     const restTime = props.restTime || DEFAULT_REST_TIME;
-    const workTimeStart = props.workTime ? props.workTime.start: DEFAULT_WORK_TIME_START;
-    const workTimeEnd = props.workTime? props.workTime.end: DEFAULT_WORK_TIME_END;
+    const workTimeStart = props.workTime ? props.workTime.start: DEFAULT_WORK_TIME_LOWER;
+    const workTimeEnd = props.workTime? props.workTime.end: DEFAULT_WORK_TIME_UPPER;
 
     const fireAddSet = () => {
         dispatch(addSet({workId: props.id}))

@@ -5,6 +5,18 @@ export const PAGE = {
     pickExercise: 'pickExercise'
 }
 
+export const TIMER_STATE = {
+    ready: 'ready',
+    setup: 'setup',
+    work: 'work',
+    rest: 'rest'
+}
+
+export const DEFAULT_SETUP_TIME = 10
+export const DEFAULT_WORK_TIME_LOWER = 40
+export const DEFAULT_WORK_TIME_UPPER = 50
+export const DEFAULT_REST_TIME = 45
+
 
 export const exerciseCategory = {
     chest: 'chest',

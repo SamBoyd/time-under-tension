@@ -4,6 +4,7 @@ import {selectUiState} from "./reducers/uiStateReducer";
 import {PAGE} from './constants';
 import Workout from "./components/workout";
 import PickExercise from "./components/pickExercise";
+import Timer from "./components/timer";
 
 import './App.css';
 
@@ -14,7 +15,10 @@ function App() {
     return (
         <div className="App">
             {uiState.page === PAGE.workout && (
-                <Workout />
+                <>
+                    <Workout />
+                    <Timer />
+                </>
             )}
 
             {uiState.page === PAGE.pickExercise && (
