@@ -89,6 +89,10 @@ const Timer = () => {
         return () => clearInterval(interval);
     }, []);
 
+    if (workout.work.length === 0) {
+        return <></>
+    }
+
     switch (timer.state) {
         case TIMER_STATE.ready:
             return ready(dispatch);
