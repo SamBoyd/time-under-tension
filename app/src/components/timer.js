@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {incrementCount, moveToSetup, moveToWork, selectTimer} from "../reducers/timerReducer";
-import {finishSetAction} from "../reducers/actions";
+import {finishSetAction, selectWorkAndResetTimer} from "../reducers/actions";
 
 import {
     DEFAULT_REST_TIME,
@@ -11,7 +11,7 @@ import {
     DEFAULT_WORK_TIME_UPPER,
     TIMER_STATE
 } from "../constants";
-import {selectWorkout} from "../reducers/workoutreducers";
+import {selectWork, selectWorkout} from "../reducers/workoutreducers";
 
 
 const ready = dispatch => {
@@ -56,8 +56,8 @@ const rest = count => {
     )}
 
 const findNextSet = workout => {
-    for (const wi in workout.work) {
-        const work = workout.work[wi]
+    const work = workout.work[workout.currentWork]
+    if (work) {
         for (const si in work.sets) {
             const set = work.sets[si]
             if (!set.finished) {
@@ -73,6 +73,10 @@ const Timer = () => {
     const dispatch = useDispatch()
 
     const nextSet = findNextSet(workout)
+
+    if (!nextSet && workout.work.length > 0) {
+        selectWorkAndResetTimer(workout.currentWork + 1, dispatch)
+    }
 
     if (timer.state === TIMER_STATE.setup && timer.count >= DEFAULT_SETUP_TIME) {
         dispatch(moveToWork())

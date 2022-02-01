@@ -27,7 +27,8 @@ const getInitialState = () => {
         id: uuidv4(),
         created_at: (new Date()).toISOString(),
         work: [],
-        finished_at: null
+        finished_at: null,
+        currentWork: null
     }
 }
 
@@ -42,6 +43,10 @@ export const workoutSlice = createSlice({
             }
             let newWork = getNewWork(exercise)
             state.work.push(newWork)
+
+            if (state.work.length === 1) {
+                state.currentWork = 0
+            }
         },
         removeWork: (state, action) => {
             state.work.splice(action.payload.index, 1)
@@ -57,6 +62,9 @@ export const workoutSlice = createSlice({
             const element = state.work[i]
             state.work.splice(i, 1)
             state.work.splice(i+1, 0, element)
+        },
+        selectWork: (state, action) => {
+            state.currentWork = action.payload.workIndex
         },
 
         addSet: (state, action) => {
@@ -162,7 +170,7 @@ export const workoutSlice = createSlice({
 
 export const selectWorkout = state => state.workout
 export const {
-    removeWork, addWork, moveWorkUp, moveWorkDown,
+    removeWork, addWork, moveWorkUp, moveWorkDown, selectWork,
     addSet, removeSet, changeRestTime, changeWorkTime,
     changeSetReps, changeSetWeight, finishSet
 } = workoutSlice.actions

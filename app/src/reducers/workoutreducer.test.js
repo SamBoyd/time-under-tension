@@ -11,7 +11,8 @@ import workoutReducer, {
     moveWorkDown,
     moveWorkUp,
     removeSet,
-    removeWork
+    removeWork,
+    selectWork
 } from "./workoutreducers";
 import {exerciseCategory} from "../constants";
 
@@ -24,7 +25,8 @@ describe('For Workout can', () => {
                 id: expect.any(String),
                 created_at: expect.any(String),
                 work: [],
-                finished_at: null
+                finished_at: null,
+                currentWork: null
             }
         )
     })
@@ -81,7 +83,8 @@ describe('For Workout can', () => {
                         ]
                     }
                 ],
-                finished_at: null
+                finished_at: null,
+                currentWork: 0
             }
         )
     })
@@ -204,6 +207,42 @@ describe('For Workout can', () => {
                     }
                 ],
                 finished_at: null
+            }
+        )
+    })
+
+    test('can select work to do', () => {
+        const previousState = {
+            name: 'New workout',
+            id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
+            created_at: "2022-01-19T17:53:11.336Z",
+            work: [
+                {id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda1e'},
+                {id: 'bbbbbbb-85f7-4e85-a238-c9e6265cda2e'},
+            ],
+            finished_at: null,
+            currentWork: 0
+        }
+
+        const exercise = {
+            id: uuidv4(),
+            name: 'Bench press',
+            category: exerciseCategory.chest
+        }
+
+        const newState = workoutReducer(previousState, selectWork({workIndex: 1}))
+
+        expect(newState).toEqual(
+            {
+                name: 'New workout',
+                id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
+                created_at: "2022-01-19T17:53:11.336Z",
+                work: [
+                    {id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda1e'},
+                    {id: 'bbbbbbb-85f7-4e85-a238-c9e6265cda2e'},
+                ],
+                finished_at: null,
+                currentWork: 1
             }
         )
     })

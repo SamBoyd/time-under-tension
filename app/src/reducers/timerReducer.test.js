@@ -4,7 +4,8 @@ import timerReducer, {
     moveToRest,
     moveToSetup,
     moveToWork,
-    resetCount
+    resetCount,
+    resetTimer
 } from "./timerReducer";
 import {TIMER_STATE} from "../constants";
 
@@ -69,5 +70,14 @@ describe('Timer', () => {
         const previousState = { count: 42 }
         const nextState = timerReducer(previousState, resetCount())
         expect(nextState).toEqual({ count: 0})
+    })
+
+    test('can reset timer', () => {
+        const previousState = { state: TIMER_STATE.work, count: 42 }
+        const nextState = timerReducer(previousState, resetTimer())
+        expect(nextState).toEqual({
+            state:TIMER_STATE.ready,
+            count: 0
+        })
     })
 })

@@ -1,6 +1,6 @@
-import {addWork, finishSet} from "./workoutreducers";
+import {addWork, finishSet, selectWork} from "./workoutreducers";
 import {moveToWorkout} from "./uiStateReducer";
-import {moveToRest} from "./timerReducer";
+import {moveToRest, resetTimer} from "./timerReducer";
 
 export const pickExerciseAction = exercise => dispatch => {
     dispatch(addWork({exercise: exercise}))
@@ -13,4 +13,9 @@ export const finishSetAction = (dispatch, set) => () => {
     if (set) {
         dispatch(finishSet({setId: set.id}))
     }
+}
+
+export const selectWorkAndResetTimer = (workIndex, dispatch) => {
+    dispatch(selectWork({workIndex: workIndex}))
+    dispatch(resetTimer())
 }
