@@ -11,7 +11,7 @@ import {
     DEFAULT_WORK_TIME_UPPER,
     TIMER_STATE
 } from "../constants";
-import {selectWork, selectWorkout} from "../reducers/workoutreducers";
+import {selectWork, selectWorkout} from "../reducers/workoutReducer";
 
 
 const ready = dispatch => {

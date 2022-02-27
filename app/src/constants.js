@@ -1,8 +1,10 @@
 import {v4 as uuidv4} from 'uuid';
 
 export const PAGE = {
+    main: 'main',
     workout: 'workout',
-    pickExercise: 'pickExercise'
+    pickExercise: 'pickExercise',
+    createTemplateWorkout: 'createTemplateWorkout'
 }
 
 export const TIMER_STATE = {

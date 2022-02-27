@@ -1,12 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import workoutReducer from './reducers/workoutreducers'
+import workoutReducer from './reducers/workoutReducer'
 import uiStateReducer from "./reducers/uiStateReducer";
 import timerReducer from "./reducers/timerReducer";
+import templateWorkoutReducer, {templateWorkoutSlice} from "./reducers/templateWorkoutReducer";
 
 export default configureStore({
     reducer: {
         workout: workoutReducer,
         uiState: uiStateReducer,
-        timer: timerReducer
+        timer: timerReducer,
+        templateWorkouts: templateWorkoutReducer
     }
 })

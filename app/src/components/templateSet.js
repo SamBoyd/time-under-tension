@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import {changeSetReps, changeSetWeight, finishSet} from "../reducers/workoutReducer";
+import {changeSetReps, changeSetWeight} from "../reducers/templateWorkoutReducer";
 
-const Set = props => {
+const TemplateSet = props => {
 
     const dispatch = useDispatch()
 
@@ -20,23 +20,14 @@ const Set = props => {
         }))
     }
 
-    const finish = () => {
-        dispatch(finishSet({
-            setId: props.id
-        }))
-    }
-
     return (
         <div>
             <label>{props.index}</label>
             <input onChange={updateReps} value={props.numberReps} />
             x
             <input onChange={updateWeight} value={props.weight} />
-
-            <input type="checkbox" onChange={finish} defaultChecked={props.finished} />
-
         </div>
     )
 }
 
-export default Set
+export default TemplateSet

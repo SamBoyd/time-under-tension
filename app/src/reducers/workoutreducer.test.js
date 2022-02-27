@@ -6,14 +6,14 @@ import workoutReducer, {
     changeRestTime,
     changeSetReps,
     changeSetWeight,
-    changeWorkTime,
+    changeWorkTime, createWorkoutFromTemplate,
     finishSet,
     moveWorkDown,
     moveWorkUp,
     removeSet,
     removeWork,
     selectWork
-} from "./workoutreducers";
+} from "./workoutReducer";
 import {exerciseCategory} from "../constants";
 
 describe('For Workout can', () => {
@@ -30,6 +30,95 @@ describe('For Workout can', () => {
             }
         )
     })
+
+    test('create workout from a template', () => {
+            const previousState = {
+                name: 'New workout',
+                id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
+                created_at: "2022-01-19T17:53:11.336Z",
+                work: [],
+                finished_at: null
+            }
+
+            const templateWorkout = {
+                name: 'Tuesday workout',
+                id: 'fa2de79b-85f7-4e85-a238-c9e62651111',
+                created_at: "2022-01-21T17:53:11.336Z",
+                work: [
+                    {
+                        id: uuidv4(),
+                        exercise: {
+                            id: uuidv4(),
+                            name: 'Bench press',
+                            category: exerciseCategory.chest
+                        },
+                        sets: [
+                            {
+                                id: uuidv4(),
+                                numberReps: 12,
+                                weight: 40,
+                                workTime: null
+                            },
+                            {
+                                id: uuidv4(),
+                                numberReps: 12,
+                                weight: 40,
+                                workTime: null
+                            },
+                            {
+                                id: uuidv4(),
+                                numberReps: 12,
+                                weight: 40,
+                                workTime: null
+                            }
+                        ]
+                    }
+                ],
+                finished_at: null,
+                currentWork: 0
+            }
+
+            const newState = workoutReducer(previousState, createWorkoutFromTemplate({template: templateWorkout}))
+
+            expect(newState).toEqual({
+                name: 'Tuesday workout',
+                id: 'fa2de79b-85f7-4e85-a238-c9e62651111',
+                created_at: "2022-01-21T17:53:11.336Z",
+                work: [
+                    {
+                        id: expect.any(String),
+                        exercise: {
+                            id: expect.any(String),
+                            name: 'Bench press',
+                            category: exerciseCategory.chest
+                        },
+                        sets: [
+                            {
+                                id: expect.any(String),
+                                numberReps: 12,
+                                weight: 40,
+                                workTime: null
+                            },
+                            {
+                                id: expect.any(String),
+                                numberReps: 12,
+                                weight: 40,
+                                workTime: null
+                            },
+                            {
+                                id: expect.any(String),
+                                numberReps: 12,
+                                weight: 40,
+                                workTime: null
+                            }
+                        ]
+                    }
+                ],
+                finished_at: null,
+                currentWork: 0
+            })
+        }
+    )
 
     test('test add work', () => {
         const previousState = {

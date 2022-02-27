@@ -1,5 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {v4 as uuidv4} from 'uuid';
+import structuredClone from '@ungap/structured-clone';
+
 
 const getNewSet = () => {
     return {
@@ -36,6 +38,12 @@ export const workoutSlice = createSlice({
     name: 'workout',
     initialState: getInitialState(),
     reducers: {
+        createWorkoutFromTemplate: (state, action) => {
+            Object.keys(action.payload.template).forEach(
+                key => state[key] = action.payload.template[key]
+            )
+        },
+
         addWork: (state, action) => {
             const exercise = action.payload.exercise;
             if (!exercise) {
@@ -172,7 +180,8 @@ export const selectWorkout = state => state.workout
 export const {
     removeWork, addWork, moveWorkUp, moveWorkDown, selectWork,
     addSet, removeSet, changeRestTime, changeWorkTime,
-    changeSetReps, changeSetWeight, finishSet
+    changeSetReps, changeSetWeight, finishSet,
+    createWorkoutFromTemplate
 } = workoutSlice.actions
 
 export default workoutSlice.reducer

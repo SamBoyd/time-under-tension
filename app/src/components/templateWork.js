@@ -1,8 +1,8 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import Set from './set'
-import {addSet, changeRestTime, changeWorkTime, removeSet} from "../reducers/workoutReducer";
+import TemplateSet from "./templateSet";
+import {addSet, changeRestTime, changeWorkTime, removeSet} from "../reducers/templateWorkoutReducer";
 import {DEFAULT_REST_TIME, DEFAULT_WORK_TIME_LOWER, DEFAULT_WORK_TIME_UPPER} from "../constants";
 
 const Work = props => {
@@ -60,7 +60,7 @@ const Work = props => {
             <div>
                 {props.sets.map((set, index) => {
                     return <div key={index}>
-                        <Set index={index} {...set} />
+                        <TemplateSet index={index} {...set} />
                         <button data-testid={"removeSet" + set.id} onClick={fireRemoveSetById(set.id)}>Remove</button>
                     </div>
                 })}
