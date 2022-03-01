@@ -11,14 +11,35 @@ import workoutReducer, {
     moveWorkDown,
     moveWorkUp,
     removeSet,
-    removeWork,
-    selectWork
+    removeWork, resetToInitialWorkout,
+    selectWork, setWorkoutFinished
 } from "./workoutReducer";
 import {exerciseCategory} from "../constants";
+
+var tk = require('timekeeper');
+
 
 describe('For Workout can', () => {
     test('test initial state', () => {
         const state = workoutReducer(undefined, {})
+        expect(state).toEqual(
+            {
+                name: 'New workout',
+                id: expect.any(String),
+                created_at: expect.any(String),
+                work: [],
+                finished_at: null,
+                currentWork: null
+            }
+        )
+    })
+
+    test('test reset workout to initial state', () => {
+        const previousState = {
+            some: 'thing',
+            not: 'related'
+        }
+        const state = workoutReducer(previousState, resetToInitialWorkout())
         expect(state).toEqual(
             {
                 name: 'New workout',
@@ -119,6 +140,7 @@ describe('For Workout can', () => {
             })
         }
     )
+
 
     test('test add work', () => {
         const previousState = {
@@ -728,6 +750,71 @@ describe('For Set can', () => {
                     }
                 ],
                 finished_at: null
+            }
+        )
+    })
+
+    test('can set workout finished', () => {
+        const previousState = {
+            name: 'New workout',
+            id: expect.any(String),
+            created_at: expect.any(String),
+            work: [
+                {
+                    id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
+                    exercise: {type: 'placeholder', value: 'Choose an exercise'},
+                    sets: [
+                        {
+                            id: "341de2a2-da16-462a-9fc4-266f7b542234",
+                            numberReps: 12,
+                            weight: 40,
+                            workTime: null,
+                            finished: true
+                        },
+                        {
+                            id: "41479206-10ed-4877-9466-d5c1f122b667",
+                            numberReps: 12,
+                            weight: 40,
+                            workTime: null
+                        },
+                    ]
+                }
+            ],
+            finished_at: null
+        }
+
+        const time = new Date(1330688329321);
+
+        tk.freeze(time)
+        const nextState = workoutReducer(previousState, setWorkoutFinished())
+
+        expect(nextState).toEqual(
+            {
+                name: 'New workout',
+                id: expect.any(String),
+                created_at: expect.any(String),
+                work: [
+                    {
+                        id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
+                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
+                        sets: [
+                            {
+                                id: "341de2a2-da16-462a-9fc4-266f7b542234",
+                                numberReps: 12,
+                                weight: 40,
+                                workTime: null,
+                                finished: true
+                            },
+                            {
+                                id: "41479206-10ed-4877-9466-d5c1f122b667",
+                                numberReps: 12,
+                                weight: 40,
+                                workTime: null
+                            },
+                        ]
+                    }
+                ],
+                finished_at: time.toISOString()
             }
         )
     })

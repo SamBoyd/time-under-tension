@@ -3,11 +3,20 @@ import { useSelector, useDispatch } from "react-redux";
 
 import {moveWorkDown, moveWorkUp, removeWork, selectWorkout} from "../reducers/workoutReducer";
 import Work from './work'
-import {moveToPickExerciseForWorkout} from "../reducers/uiStateReducer";
+import {moveToMainPage, moveToPickExerciseForWorkout} from "../reducers/uiStateReducer";
+import {finishWorkoutAndMoveToMainPage} from "../reducers/actions";
 
 const Workout = () => {
     const dispatch = useDispatch()
     const workout = useSelector(selectWorkout)
+
+    const goBack = () => {
+        dispatch(moveToMainPage())
+    }
+
+    const finishWorkout = () => {
+        finishWorkoutAndMoveToMainPage(dispatch, workout)
+    }
 
     const addNewWork = () => {
         dispatch(moveToPickExerciseForWorkout())
@@ -40,6 +49,8 @@ const Workout = () => {
 
     return (
         <div>
+            <button onClick={goBack}>back</button>
+            <button onClick={finishWorkout}>finish</button>
             <p>Workout</p>
             <div>
                 { workComponents }

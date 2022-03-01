@@ -43,6 +43,21 @@ export const workoutSlice = createSlice({
                 key => state[key] = action.payload.template[key]
             )
         },
+        resetToInitialWorkout: (state) => {
+            const initialState = getInitialState()
+            for (const i in initialState) {
+                state[i] = initialState[i]
+            }
+
+            for (const i in state) {
+                if (!(i in initialState)){
+                    delete state[i]
+                }
+            }
+        },
+        setWorkoutFinished: (state) => {
+            state.finished_at = (new Date()).toISOString()
+        },
 
         addWork: (state, action) => {
             const exercise = action.payload.exercise;
@@ -178,10 +193,11 @@ export const workoutSlice = createSlice({
 
 export const selectWorkout = state => state.workout
 export const {
+    resetToInitialWorkout,
     removeWork, addWork, moveWorkUp, moveWorkDown, selectWork,
     addSet, removeSet, changeRestTime, changeWorkTime,
     changeSetReps, changeSetWeight, finishSet,
-    createWorkoutFromTemplate
+    createWorkoutFromTemplate, setWorkoutFinished
 } = workoutSlice.actions
 
 export default workoutSlice.reducer

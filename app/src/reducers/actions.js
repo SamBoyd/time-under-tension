@@ -1,7 +1,15 @@
-import {addWork, createWorkoutFromTemplate, finishSet, selectWork} from "./workoutReducer";
+import {
+    addWork,
+    createWorkoutFromTemplate,
+    finishSet,
+    resetToInitialWorkout,
+    selectWork
+} from "./workoutReducer";
 import {addWork as addTemplateWork, cancelEditTemplate, editTemplate, saveTemplate} from "./templateWorkoutReducer";
 import {followRedirect, moveToCreateTemplate, moveToMainPage, moveToWorkout} from "./uiStateReducer";
 import {moveToRest, resetTimer} from "./timerReducer";
+import {addWorkoutToHistory} from "./historyReducer";
+import structuredClone from '@ungap/structured-clone';
 
 export const pickExerciseForWorkoutAction = exercise => dispatch => {
     dispatch(addWork({exercise: exercise}))
@@ -45,4 +53,12 @@ export const cancelEditTemplateAndMoveToMainPage = (dispatch) => {
 export const createWorkoutFromTemplateAndMoveToWorkout = (dispatch, template) => {
     dispatch(createWorkoutFromTemplate({template: template}))
     dispatch(moveToWorkout())
+}
+
+export const finishWorkoutAndMoveToMainPage = (dispatch, workout) => {
+    const w = structuredClone(workout)
+    w.finished_at = new Date().toISOString()
+    dispatch(addWorkoutToHistory({workout: w}))
+    dispatch(resetToInitialWorkout())
+    dispatch(moveToMainPage())
 }
