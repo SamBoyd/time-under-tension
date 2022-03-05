@@ -28,6 +28,12 @@ export const uiStateSlice = createSlice({
         followRedirect: state => {
             state.page = state.redirectTo
             state.redirectTo = null
+        },
+        moveToManageExercises: state => {
+            state.page = PAGE.manageExercises
+        },
+        moveToAddExercise: state => {
+            state.page = PAGE.addExercise
         }
     }
 })
@@ -36,6 +42,7 @@ export const selectUiState = state => state.uiState
 export const {
     moveToMainPage, moveToPickExerciseForWorkout,
     moveToPickExerciseForTemplateWorkout, moveToWorkout,
-    moveToCreateTemplate, followRedirect
+    moveToCreateTemplate, followRedirect,
+    moveToManageExercises, moveToAddExercise
 } = uiStateSlice.actions
 export default uiStateSlice.reducer

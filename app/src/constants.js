@@ -4,7 +4,9 @@ export const PAGE = {
     main: 'main',
     workout: 'workout',
     pickExercise: 'pickExercise',
-    createTemplateWorkout: 'createTemplateWorkout'
+    createTemplateWorkout: 'createTemplateWorkout',
+    manageExercises: 'manageExercises',
+    addExercise: 'addExercise'
 }
 
 export const TIMER_STATE = {

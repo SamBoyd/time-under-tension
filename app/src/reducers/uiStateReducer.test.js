@@ -1,6 +1,6 @@
 import uiStateReducer, {
-    followRedirect,
-    moveToCreateTemplate, moveToMainPage,
+    followRedirect, moveToAddExercise,
+    moveToCreateTemplate, moveToMainPage, moveToManageExercises,
     moveToPickExercise, moveToPickExerciseForTemplateWorkout, moveToPickExerciseForWorkout, moveToWorkout
 } from "./uiStateReducer";
 import {PAGE} from '../constants'
@@ -89,6 +89,31 @@ describe('For UiState can', () =>{
 
         expect(state).toEqual({
             page: PAGE.main
+        })
+    })
+
+
+    test('move to manage exercises page', () => {
+        const previousState = {
+            page: PAGE.createTemplateWorkout
+        }
+
+        const state = uiStateReducer(previousState, moveToManageExercises())
+
+        expect(state).toEqual({
+            page: PAGE.manageExercises
+        })
+    })
+
+    test('move to add exercises page', () => {
+        const previousState = {
+            page: PAGE.createTemplateWorkout
+        }
+
+        const state = uiStateReducer(previousState, moveToAddExercise())
+
+        expect(state).toEqual({
+            page: PAGE.addExercise
         })
     })
 })

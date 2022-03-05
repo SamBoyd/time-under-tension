@@ -9,6 +9,8 @@ import Timer from "./components/timer";
 import './App.css';
 import MainPage from "./pages/mainPage";
 import CreateTemplateWorkout from "./pages/createTemplateWorkout";
+import ManageExercises from "./pages/manageExercises";
+import AddExercise from "./pages/addExercise";
 
 
 function App() {
@@ -32,6 +34,13 @@ function App() {
 
             {uiState.page === PAGE.createTemplateWorkout && (
                 <CreateTemplateWorkout />
+            )}
+
+            {uiState.page === PAGE.manageExercises && (
+                <ManageExercises />
+            )}
+            {uiState.page === PAGE.addExercise && (
+                <AddExercise />
             )}
         </div>
     );

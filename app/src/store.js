@@ -2,8 +2,9 @@ import { configureStore } from "@reduxjs/toolkit";
 import workoutReducer from './reducers/workoutReducer'
 import uiStateReducer from "./reducers/uiStateReducer";
 import timerReducer from "./reducers/timerReducer";
-import templateWorkoutReducer, {templateWorkoutSlice} from "./reducers/templateWorkoutReducer";
+import templateWorkoutReducer from "./reducers/templateWorkoutReducer";
 import historyReducer from "./reducers/historyReducer";
+import exercisesReducer from "./reducers/exercisesReducer";
 
 export default configureStore({
     reducer: {
@@ -11,6 +12,7 @@ export default configureStore({
         uiState: uiStateReducer,
         timer: timerReducer,
         templateWorkouts: templateWorkoutReducer,
-        history: historyReducer
+        history: historyReducer,
+        exercises: exercisesReducer
     }
 })
