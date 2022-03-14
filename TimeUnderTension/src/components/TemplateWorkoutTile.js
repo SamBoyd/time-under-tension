@@ -1,7 +1,19 @@
 import React from 'react'
 import {useDispatch} from "react-redux";
 import {createWorkoutFromTemplateAndMoveToWorkout, moveToEditTemplate} from "../reducers/actions";
-import {FlatList, Text, View} from "react-native";
+import {StyleSheet, FlatList, View} from "react-native";
+import {TextLighter, TextNormal} from "./styled/text";
+import {EditButton} from "./styled/button";
+
+
+const styles = StyleSheet.create({
+
+    row: {
+        flexDirection: "row",
+        // flexWrap: "wrap",
+    },
+
+});
 
 const TemplateWorkoutTile = props => {
     const dispatch = useDispatch()
@@ -15,13 +27,15 @@ const TemplateWorkoutTile = props => {
     }
 
     const Work = ({exercise, sets}) => {
-        return <Text>{exercise.name} - {sets.length} sets</Text>
+        return <TextLighter>{exercise.name} - {sets.length} sets</TextLighter>
     }
 
     return (
-        <View>
-            <Text onPress={startWorkoutFromTemplate}>{props.template.name}</Text>
-            <Text onPress={editTemplate}>edit</Text>
+        <View style={{paddingTop: 5}}>
+            <View style={styles.row} >
+                <TextNormal onPress={startWorkoutFromTemplate}>{props.template.name}</TextNormal>
+                <EditButton onPress={editTemplate}/>
+            </View>
             <FlatList
                 data={props.template.work}
                 renderItem={({item}) => <Work exercise={item.exercise} sets={item.sets} />}

@@ -1,9 +1,13 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import {changeSetReps, changeSetWeight, finishSet} from "../reducers/workoutReducer";
+import {changeSetReps, changeSetWeight, finishSet, removeSet} from "../reducers/workoutReducer";
 import {Text, View} from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import InputSpinner from "react-native-input-spinner";
+import {TextNormal} from "./styled/text";
+import {FlexRowView} from "./styled/view";
+import {Button} from "./styled/button";
+import {Icon} from "react-native-elements";
 
 const Set = props => {
 
@@ -29,19 +33,29 @@ const Set = props => {
         }))
     }
 
+    const fireRemoveSetById = setId => () => {
+        dispatch(removeSet({setId: props.id, workId: props.workId}))
+    }
+
     return (
         <View>
-            <Text>{props.index}</Text>
-            <InputSpinner onChange={updateReps} value={props.numberReps} />
+            <TextNormal>Set #{props.index}</TextNormal>
 
-            <Text>x</Text>
-            <InputSpinner onChange={updateWeight} value={props.weight} />
+            <FlexRowView>
+                <InputSpinner onChange={updateReps} value={props.numberReps} />
+                <TextNormal>x</TextNormal>
+                <InputSpinner onChange={updateWeight} value={props.weight} />
+                <BouncyCheckbox
+                    onPress={finish}
+                    isChecked={props.finished}
+                />
+                <Icon
+                    name='delete'
+                    onPress={fireRemoveSetById(props.id)}
+                />
+            </FlexRowView>
 
 
-            <BouncyCheckbox
-                onPress={finish}
-                isChecked={props.finished}
-            />
         </View>
     )
 }

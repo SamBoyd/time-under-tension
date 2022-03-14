@@ -12,7 +12,10 @@ import {
     TIMER_STATE
 } from "../constants";
 import {selectWork, selectWorkout} from "../reducers/workoutReducer";
-import {Button, Text, View} from "react-native";
+import {View} from "react-native";
+import {TextBold, TextNormal} from "./styled/text";
+import {FlexRowView} from "./styled/view";
+import {Button} from "./styled/button";
 
 
 const ready = dispatch => {
@@ -21,8 +24,10 @@ const ready = dispatch => {
     }
     return (
         <View>
-            <Text>Timer</Text>
-            <Text>Ready</Text>
+            <TextNormal>
+                <TextNormal>Timer </TextNormal>
+                <TextBold>Ready</TextBold>
+            </TextNormal>
             <Button onPress={click} title="Click to start" />
         </View>
     )
@@ -30,19 +35,21 @@ const ready = dispatch => {
 
 const setup = count => {
     return (
-        <View>
-            <Text>Timer</Text>
-            <Text>Setup - {count}</Text>
-        </View>
+        <TextNormal>
+            <TextNormal>Timer </TextNormal>
+            <TextBold>Setup - {count}</TextBold>
+        </TextNormal>
     )
 }
 
 const work = (dispatch, count, lower, upper, set) => {
     return (
         <View>
-            <Text>Timer</Text>
-            <Text>Work - {count}</Text>
-            <Text>{lower}s -> {upper}s</Text>
+            <FlexRowView>
+                <TextNormal>Timer </TextNormal>
+                <TextBold>Work - {count}</TextBold>
+                <TextBold> ({lower}s -> {upper}s)</TextBold>
+            </FlexRowView>
             <Button onPress={finishSetAction(dispatch, set)} title="Finish"/>
         </View>
     )
@@ -50,10 +57,10 @@ const work = (dispatch, count, lower, upper, set) => {
 
 const rest = count => {
     return (
-        <View>
-            <Text>Timer</Text>
-            <Text>Rest - {count}</Text>
-        </View>
+        <FlexRowView>
+            <TextNormal>Timer </TextNormal>
+            <TextBold>Rest - {count}</TextBold>
+        </FlexRowView>
     )}
 
 const findNextSet = workout => {

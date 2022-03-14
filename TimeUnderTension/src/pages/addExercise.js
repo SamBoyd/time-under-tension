@@ -3,8 +3,9 @@ import {useDispatch, useSelector} from "react-redux";
 
 import {changeNewExerciseField, selectExercises} from "../reducers/exercisesReducer";
 import {resetNewExerciseAndMoveToManageExercises, saveNewExerciseAndMoveToManageExercises} from "../reducers/actions";
-import {Button, Text, TextInput, View} from "react-native";
+import {Button, TextInput, View} from "react-native";
 import { Dropdown } from 'react-native-element-dropdown';
+import {TextNormal} from "../components/styled/text";
 
 const AddExercise = () => {
     const dispatch = useDispatch()
@@ -40,7 +41,7 @@ const AddExercise = () => {
     return (
         <View>
             <Button onPress={back} title="back" />
-            <Text>Add Exercise</Text>
+            <TextNormal>Add Exercise</TextNormal>
 
             <TextInput onChangeText={changeField('name')} value={exercises.newExercise.name} placeholder={'name'}/>
 

@@ -4,8 +4,9 @@ import {useDispatch, useSelector} from "react-redux";
 import {moveToCreateTemplate} from "../reducers/uiStateReducer";
 import {selectTemplateWorkout} from "../reducers/templateWorkoutReducer";
 import TemplateWorkoutTile from "./TemplateWorkoutTile";
-import styled from "styled-components";
-import {Button, Text, View} from "react-native";
+import {View} from "react-native";
+import {TextH1} from "./styled/text";
+import {Button} from "./styled/button";
 
 const TemplateWorkouts = () => {
     const dispatch = useDispatch()
@@ -17,7 +18,7 @@ const TemplateWorkouts = () => {
 
     return (
         <View>
-            <Text>Template workouts</Text>
+            <TextH1>Template workouts</TextH1>
             <View>
                 {templateWorkouts.templates.map((template, index) => {
                     return <TemplateWorkoutTile key={index} template={template} />

@@ -15,8 +15,12 @@ import {
     cancelEditTemplateAndMoveToMainPage,
     saveTemplateAndMoveToMainPage
 } from "../reducers/actions";
-import {Button, ScrollView, Text, TextInput, View} from "react-native";
+import {ScrollView, Text, TextInput, View} from "react-native";
 import SafeAreaView from "react-native/Libraries/Components/SafeAreaView/SafeAreaView";
+import {TextNormal} from "../components/styled/text";
+import {Button} from "../components/styled/button";
+import {FlexRowView} from "../components/styled/view";
+import {Icon} from "react-native-elements";
 
 const CreateTemplateWorkout = () => {
     const dispatch = useDispatch()
@@ -69,8 +73,10 @@ const CreateTemplateWorkout = () => {
             <View key={i}>
                 <TemplateWork {...work} />
                 <Button onPress={removeWorkByIndex(i)} title={`Remove work ${i}`} />
-                <Button data-testid={"moveWork" + i + "UpBtn"} onPress={moveWorkUpByIndex(i)} title="Up" />
-                <Button data-testid={"moveWork" + i + "DownBtn"} onPress={moveWorkDownByIndex(i)} title="Down" />
+                <FlexRowView>
+                    <Button data-testid={"moveWork" + i + "UpBtn"} onPress={moveWorkUpByIndex(i)} title="Up" />
+                    <Button data-testid={"moveWork" + i + "DownBtn"} onPress={moveWorkDownByIndex(i)} title="Down" />
+                </FlexRowView>
             </View>
         )
     })
@@ -79,11 +85,11 @@ const CreateTemplateWorkout = () => {
         if (uiState.editingTitle) {
             return <>
                 <input value={newTemplate.name} onChange={updateTitle} />
-                <button onClick={toggleEditTitle}>save</button>
+                <Button onClick={toggleEditTitle}>save</Button>
             </>
         } else {
             return <p id='template-title'>{newTemplate.name}
-                <button onClick={toggleEditTitle}>edit</button>
+                <Button onClick={toggleEditTitle}>edit</Button>
             </p>
         }
     }
@@ -92,22 +98,22 @@ const CreateTemplateWorkout = () => {
     return (
         <SafeAreaView>
             <ScrollView>
-                <Button onClick={backToMainPage} title="back" />
+                <Button onPress={backToMainPage} title="back" />
                 {editingExistingTemplate && (
-                    <Text htmlFor='template-title'>Editing</Text>
+                    <TextNormal htmlFor='template-title'>Editing</TextNormal>
                 )}
                 {uiState.editingTitle && (
-                    <View>
+                    <FlexRowView>
                         <TextInput value={newTemplate.name} onChangeText={updateTitle} />
                         <Button onPress={toggleEditTitle} title="save" />
-                    </View>
+                    </FlexRowView>
                 ) || (
-                    <View>
-                        <Text id='template-title'>
+                    <FlexRowView>
+                        <TextNormal id='template-title'>
                             {newTemplate.name}
-                        </Text>
-                        <Button onPress={toggleEditTitle} title="edit" />
-                    </View>
+                        </TextNormal>
+                        <Icon name='edit' onPress={toggleEditTitle} />
+                    </FlexRowView>
                 )}
                 <View>
                     {workComponents}

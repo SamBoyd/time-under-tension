@@ -1,30 +1,21 @@
 import React from 'react';
 import type {Node} from 'react';
+import {Provider} from "react-redux";
 import {
-    useColorScheme,
+    useColorScheme, View,
 } from 'react-native';
 
+import {SafeAreaProvider} from "react-native-safe-area-context/src/SafeAreaContext";
+import {ThemeProvider} from "react-native-elements";
 import {
     Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
 import MainApp from './src/App'
-
-import {Provider} from "react-redux";
 import store from "./src/store";
-import {SafeAreaProvider} from "react-native-safe-area-context/src/SafeAreaContext";
-import {ThemeProvider} from "react-native-elements";
+import theme from './src/theme'
 
-const theme = {
-    Avatar: {
-        rounded: true,
-    },
-    Badge: {
-        textStyle: { fontSize: 30 },
-    },
-};
-
-const App  = () => {
+const App = () => {
     const isDarkMode = useColorScheme() === 'dark';
 
     const backgroundStyle = {

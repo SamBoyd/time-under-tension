@@ -3,7 +3,11 @@ import React from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {removeExercise, selectExercises} from "../reducers/exercisesReducer";
 import {moveToAddExercise, moveToMainPage} from "../reducers/uiStateReducer";
-import {Button, FlatList, ScrollView, Text, View} from "react-native";
+import {FlatList, ScrollView, View} from "react-native";
+import {TextBold, TextNormal} from "../components/styled/text";
+import {Button} from "../components/styled/button";
+import {Icon} from "react-native-elements";
+import {FlexRowView} from "../components/styled/view";
 
 const ManageExercises = () => {
     const dispatch = useDispatch()
@@ -27,20 +31,20 @@ const ManageExercises = () => {
     })
 
     const Item = ({id, name, category}) => {
-        return <View>
-            <Text>{name}</Text>
-            <Button onPress={removeExerciseId(id)} title="remove"/>
-        </View>
+        return <FlexRowView>
+            <TextNormal>{name}</TextNormal>
+            <Icon name='delete' onPress={removeExerciseId(id)} title="remove"/>
+        </FlexRowView>
     }
 
     return (
         <ScrollView nestedScrollEnabled>
             <Button onPress={back} title="back"/>
-            <Text>Manage Exercises</Text>
+            <TextBold>Manage Exercises</TextBold>
 
             {sortedExercises.map(({title, data}) => {
                 return <View>
-                    <Text>{title}</Text>
+                    <TextBold>{title}</TextBold>
                     <FlatList
                     nestedScrollEnabled
                     data={data}

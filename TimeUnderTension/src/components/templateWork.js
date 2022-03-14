@@ -4,8 +4,12 @@ import { useDispatch } from "react-redux";
 import TemplateSet from "./templateSet";
 import {addSet, changeRestTime, changeWorkTime, removeSet} from "../reducers/templateWorkoutReducer";
 import {DEFAULT_REST_TIME, DEFAULT_WORK_TIME_LOWER, DEFAULT_WORK_TIME_UPPER} from "../constants";
-import {Button, Text, View} from "react-native";
+import {View} from "react-native";
 import InputSpinner from "react-native-input-spinner";
+import {TextBold, TextH1, TextNormal} from "./styled/text";
+import {FlexRowView} from "./styled/view";
+import {Icon} from "react-native-elements";
+import {Button} from "./styled/button";
 
 const Work = props => {
     const dispatch = useDispatch()
@@ -17,9 +21,7 @@ const Work = props => {
     const fireAddSet = () => {
         dispatch(addSet({workId: props.id}))
     }
-    const fireRemoveSetById = setId => () => {
-        dispatch(removeSet({setId: setId, workId: props.id}))
-    }
+
     const fireChangeRestTime = event => {
         dispatch(changeRestTime({
             workId: props.id,
@@ -49,20 +51,23 @@ const Work = props => {
 
     return (
         <View>
-            <Text>{props.exercise.name}</Text>
+            <TextBold>{props.exercise.name}</TextBold>
 
-            <Text htmlFor="restTimeInput">Rest time</Text>
-            <InputSpinner id="restTimeInput" onChange={fireChangeRestTime} value={restTime.toString()} />
+            <FlexRowView>
+                <TextNormal htmlFor="restTimeInput">Rest time</TextNormal>
+                <InputSpinner id="restTimeInput" onChange={fireChangeRestTime} value={restTime.toString()} />
+            </FlexRowView>
 
-            <Text htmlFor="workTimeInputStart">Work time</Text>
-            <InputSpinner id="workTimeInputStart" onChange={fireChangeWorkTimeStart} value={workTimeStart} />
-            <InputSpinner id="workTimeInputEnd" onChange={fireChangeWorkTimeEnd} value={workTimeEnd} />
+            <FlexRowView>
+                <TextNormal htmlFor="workTimeInputStart">Work time</TextNormal>
+                <InputSpinner id="workTimeInputStart" onChange={fireChangeWorkTimeStart} value={workTimeStart} />
+                <InputSpinner id="workTimeInputEnd" onChange={fireChangeWorkTimeEnd} value={workTimeEnd} />
+            </FlexRowView>
 
             <View>
                 {props.sets.map((set, index) => {
                     return <View key={index}>
-                        <TemplateSet index={index} {...set} />
-                        <Button data-testid={"removeSet" + set.id} onPress={fireRemoveSetById(set.id)} title="Remove" />
+                        <TemplateSet index={index} {...set} workId={props.id}/>
                     </View>
                 })}
             </View>

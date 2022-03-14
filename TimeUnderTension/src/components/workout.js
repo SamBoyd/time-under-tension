@@ -1,6 +1,7 @@
 import React from 'react';
 import {useSelector, useDispatch} from "react-redux";
-import {Button, ScrollView, Text, View} from "react-native";
+import {ScrollView, View} from "react-native";
+
 
 import {moveWorkDown, moveWorkUp, removeWork, selectWorkout} from "../reducers/workoutReducer";
 import Work from './work'
@@ -8,6 +9,9 @@ import {moveToMainPage, moveToPickExerciseForWorkout} from "../reducers/uiStateR
 import {finishWorkoutAndMoveToMainPage} from "../reducers/actions";
 import SafeAreaView from "react-native/Libraries/Components/SafeAreaView/SafeAreaView";
 import Timer from "./timer";
+import {TextNormal} from "./styled/text";
+import {Button} from "./styled/button";
+import {FlexRowView} from "./styled/view";
 
 const Workout = () => {
     const dispatch = useDispatch()
@@ -44,19 +48,23 @@ const Workout = () => {
                 <Work
                     {...work} />
                 <Button onPress={removeWorkByIndex(i)} title={`Remove work ${i}`}/>
-                <Button data-testid={"moveWork" + i + "UpBtn"} onPress={moveWorkUpByIndex(i)} title="Up"/>
-                <Button data-testid={"moveWork" + i + "DownBtn"} onPress={moveWorkDownByIndex(i)} title="Down"/>
+                <FlexRowView>
+                    <Button data-testid={"moveWork" + i + "UpBtn"} onPress={moveWorkUpByIndex(i)} title="Up"/>
+                    <Button data-testid={"moveWork" + i + "DownBtn"} onPress={moveWorkDownByIndex(i)} title="Down"/>
+                </FlexRowView>
             </View>
         )
     })
 
     return (
         <SafeAreaView>
-            <ScrollView contentInsetAdjustmentBehavior="automatic">
+            <ScrollView>
                 <View>
-                    <Button onPress={goBack} title="back"/>
-                    <Button onPress={finishWorkout} title="finish"/>
-                    <Text>Workout</Text>
+                    <FlexRowView>
+                        <Button onPress={goBack} title="back"/>
+                        <Button onPress={finishWorkout} title="finish"/>
+                    </FlexRowView>
+                    <TextNormal>Workout</TextNormal>
                     <View>
                         {workComponents}
                     </View>

@@ -3,10 +3,19 @@ import { useDispatch, useSelector } from "react-redux";
 
 import {PAGE} from '../constants'
 import {pickExerciseForTemplateWorkoutAction, pickExerciseForWorkoutAction} from "../reducers/actions"
-import {selectUiState} from "../reducers/uiStateReducer";
+import {
+    followRedirect,
+    moveToCreateTemplate,
+    moveToMainPage,
+    moveToWorkout,
+    selectUiState
+} from "../reducers/uiStateReducer";
 import {selectExercises} from "../reducers/exercisesReducer";
 import {Text, View} from "react-native";
 import SectionList from "react-native/Libraries/Lists/SectionList";
+import {TextBold, TextNormal} from "../components/styled/text";
+import {Button} from "../components/styled/button";
+import {ListItem} from "react-native-elements";
 
 
 const PickExercise = () => {
@@ -22,26 +31,33 @@ const PickExercise = () => {
         }
     }
 
+    const goBack = () => {
+        dispatch(followRedirect())
+    }
+
     const sortedExercises = []
     exercises.categories.forEach(cat => {
         sortedExercises.push({'title': cat, 'data': exercises.exercises.filter(e => e.category === cat)})
     })
 
     const Item = ({ exercise }) => (
-        <View>
-            <Text onPress={selectExercise(exercise)}>{exercise.name}</Text>
-        </View>
+        <ListItem>
+            <ListItem.Content>
+                <TextNormal onPress={selectExercise(exercise)}>{exercise.name}</TextNormal>
+            </ListItem.Content>
+        </ListItem>
     );
 
     return (
         <View>
-            <Text>Pick an exercise</Text>
+            <Button onPress={goBack} title="back"/>
+            <TextBold>Pick an exercise</TextBold>
             <SectionList
                 sections={sortedExercises}
                 keyExtractor={exercise => exercise.id}
                 renderItem={({item}) => <Item exercise={item} />}
                 renderSectionHeader={({ section: { title } }) => (
-                    <Text>{title}</Text>
+                    <ListItem><ListItem.Subtitle><TextBold>{title}</TextBold></ListItem.Subtitle></ListItem>
                 )}
             />
         </View>
