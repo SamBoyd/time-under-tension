@@ -1,22 +1,25 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import {useDispatch} from "react-redux";
 
 import Set from './set'
 import {addSet, changeRestTime, changeWorkTime, removeSet} from "../reducers/workoutReducer";
 import {DEFAULT_REST_TIME, DEFAULT_WORK_TIME_LOWER, DEFAULT_WORK_TIME_UPPER} from "../constants";
-import {View} from "react-native";
-import InputSpinner from "react-native-input-spinner";
-import {TextBold, TextNormal} from "./styled/text";
+import {StyleSheet, View} from "react-native";
+import {TextH1} from "./styled/text";
 import {FlexRowView} from "./styled/view";
 import {Button} from "./styled/button";
+
+
+import RestTime from "./resetTime";
+import WorkTime from "./workTime";
 
 const Work = props => {
 
     const dispatch = useDispatch()
 
     const restTime = props.restTime || DEFAULT_REST_TIME;
-    const workTimeStart = props.workTime ? props.workTime.start: DEFAULT_WORK_TIME_LOWER;
-    const workTimeEnd = props.workTime? props.workTime.end: DEFAULT_WORK_TIME_UPPER;
+    const workTimeStart = props.workTime ? props.workTime.start : DEFAULT_WORK_TIME_LOWER;
+    const workTimeEnd = props.workTime ? props.workTime.end : DEFAULT_WORK_TIME_UPPER;
 
     const fireAddSet = () => {
         dispatch(addSet({workId: props.id}))
@@ -49,27 +52,44 @@ const Work = props => {
         }))
     }
 
+    if (workTimeStart > workTimeEnd) {
+        fireChangeWorkTimeEnd(workTimeStart+1)
+    }
+
+
+    const styles = StyleSheet.create({
+        timingContainer: {
+            marginLeft: 50,
+            marginRight: 50,
+            // alignItems: 'center',
+            flexDirection: "row",
+            justifyContent: 'space-between',
+        }
+    })
+
     return (
         <View>
-            <TextBold>{props.exercise.name}</TextBold>
+            <TextH1>{props.exercise.name}</TextH1>
 
-            <FlexRowView>
-                <TextNormal htmlFor="restTimeInput">Rest time</TextNormal>
-                <InputSpinner id="restTimeInput" type="square" onChange={fireChangeRestTime} value={restTime.toString()} />
-            </FlexRowView>
+            <FlexRowView viewStyle={styles.timingContainer}>
+
+                <RestTime
+                    onChangeText={fireChangeRestTime}
+                    value={restTime}
+                />
 
 
-            <TextNormal htmlFor="workTimeInputStart">Work time</TextNormal>
-            <FlexRowView>
-                <TextNormal>start</TextNormal>
-                <InputSpinner id="workTimeInputStart" onChange={fireChangeWorkTimeStart} value={workTimeStart} />
-                <TextNormal>end</TextNormal>
-                <InputSpinner id="workTimeInputEnd" onChange={fireChangeWorkTimeEnd} value={workTimeEnd} />
+                <WorkTime
+                    workTimeStart={workTimeStart}
+                    workTimeEnd={workTimeEnd}
+                    fireChangeWorkTimeStart={fireChangeWorkTimeStart}
+                    fireChangeWorkTimeEnd={fireChangeWorkTimeEnd}
+                />
             </FlexRowView>
 
             <View>
                 {props.sets.map((set, index) => {
-                    return  <Set key={index} index={index} {...set} workId={props.id}/>
+                    return <Set key={index} index={index} {...set} workId={props.id}/>
                 })}
             </View>
             <Button onPress={fireAddSet} title="Add Set" />

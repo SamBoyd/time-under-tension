@@ -2,7 +2,7 @@ const theme = {
     colors: {
         primary: 'black',
         //     secondary;
-        //     white;
+        white: 'white',
         //     black;
         grey0: "rgba(0, 0, 0, 0.5)",
         //     grey1;
@@ -43,6 +43,11 @@ const theme = {
         textStyle: {
             fontSize: 12
         },
+    },
+    Input: {
+        textStyle: {
+            fontSize: 12
+        }
     }
 };
 
