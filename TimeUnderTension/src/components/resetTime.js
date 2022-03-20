@@ -12,7 +12,7 @@ const RestTime = props => {
         maximumValue={90}
         someStyling={{
             borderWidth: 1,
-            borderColor: theme.colors.primary,
+            borderColor: theme.colors.secondary,
             borderRadius: 10,
             paddingTop: 2,
             paddingBottom: 2,

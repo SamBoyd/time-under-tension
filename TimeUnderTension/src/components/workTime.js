@@ -8,7 +8,7 @@ const WorkTime = props => {
     return <FlexRowView
         viewStyle={{
             borderWidth: 1,
-            borderColor: theme.colors.primary,
+            borderColor: theme.colors.secondary,
             borderRadius: 10,
             paddingTop: 2,
             paddingBottom: 2,

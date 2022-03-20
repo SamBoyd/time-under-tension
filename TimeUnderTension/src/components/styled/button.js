@@ -26,16 +26,29 @@ export const EditButton = props => <UnStyledButton
     }}
 />
 
-export const Button = withTheme(props => {
-    const { theme } = props
+export const Button = props => {
     return <UnStyledButton
         {...props}
-        buttonStyle={{ backgroundColor: 'rgba(39, 39, 39, 1)' }}
-        containerStyle={{
-            width: 200,
-            // marginHorizontal: 50,
-            marginVertical: 10,
+        buttonStyle={{
+            backgroundColor: theme.colors.tertiary,
+            borderWidth: 1,
+            borderRadius: 5,
+            borderColor: theme.colors.secondary,
+            paddingTop: 0,
+            paddingBottom: 0,
+            paddingLeft: 10,
+            paddingRight: 10,
         }}
-        titleStyle={{ color: 'white', marginHorizontal: 20 }}
-        />
-})
+        titleStyle={{
+            color: theme.colors.secondary,
+            fontSize: 12,
+        }}
+        containerStyle={[
+            props.containerStyle,
+            {
+                padding: 0,
+                height: 30,
+            },
+        ]}
+    />
+}

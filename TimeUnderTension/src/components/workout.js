@@ -1,6 +1,6 @@
 import React from 'react';
 import {useSelector, useDispatch} from "react-redux";
-import {ScrollView, View} from "react-native";
+import {StyleSheet, ScrollView, View, Dimensions} from "react-native";
 
 
 import {moveWorkDown, moveWorkUp, removeWork, selectWorkout} from "../reducers/workoutReducer";
@@ -9,9 +9,16 @@ import {moveToMainPage, moveToPickExerciseForWorkout} from "../reducers/uiStateR
 import {finishWorkoutAndMoveToMainPage} from "../reducers/actions";
 import SafeAreaView from "react-native/Libraries/Components/SafeAreaView/SafeAreaView";
 import Timer from "./timer";
-import {TextNormal} from "./styled/text";
+import {TextH1, TextNormal} from "./styled/text";
 import {Button} from "./styled/button";
 import {FlexRowView} from "./styled/view";
+
+import theme from '../theme'
+import Header from "./header";
+import {Divider} from "react-native-elements";
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const Workout = () => {
     const dispatch = useDispatch()
@@ -29,51 +36,88 @@ const Workout = () => {
         dispatch(moveToPickExerciseForWorkout())
     }
 
-    const removeWorkByIndex = index => () => {
-        dispatch(removeWork({index: index}))
-    }
 
-    const moveWorkDownByIndex = index => () => {
-        dispatch(moveWorkDown({index: index}))
-    }
+    const styles = StyleSheet.create({
+        wrapperView: {
+            flex: 1,
+            width: windowWidth,
+        },
 
-    const moveWorkUpByIndex = index => () => {
-        dispatch(moveWorkUp({index: index}))
-    }
+        containerView: {
+            containerStyle: {
+                // padding: 20,
+                flex:1,
+                backgroundColor: theme.colors.tertiary,
+                // minHeight: '100%',
+            },
+            contentContainerStyle: {
+                alignItems: 'center',
+                flexDirection: 'column',
+                rowGap: 10,
+                paddingTop: 10,
+                paddingBottom: 50,
+            }
+        },
+
+
+        backButton: {},
+
+        finishButton: {},
+
+
+        workComponent: {
+            componentStyle: {
+                borderRadius: theme.borderRadius,
+                borderWidth: 1,
+                borderColor: theme.colors.secondary,
+                padding: 10,
+                marginTop: 10,
+            }
+
+        },
+
+        addWorkButton: {
+            marginTop: 20,
+            width: 200
+        }
+
+
+    })
 
     const workComponents = workout.work.map((work, i) => {
-
         return (
-            <View key={i}>
-                <Work
-                    {...work} />
-                <Button onPress={removeWorkByIndex(i)} title={`Remove work ${i}`}/>
-                <FlexRowView>
-                    <Button data-testid={"moveWork" + i + "UpBtn"} onPress={moveWorkUpByIndex(i)} title="Up"/>
-                    <Button data-testid={"moveWork" + i + "DownBtn"} onPress={moveWorkDownByIndex(i)} title="Down"/>
-                </FlexRowView>
-            </View>
+            <Work
+                {...work}
+                workIndex={i}
+            />
         )
     })
 
+
     return (
-        <SafeAreaView>
-            <ScrollView>
-                <View>
-                    <FlexRowView>
-                        <Button onPress={goBack} title="back"/>
-                        <Button onPress={finishWorkout} title="finish"/>
-                    </FlexRowView>
-                    <TextNormal>Workout</TextNormal>
+        <>
+            <View style={styles.wrapperView}>
+                <Header
+                    leftComponent={<Button onPress={goBack} title="back" containerStyle={styles.backButton}/>}
+                    rightComponent={<Button onPress={finishWorkout} title="finish" containerStyle={styles.finishButton}/>}
+                />
+                <ScrollView
+                    style={styles.containerView.containerStyle}
+                    contentContainerStyle={styles.containerView.contentContainerStyle}
+                >
+
+
+                    <TextH1>Workout</TextH1>
                     <View>
                         {workComponents}
                     </View>
-                    <Button onPress={addNewWork} title="Add work"/>
-                </View>
+                    <Divider />
+                    <Button onPress={addNewWork} title="Add work" containerStyle={styles.addWorkButton}/>
 
-                <Timer />
-            </ScrollView>
-        </SafeAreaView>
+                    <Timer/>
+                </ScrollView>
+            </View>
+        </>
     )
 }
 

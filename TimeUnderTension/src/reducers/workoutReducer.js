@@ -9,7 +9,8 @@ const getNewSet = () => {
         id: uuidv4(),
         numberReps: 12,
         weight: 40,
-        workTime: null
+        workTime: null,
+        finished: false
     }
 }
 const getNewWork = (exercise) => {

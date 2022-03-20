@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import {StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {incrementCount, moveToSetup, moveToWork, selectTimer} from "../reducers/timerReducer";
@@ -17,7 +18,9 @@ import {TextBold, TextNormal} from "./styled/text";
 import {FlexRowView} from "./styled/view";
 import {Button} from "./styled/button";
 
+const styles = StyleSheet.create({
 
+})
 const ready = dispatch => {
     const click = () => {
         dispatch(moveToSetup())
@@ -74,6 +77,7 @@ const findNextSet = workout => {
         }
     }
 }
+
 
 const Timer = () => {
     const timer = useSelector(selectTimer)

@@ -1,13 +1,18 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import {useDispatch} from "react-redux";
 import {changeSetReps, changeSetWeight, finishSet, removeSet} from "../reducers/workoutReducer";
-import {Text, View} from "react-native";
+import {Text, View, StyleSheet, Dimensions} from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import InputSpinner from "react-native-input-spinner";
 import {TextNormal} from "./styled/text";
 import {FlexRowView} from "./styled/view";
 import {Button} from "./styled/button";
 import {Icon} from "react-native-elements";
+import {OverlaySlider} from "./styled/input";
+
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const Set = props => {
 
@@ -37,26 +42,58 @@ const Set = props => {
         dispatch(removeSet({setId: props.id, workId: props.workId}))
     }
 
-    return (
-        <View>
-            <TextNormal>Set #{props.index}</TextNormal>
+    const styles = StyleSheet.create({
+        container: {
+            marginTop: 5,
+            justifyContent: "space-evenly",
+            alignItems: 'center',
+            width: windowWidth * 0.8,
+        },
+        repsAndWeight: {
+            width: 50,
+            justifyContent: "space-between",
+        },
+        checkbox: {
+            height: 15,
+            width: 15,
+        },
+        removeIcon: {
+            size: 15,
+        }
+    })
 
-            <FlexRowView>
-                <InputSpinner onChange={updateReps} value={props.numberReps} />
-                <TextNormal>x</TextNormal>
-                <InputSpinner onChange={updateWeight} value={props.weight} />
-                <BouncyCheckbox
-                    onPress={finish}
-                    isChecked={props.finished}
+    return (
+        <FlexRowView viewStyle={styles.container}>
+            <TextNormal>{props.index}</TextNormal>
+            <FlexRowView viewStyle={styles.repsAndWeight}>
+                <OverlaySlider
+                    overlayTitle="Number of reps"
+                    onChangeText={updateReps}
+                    value={props.numberReps}
+                    minimumValue={0}
+                    maximumValue={20}
                 />
-                <Icon
-                    name='delete'
-                    onPress={fireRemoveSetById(props.id)}
+                <TextNormal>x</TextNormal>
+                <OverlaySlider
+                    overlayTitle="Weight"
+                    onChangeText={updateWeight}
+                    value={props.weight}
+                    minimumValue={0}
+                    maximumValue={100}
                 />
             </FlexRowView>
-
-
-        </View>
+            <BouncyCheckbox
+                onPress={finish}
+                isChecked={props.finished}
+                iconStyle={styles.checkbox}
+            />
+            <Icon
+                name='delete'
+                onPress={fireRemoveSetById(props.id)}
+                size={styles.removeIcon.size}
+                style={styles.removeIcon}
+            />
+        </FlexRowView>
     )
 }
 

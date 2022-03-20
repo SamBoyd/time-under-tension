@@ -1,7 +1,8 @@
 const theme = {
     colors: {
-        primary: 'black',
-        //     secondary;
+        primary: '#FA9500',
+        secondary: "#00272B",
+        tertiary: "#E5ECE9",
         white: 'white',
         //     black;
         grey0: "rgba(0, 0, 0, 0.5)",
@@ -34,6 +35,9 @@ const theme = {
         //         };
         //     };
     },
+
+    borderRadius: 4,
+
     Text: {
         style: {
             fontSize: 12,

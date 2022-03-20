@@ -15,21 +15,21 @@ import {View} from "react-native";
 function App() {
     const uiState = useSelector(selectUiState)
 
-        if (uiState.page === PAGE.main) {
-            return <MainPage />
-        } else if (uiState.page === PAGE.workout) {
-            return <Workout />
-        } else if (uiState.page === PAGE.pickExercise) {
-            return <PickExercise />
-        } else if (uiState.page === PAGE.createTemplateWorkout) {
-            return <CreateTemplateWorkout />
-        } else if (uiState.page === PAGE.manageExercises) {
-            return <ManageExercises />
-        } else if (uiState.page === PAGE.addExercise) {
-            return <AddExercise />
-        } else {
-            return <View>Nothing here</View>
-        }
+    if (uiState.page === PAGE.main) {
+        return <MainPage />
+    } else if (uiState.page === PAGE.workout) {
+        return <Workout />
+    } else if (uiState.page === PAGE.pickExercise) {
+        return <PickExercise />
+    } else if (uiState.page === PAGE.createTemplateWorkout) {
+        return <CreateTemplateWorkout />
+    } else if (uiState.page === PAGE.manageExercises) {
+        return <ManageExercises />
+    } else if (uiState.page === PAGE.addExercise) {
+        return <AddExercise />
+    } else {
+        return <View>Nothing here</View>
+    }
 }
 
 export default App;
