@@ -5,13 +5,9 @@ const h1Style = {
     fontSize: 14,
     fontWeight: "bold"
 }
-export const TextH1 = withTheme(props => {
-    const { theme } = props
-    return <TextNormal h1 {...props} h1Style={h1Style} />
-})
+export const TextH1 = props => <Text h1 {...props} h1Style={[props.style, h1Style]}/>
 
 export const TextNormal = withTheme(props => {
-    const { theme } = props
     return <Text {...props} />
 })
 

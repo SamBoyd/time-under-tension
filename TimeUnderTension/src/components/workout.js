@@ -95,29 +95,27 @@ const Workout = () => {
 
 
     return (
-        <>
-            <View style={styles.wrapperView}>
-                <Header
-                    leftComponent={<Button onPress={goBack} title="back" containerStyle={styles.backButton}/>}
-                    rightComponent={<Button onPress={finishWorkout} title="finish" containerStyle={styles.finishButton}/>}
-                />
-                <ScrollView
-                    style={styles.containerView.containerStyle}
-                    contentContainerStyle={styles.containerView.contentContainerStyle}
-                >
+        <View style={styles.wrapperView}>
+            <Header
+                leftComponent={<Button onPress={goBack} title="back" containerStyle={styles.backButton}/>}
+                rightComponent={<Button onPress={finishWorkout} title="finish" containerStyle={styles.finishButton}/>}
+            />
+            <ScrollView
+                style={styles.containerView.containerStyle}
+                contentContainerStyle={styles.containerView.contentContainerStyle}
+            >
 
 
-                    <TextH1>Workout</TextH1>
-                    <View>
-                        {workComponents}
-                    </View>
-                    <Divider />
-                    <Button onPress={addNewWork} title="Add work" containerStyle={styles.addWorkButton}/>
+                <TextH1>Workout</TextH1>
+                <View>
+                    {workComponents}
+                </View>
+                <Divider />
+                <Button onPress={addNewWork} title="Add work" containerStyle={styles.addWorkButton}/>
 
-                    <Timer/>
-                </ScrollView>
-            </View>
-        </>
+                <Timer/>
+            </ScrollView>
+        </View>
     )
 }
 
