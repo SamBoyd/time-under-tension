@@ -7,6 +7,11 @@ import {EditButton} from "./styled/button";
 
 
 const styles = StyleSheet.create({
+    wrapper: {
+        paddingTop: 5,
+        paddingBottom: 5,
+        paddingLeft: 10,
+    },
 
     row: {
         flexDirection: "row",
@@ -31,7 +36,7 @@ const TemplateWorkoutTile = props => {
     }
 
     return (
-        <View style={{paddingTop: 5}}>
+        <View style={styles.wrapper}>
             <View style={styles.row} >
                 <TextNormal onPress={startWorkoutFromTemplate}>{props.template.name}</TextNormal>
                 <EditButton onPress={editTemplate}/>

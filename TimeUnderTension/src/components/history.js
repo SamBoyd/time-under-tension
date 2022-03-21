@@ -10,15 +10,24 @@ import {TextH1, TextLighter, TextNormal} from "./styled/text";
 import {FlexRowView} from "./styled/view";
 
 const styles = StyleSheet.create({
+    wrapper: {
+        marginBottom: 20,
+    },
+
     row: {
         flexDirection: "row",
-        // flexWrap: "wrap",
     },
+
+    tile: {
+        paddingLeft: 10,
+        paddingTop: 5,
+        paddingBottom: 5,
+    }
 });
 
 const HistoryTile = props => {
     return (
-        <View style={{paddingTop: 5}}>
+        <View style={styles.tile}>
             <FlexRowView>
                 <TextNormal>{props.name}</TextNormal>
                 <TextLighter className="date"> - {dateFormat(props.created_at, 'ddd, dS mmmm yyyy')}</TextLighter>
@@ -34,8 +43,9 @@ const History = () => {
     const history = useSelector(selectHistory)
 
     return (
-        <View>
+        <View style={styles.wrapper}>
             <TextH1>History</TextH1>
+
             {history.map((workout, i) => <HistoryTile key={i} {...workout}/>)}
         </View>
     )
