@@ -11,6 +11,7 @@ import {FlexRowView} from "../components/styled/view";
 import Header from "../components/header";
 
 import theme from '../theme'
+import {capitalizeFirstLetter} from "../utils/textUtils";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -30,10 +31,6 @@ const ManageExercises = () => {
 
     const removeExerciseId = exerciseId => () => {
         dispatch(removeExercise({id: exerciseId}))
-    }
-
-    const capitalizeFirstLetter = (string) => {
-        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
     const styles = StyleSheet.create({

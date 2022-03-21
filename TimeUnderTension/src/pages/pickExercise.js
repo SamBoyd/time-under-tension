@@ -11,11 +11,14 @@ import {
     selectUiState
 } from "../reducers/uiStateReducer";
 import {selectExercises} from "../reducers/exercisesReducer";
-import {Text, View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import SectionList from "react-native/Libraries/Lists/SectionList";
-import {TextBold, TextNormal} from "../components/styled/text";
+import {TextBold, TextH1, TextNormal} from "../components/styled/text";
 import {Button} from "../components/styled/button";
 import {ListItem} from "react-native-elements";
+import Header from "../components/header";
+import theme from "../theme";
+import {capitalizeFirstLetter} from "../utils/textUtils";
 
 
 const PickExercise = () => {
@@ -48,18 +51,56 @@ const PickExercise = () => {
         </ListItem>
     );
 
+    const styles = StyleSheet.create({
+        wrapper: {
+          backgroundColor: theme.colors.tertiary
+        },
+
+        backButton: {
+
+        },
+
+        header: {
+            title: {
+                color: theme.colors.tertiary
+            }
+        },
+
+        listWrapper: {
+            backgroundColor: theme.colors.tertiary,
+            margin: 40,
+        },
+
+        listHeader: {
+            backgroundColor: theme.colors.tertiary,
+        },
+        listItem: {
+            backgroundColor: theme.colors.tertiary,
+            paddingRight: 20,
+        },
+    })
+
     return (
-        <View>
-            <Button onPress={goBack} title="back"/>
-            <TextBold>Pick an exercise</TextBold>
-            <SectionList
-                sections={sortedExercises}
-                keyExtractor={exercise => exercise.id}
-                renderItem={({item}) => <Item exercise={item} />}
-                renderSectionHeader={({ section: { title } }) => (
-                    <ListItem><ListItem.Subtitle><TextBold>{title}</TextBold></ListItem.Subtitle></ListItem>
-                )}
+        <View style={styles.wrapper}>
+            <Header
+                leftComponent={<Button onPress={goBack} title="back" containerStyle={styles.backButton}/>}
+                centerComponent={<TextH1 style={styles.header.title}>Pick an exercise</TextH1>}
             />
+
+            <View syles={styles.listWrapper}>
+                <SectionList
+                    sections={sortedExercises}
+                    keyExtractor={exercise => exercise.id}
+                    renderItem={({item}) => <Item exercise={item} />}
+                    renderSectionHeader={({ section: { title } }) => (
+                        <ListItem topDivider>
+                            <ListItem.Subtitle>
+                                <TextBold>{capitalizeFirstLetter(title)}</TextBold>
+                            </ListItem.Subtitle>
+                        </ListItem>
+                    )}
+                />
+            </View>
         </View>
     )
 }
