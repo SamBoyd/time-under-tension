@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import {useSelector, useDispatch} from "react-redux";
+import {ScrollView, Text, View, StyleSheet, Dimensions} from "react-native";
 
 import {
     editTemplateName,
@@ -15,12 +16,16 @@ import {
     cancelEditTemplateAndMoveToMainPage,
     saveTemplateAndMoveToMainPage
 } from "../reducers/actions";
-import {ScrollView, Text, TextInput, View} from "react-native";
 import SafeAreaView from "react-native/Libraries/Components/SafeAreaView/SafeAreaView";
-import {TextNormal} from "../components/styled/text";
+import {TextH1, TextNormal} from "../components/styled/text";
 import {Button} from "../components/styled/button";
 import {FlexRowView} from "../components/styled/view";
-import {Icon} from "react-native-elements";
+import {Icon, Input} from "react-native-elements";
+import Header from "../components/header";
+import theme from "../theme"
+
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const CreateTemplateWorkout = () => {
     const dispatch = useDispatch()
@@ -51,77 +56,126 @@ const CreateTemplateWorkout = () => {
         dispatch(moveToPickExerciseForTemplateWorkout())
     }
 
-    const removeWorkByIndex = index => () => {
-        dispatch(removeWork({index: index}))
-    }
-
-    const moveWorkDownByIndex = index => () => {
-        dispatch(moveWorkDown({index: index}))
-    }
-
-    const moveWorkUpByIndex = index => () => {
-        dispatch(moveWorkUp({index: index}))
-    }
-
     const saveTemplate = () => {
         saveTemplateAndMoveToMainPage(dispatch)
     }
 
-    const workComponents = newTemplate.work.map((work, i) => {
+    const styles = StyleSheet.create({
+        wrapperView: {
+            flex: 1,
+        },
 
-        return (
-            <View key={i}>
-                <TemplateWork {...work} />
-                <Button onPress={removeWorkByIndex(i)} title={`Remove work ${i}`} />
-                <FlexRowView>
-                    <Button data-testid={"moveWork" + i + "UpBtn"} onPress={moveWorkUpByIndex(i)} title="Up" />
-                    <Button data-testid={"moveWork" + i + "DownBtn"} onPress={moveWorkDownByIndex(i)} title="Down" />
-                </FlexRowView>
-            </View>
-        )
+        headerTitle: {
+            color: theme.colors.tertiary,
+        },
+
+        scrollWrapper: {
+            flex: 1,
+            backgroundColor: theme.colors.tertiary,
+            paddingLeft: 20,
+            paddingRight: 20,
+            height: windowHeight
+        },
+
+        editTitleWrapper: {
+          alignItems: "center"
+        },
+
+        editTitleContainer: {
+          maxWidth: windowWidth - 150
+
+        },
+        saveTitleContainer: {
+            // justifyContent: 'center'
+        },
+
+        titleWrapper: {
+            marginTop: 20,
+            alignItems: "center",
+
+            editIcon: {
+                size: 15,
+                marginLeft: 10,
+            }
+        },
+
+        workWrapper: {
+            marginTop: 0,
+            marginBottom: 20,
+        },
+
+        saveButton: {
+            marginTop: 10,
+        }
     })
 
-    const templateTitle = () => {
-        if (uiState.editingTitle) {
-            return <>
-                <input value={newTemplate.name} onChange={updateTitle} />
-                <Button onClick={toggleEditTitle}>save</Button>
-            </>
-        } else {
-            return <p id='template-title'>{newTemplate.name}
-                <Button onClick={toggleEditTitle}>edit</Button>
-            </p>
-        }
-    }
+    const workComponents = newTemplate.work.map((work, i) => <TemplateWork work={work} workIndex={i}/>)
 
-
-    return (
-        <SafeAreaView>
-            <ScrollView>
-                <Button onPress={backToMainPage} title="back" />
+    const templateTitle = <>
                 {editingExistingTemplate && (
                     <TextNormal htmlFor='template-title'>Editing</TextNormal>
                 )}
                 {uiState.editingTitle && (
-                    <FlexRowView>
-                        <TextInput value={newTemplate.name} onChangeText={updateTitle} />
-                        <Button onPress={toggleEditTitle} title="save" />
+                    <FlexRowView viewStyle={styles.editTitleWrapper}>
+                        <Input
+                            value={newTemplate.name}
+                            onChangeText={updateTitle}
+                            containerStyle={styles.editTitleContainer}
+                            rightIcon={<Icon
+                                name={"save"}
+                                onPress={toggleEditTitle}
+                                containerStyle={styles.saveTitleContainer}
+                                size={styles.titleWrapper.editIcon.size}
+                            />}
+                        />
+
                     </FlexRowView>
                 ) || (
                     <FlexRowView>
-                        <TextNormal id='template-title'>
+                        <TextH1 id='template-title'>
                             {newTemplate.name}
-                        </TextNormal>
-                        <Icon name='edit' onPress={toggleEditTitle} />
+                        </TextH1>
+                        <Icon name='edit'
+                              onPress={toggleEditTitle}
+                              size={styles.titleWrapper.editIcon.size}
+                              style={styles.titleWrapper.editIcon}
+                              containerStyle={styles.titleWrapper.editIcon}
+                        />
                     </FlexRowView>
                 )}
-                <View>
-                    {workComponents}
-                </View>
-                <Button onPress={addNewWork} title="Add work" />
+            </>
 
-                <Button onPress={saveTemplate} title="Save" />
-            </ScrollView>
+    return (
+        <SafeAreaView style={styles.wrapperView}>
+            <Header
+                leftComponent={<Button onPress={backToMainPage} title="back" containerStyle={styles.backButton}/>}
+                centerComponent={<TextH1 style={styles.headerTitle}>Create template workout</TextH1>}
+            />
+
+            <View style={styles.scrollWrapper}>
+                <ScrollView>
+                    <View style={styles.titleWrapper}>
+                        {templateTitle}
+                    </View>
+
+                    <View style={styles.workWrapper}>
+                        {workComponents}
+                    </View>
+
+
+                    <Button
+                        onPress={addNewWork}
+                        title="Add work"
+
+                    />
+
+                    <Button
+                        onPress={saveTemplate}
+                        title="Save"
+                        style={styles.saveButton}
+                    />
+                </ScrollView>
+            </View>
         </SafeAreaView>
     )
 }
