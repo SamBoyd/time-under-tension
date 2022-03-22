@@ -12,6 +12,7 @@ import Header from "../components/header";
 
 import theme from '../theme'
 import {capitalizeFirstLetter} from "../utils/textUtils";
+import SafeAreaView from "react-native/Libraries/Components/SafeAreaView/SafeAreaView";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -45,15 +46,17 @@ const ManageExercises = () => {
             }
         },
 
+        scrollWrapper: {
+            flex:1,
+            paddingLeft: 20,
+            paddingTop: 10,
+            paddingRight: 20,
+            backgroundColor: theme.colors.tertiary
+        },
         containerView: {
             containerStyle: {
-                flex: 1,
             },
             containerContentStyle: {
-                paddingLeft: 20,
-                paddingTop: 10,
-                paddingRight: 20,
-                paddingBottom: 50,
             },
         },
 
@@ -78,7 +81,8 @@ const ManageExercises = () => {
 
         addButton: {
             marginTop: 20,
-            justifyContent: "center"
+            justifyContent: "center",
+            marginBottom: 100,
         }
     })
 
@@ -96,43 +100,45 @@ const ManageExercises = () => {
     }
 
     return (
-        <View style={styles.wrapperView}>
+        <SafeAreaView style={styles.wrapperView}>
             <Header
                 leftComponent={<Button onPress={goBack} title="back" containerStyle={styles.backButton}/>}
                 centerComponent={<TextH1 style={styles.header.title}>Managing Exercises</TextH1>}
             />
 
-            <ScrollView
-                style={styles.containerView.containerStyle}
-                contentContainerStyle={styles.containerView.containerContentStyle}
-            >
-                {sortedExercises.map(({title, data}) => {
-                    return (
-                        <>
-                            <View style={styles.subsection}>
-                                <View style={styles.subsection.header}>
-                                    <TextBold>{capitalizeFirstLetter(title)}</TextBold>
+            <View style={styles.scrollWrapper}>
+                <ScrollView
+                    style={styles.containerView.containerStyle}
+                    contentContainerStyle={styles.containerView.containerContentStyle}
+                >
+                    {sortedExercises.map(({title, data}) => {
+                        return (
+                            <>
+                                <View style={styles.subsection}>
+                                    <View style={styles.subsection.header}>
+                                        <TextBold>{capitalizeFirstLetter(title)}</TextBold>
+                                    </View>
+                                    <FlatList
+                                        nestedScrollEnabled
+                                        data={data}
+                                        renderItem={({item}) => <Item id={item.id} name={item.name}
+                                                                      category={item.category}/>}
+                                        keyExtractor={item => item.id}
+                                    />
                                 </View>
-                                <FlatList
-                                    nestedScrollEnabled
-                                    data={data}
-                                    renderItem={({item}) => <Item id={item.id} name={item.name}
-                                                                  category={item.category}/>}
-                                    keyExtractor={item => item.id}
-                                />
-                            </View>
-                            <Divider/>
-                        </>
-                    )
-                })}
+                                <Divider/>
+                            </>
+                        )
+                    })}
 
-                <Button
-                    onPress={addExercise}
-                    title="Add"
-                    containerStyle={styles.addButton}
-                />
-            </ScrollView>
-        </View>
+                    <Button
+                        onPress={addExercise}
+                        title="Add"
+                        containerStyle={styles.addButton}
+                    />
+                </ScrollView>
+            </View>
+        </SafeAreaView>
     )
 }
 
