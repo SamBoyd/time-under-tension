@@ -40,22 +40,19 @@ const Workout = () => {
     const styles = StyleSheet.create({
         wrapperView: {
             flex: 1,
-            width: windowWidth,
         },
 
         containerView: {
             containerStyle: {
-                // padding: 20,
-                flex:1,
+                flex: 1,
                 backgroundColor: theme.colors.tertiary,
-                // minHeight: '100%',
             },
             contentContainerStyle: {
                 alignItems: 'center',
                 flexDirection: 'column',
                 rowGap: 10,
                 paddingTop: 10,
-                paddingBottom: 50,
+                paddingBottom: 125,
             }
         },
 
@@ -113,8 +110,8 @@ const Workout = () => {
                 <Divider />
                 <Button onPress={addNewWork} title="Add work" containerStyle={styles.addWorkButton}/>
 
-                <Timer/>
             </ScrollView>
+            <Timer/>
         </View>
     )
 }

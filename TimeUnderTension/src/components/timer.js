@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {incrementCount, moveToSetup, moveToWork, selectTimer} from "../reducers/timerReducer";
@@ -18,53 +18,78 @@ import {TextBold, TextNormal} from "./styled/text";
 import {FlexRowView} from "./styled/view";
 import {Button} from "./styled/button";
 
-const styles = StyleSheet.create({
+import theme from '../theme'
 
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
+
+const styles = StyleSheet.create({
+    container: {
+        position: 'absolute',
+        left: 0,
+        bottom: 0,
+        width: '100%',
+        height: 75,
+
+        borderTopWidth: 2,
+        borderColor: theme.colors.primary,
+        backgroundColor: theme.colors.secondary,
+
+        alignItems: "center",
+        alignContent: "space-between",
+        justifyContent: "space-around",
+    },
+
+    text: {
+        color: theme.colors.tertiary
+    },
+
+    statusContainer: {},
+
+    textContainer: {
+        alignSelf: "center"
+    },
+
+    buttonContainer: {},
 })
+
+const timerText = state => <FlexRowView viewStyle={styles.textContainer}>
+    <TextBold fontStyle={styles.text}>{state}</TextBold>
+</FlexRowView>
+
 const ready = dispatch => {
     const click = () => {
         dispatch(moveToSetup())
     }
     return (
-        <View>
-            <TextNormal>
-                <TextNormal>Timer </TextNormal>
-                <TextBold>Ready</TextBold>
-            </TextNormal>
-            <Button onPress={click} title="Click to start" />
+        <View style={styles.statusContainer}>
+            {timerText('Ready')}
+            <View style={styles.buttonContainer}>
+                <Button onPress={click} title="Click to start"/>
+            </View>
         </View>
     )
 }
 
 const setup = count => {
-    return (
-        <TextNormal>
-            <TextNormal>Timer </TextNormal>
-            <TextBold>Setup - {count}</TextBold>
-        </TextNormal>
-    )
+    return timerText(`Setup - ${count}`)
 }
+
 
 const work = (dispatch, count, lower, upper, set) => {
     return (
-        <View>
-            <FlexRowView>
-                <TextNormal>Timer </TextNormal>
-                <TextBold>Work - {count}</TextBold>
-                <TextBold> ({lower}s -> {upper}s)</TextBold>
-            </FlexRowView>
-            <Button onPress={finishSetAction(dispatch, set)} title="Finish"/>
-        </View>
+        <>
+            {timerText(`Work - ${count} (${lower}s -> ${upper}s)`)}
+            <View style={styles.buttonContainer}>
+                <Button onPress={finishSetAction(dispatch, set)} title="Finish"/>
+            </View>
+        </>
     )
 }
 
 const rest = count => {
-    return (
-        <FlexRowView>
-            <TextNormal>Timer </TextNormal>
-            <TextBold>Rest - {count}</TextBold>
-        </FlexRowView>
-    )}
+    return timerText(`Rest - ${count}`)
+}
 
 const findNextSet = workout => {
     const work = workout.work[workout.currentWork]
@@ -92,7 +117,7 @@ const Timer = () => {
 
     if (timer.state === TIMER_STATE.setup && timer.count >= DEFAULT_SETUP_TIME) {
         dispatch(moveToWork())
-    } else if (timer.state === TIMER_STATE.rest && timer.count >= DEFAULT_REST_TIME)  {
+    } else if (timer.state === TIMER_STATE.rest && timer.count >= DEFAULT_REST_TIME) {
         dispatch(moveToWork())
     }
 
@@ -102,25 +127,32 @@ const Timer = () => {
     }, []);
 
     if (workout.work.length === 0) {
-        return <View></View>
+        return <></>
     }
 
+    let timerText
     switch (timer.state) {
         case TIMER_STATE.ready:
-            return ready(dispatch);
-            break;
+            timerText = ready(dispatch);
+            break
         case TIMER_STATE.setup:
-            return setup(timer.count);
-            break;
+            timerText = setup(timer.count);
+            break
         case TIMER_STATE.work:
-            return work(dispatch, timer.count, DEFAULT_WORK_TIME_LOWER, DEFAULT_WORK_TIME_UPPER, nextSet);
-            break;
+            timerText = work(dispatch, timer.count, DEFAULT_WORK_TIME_LOWER, DEFAULT_WORK_TIME_UPPER, nextSet);
+            break
         case TIMER_STATE.rest:
-            return rest(timer.count);
-            break;
+            timerText = rest(timer.count);
+            break
         default:
-            return <View>Nothing here</View>
+            timerText = <View>Nothing here</View>
     }
+
+    return (
+        <View style={styles.container}>
+            {timerText}
+        </View>
+    )
 }
 
 export default Timer

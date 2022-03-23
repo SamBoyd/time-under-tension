@@ -13,7 +13,7 @@ export const TextNormal = withTheme(props => {
 
 export const TextBold = withTheme(props => {
     const { theme } = props
-    return <Text {...props} style={{fontWeight: "bold"}}/>
+    return <Text {...props} style={[props.fontStyle, {fontWeight: "bold"}]}/>
 })
 
 export const TextLighter = withTheme(props => {

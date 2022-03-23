@@ -30,11 +30,10 @@ export const pickExerciseForTemplateWorkoutAction = exercise => dispatch => {
 
 
 export const finishSetAction = (dispatch, set) => () => {
-    dispatch(moveToRest())
-
     if (set) {
         dispatch(finishSet({setId: set.id}))
     }
+    dispatch(moveToRest())
 }
 
 export const selectWorkAndResetTimer = (workIndex, dispatch) => {
