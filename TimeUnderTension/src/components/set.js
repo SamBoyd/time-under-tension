@@ -82,11 +82,20 @@ const Set = props => {
                     maximumValue={100}
                 />
             </FlexRowView>
-            <BouncyCheckbox
-                onPress={finish}
-                isChecked={props.finished}
-                iconStyle={styles.checkbox}
-            />
+            {props.finished && (
+                <BouncyCheckbox
+                    onPress={finish}
+                    isChecked={true}
+                    iconStyle={styles.checkbox}
+                />
+            ) || (
+                <BouncyCheckbox
+                    onPress={finish}
+                    isChecked={false}
+                    iconStyle={styles.checkbox}
+                />
+            )}
+
             <Icon
                 name='delete'
                 onPress={fireRemoveSetById(props.id)}
