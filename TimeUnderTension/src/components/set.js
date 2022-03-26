@@ -10,6 +10,7 @@ import {Button} from "./styled/button";
 import {CheckBox, Icon} from "react-native-elements";
 import {OverlaySlider} from "./styled/input";
 
+import theme from '../theme'
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -43,29 +44,76 @@ const Set = props => {
         dispatch(removeSet({setId: props.id, workId: props.workId}))
     }
 
-    const styles = StyleSheet.create({
-        container: {
-            marginTop: 5,
-            justifyContent: "space-evenly",
-            alignItems: 'center',
-            width: windowWidth * 0.8,
-        },
-        repsAndWeight: {
-            width: 50,
-            justifyContent: "space-between",
-        },
-        checkbox: {
-            height: 15,
-            width: 15,
-        },
-        removeIcon: {
-            size: 15,
-        }
-    })
+    let styles
+
+    if (props.active) {
+        styles = StyleSheet.create({
+            container: {
+                marginTop: 5,
+                justifyContent: "space-evenly",
+                alignItems: 'center',
+                width: windowWidth * 0.8,
+                backgroundColor: theme.colors.primary,
+                color: theme.colors.white,
+
+            },
+            setIndex: {
+                color: theme.colors.white,
+            },
+            repsAndWeight: {
+                width: 50,
+                justifyContent: "space-between",
+                textStyle: {
+                    color: theme.colors.white,
+                }
+            },
+            checkbox: {
+                height: 15,
+                width: 15,
+                uncheckedIcon: {
+                    color: theme.colors.white,
+                },
+                checkedIcon: {
+                    color: theme.colors.primary,
+                }
+            },
+            removeIcon: {
+                size: 15,
+                color: theme.colors.white,
+            }
+        })
+    } else {
+        styles = StyleSheet.create({
+            container: {
+                marginTop: 5,
+                justifyContent: "space-evenly",
+                alignItems: 'center',
+                width: windowWidth * 0.8,
+            },
+            repsAndWeight: {
+                width: 50,
+                justifyContent: "space-between",
+                textStyle: {}
+            },
+            checkbox: {
+                height: 15,
+                width: 15,
+                uncheckedIcon: {
+                    color: theme.colors.secondary,
+                },
+                checkedIcon: {
+                    color: theme.colors.primary,
+                }
+            },
+            removeIcon: {
+                size: 15,
+            }
+        })
+    }
 
     return (
         <FlexRowView viewStyle={styles.container}>
-            <TextNormal>{props.index}</TextNormal>
+            <TextNormal style={styles.setIndex}>{props.index}</TextNormal>
             <FlexRowView viewStyle={styles.repsAndWeight}>
                 <OverlaySlider
                     overlayTitle="Number of reps"
@@ -73,29 +121,46 @@ const Set = props => {
                     value={props.numberReps}
                     minimumValue={0}
                     maximumValue={20}
+                    textStyle={styles.repsAndWeight.textStyle}
                 />
-                <TextNormal>x</TextNormal>
+                <TextNormal
+                    style={styles.repsAndWeight.textStyle}
+                >
+                    x
+                </TextNormal>
                 <OverlaySlider
                     overlayTitle="Weight"
                     onChangeText={updateWeight}
                     value={props.weight}
                     minimumValue={0}
                     maximumValue={100}
+                    textStyle={styles.repsAndWeight.textStyle}
                 />
             </FlexRowView>
             <CheckBox
                 center
-                checkedIcon="dot-circle-o"
-                uncheckedIcon="circle-o"
                 onPress={finish}
                 checked={props.finished}
-                iconStyle={styles.checkbox}
+                iconProps={styles.checkbox.icon}
+                checkedIcon={
+                    <Icon
+                        name="radio-button-checked"
+                        type="material"
+                        color={styles.checkbox.checkedIcon.color}
+                    />
+                }
+                uncheckedIcon={
+                    <Icon
+                        name="radio-button-unchecked"
+                        type="material"
+                        color={styles.checkbox.uncheckedIcon.color}
+                    />
+                }
             />
             <Icon
                 name='delete'
                 onPress={fireRemoveSetById(props.id)}
-                size={styles.removeIcon.size}
-                style={styles.removeIcon}
+                {...styles.removeIcon}
             />
         </FlexRowView>
     )

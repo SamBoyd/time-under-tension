@@ -49,7 +49,7 @@ export const OverlaySlider = props => {
                     />
             </Overlay>
             <Text
-                style={props.someStyling}
+                style={props.textStyle}
                 onPress={toggleEdit}
             >
                 {props.value}

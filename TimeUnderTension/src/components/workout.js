@@ -86,6 +86,7 @@ const Workout = () => {
             <Work
                 {...work}
                 workIndex={i}
+                active={workout.currentWork === i}
             />
         )
     })

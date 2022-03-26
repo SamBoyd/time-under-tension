@@ -142,6 +142,14 @@ const Work = props => {
         }
     })
 
+    let active = -1
+    for (const [i, set] of props.sets.entries()) {
+        if (!set.finished) {
+            active = i
+            break;
+        }
+    }
+
     return (
         <Card containerStyle={styles.card.containerStyle}>
                 <Card.Title>{props.exercise.name}</Card.Title>
@@ -169,7 +177,13 @@ const Work = props => {
 
             <View style={styles.setsContainer}>
                 {props.sets.map((set, index) => {
-                    return <Set key={index} index={index} {...set} workId={props.id}/>
+                    return <Set
+                        key={index}
+                        index={index}
+                        {...set}
+                        workId={props.id}
+                        active={props.active && active === index}
+                    />
                 })}
             </View>
 
