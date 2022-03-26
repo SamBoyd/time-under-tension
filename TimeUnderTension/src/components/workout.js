@@ -38,6 +38,10 @@ const Workout = () => {
 
 
     const styles = StyleSheet.create({
+        headerTitle: {
+            color: theme.colors.white
+        },
+
         wrapperView: {
             flex: 1,
         },
@@ -96,6 +100,7 @@ const Workout = () => {
         <View style={styles.wrapperView}>
             <Header
                 leftComponent={<Button onPress={goBack} title="back" containerStyle={styles.backButton}/>}
+                centerComponent={<TextH1 style={styles.headerTitle}>Workout</TextH1>}
                 rightComponent={<Button onPress={finishWorkout} title="finish" containerStyle={styles.finishButton}/>}
             />
             <ScrollView
@@ -103,8 +108,6 @@ const Workout = () => {
                 contentContainerStyle={styles.containerView.contentContainerStyle}
             >
 
-
-                <TextH1>Workout</TextH1>
                 <View>
                     {workComponents}
                 </View>
