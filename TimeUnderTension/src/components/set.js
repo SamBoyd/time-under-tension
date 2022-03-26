@@ -33,10 +33,10 @@ const Set = props => {
     }
 
     const finish = () => {
-        console.log(`${props.finished} -> ${!props.finished}`)
-        dispatch(finishSet({
-            setId: props.id
-        }))
+        // console.log(`${props.finished} -> ${!props.finished}`)
+        // dispatch(finishSet({
+        //     setId: props.id
+        // }))
     }
 
     const fireRemoveSetById = setId => () => {
