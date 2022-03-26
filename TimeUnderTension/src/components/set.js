@@ -7,7 +7,7 @@ import InputSpinner from "react-native-input-spinner";
 import {TextNormal} from "./styled/text";
 import {FlexRowView} from "./styled/view";
 import {Button} from "./styled/button";
-import {Icon} from "react-native-elements";
+import {CheckBox, Icon} from "react-native-elements";
 import {OverlaySlider} from "./styled/input";
 
 
@@ -33,6 +33,7 @@ const Set = props => {
     }
 
     const finish = () => {
+        console.log(`${props.finished} -> ${!props.finished}`)
         dispatch(finishSet({
             setId: props.id
         }))
@@ -82,20 +83,14 @@ const Set = props => {
                     maximumValue={100}
                 />
             </FlexRowView>
-            {props.finished && (
-                <BouncyCheckbox
-                    onPress={finish}
-                    isChecked={true}
-                    iconStyle={styles.checkbox}
-                />
-            ) || (
-                <BouncyCheckbox
-                    onPress={finish}
-                    isChecked={false}
-                    iconStyle={styles.checkbox}
-                />
-            )}
-
+            <CheckBox
+                center
+                checkedIcon="dot-circle-o"
+                uncheckedIcon="circle-o"
+                onPress={finish}
+                checked={props.finished}
+                iconStyle={styles.checkbox}
+            />
             <Icon
                 name='delete'
                 onPress={fireRemoveSetById(props.id)}

@@ -1,7 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import 'react-native-get-random-values';
 import {v4 as uuidv4} from 'uuid';
-import structuredClone from '@ungap/structured-clone';
 
 
 const getNewSet = () => {
@@ -13,7 +12,7 @@ const getNewSet = () => {
         finished: false
     }
 }
-const getNewWork = (exercise) => {
+const getNewWork = (exercise, index) => {
     return {
         id: uuidv4(),
         exercise: exercise,
@@ -21,7 +20,8 @@ const getNewWork = (exercise) => {
             getNewSet(),
             getNewSet(),
             getNewSet()
-        ]
+        ],
+        index: index
     }
 }
 
@@ -52,7 +52,7 @@ export const workoutSlice = createSlice({
             }
 
             for (const i in state) {
-                if (!(i in initialState)){
+                if (!(i in initialState)) {
                     delete state[i]
                 }
             }
@@ -66,7 +66,7 @@ export const workoutSlice = createSlice({
             if (!exercise) {
                 return
             }
-            let newWork = getNewWork(exercise)
+            let newWork = getNewWork(exercise, state.work.length)
             state.work.push(newWork)
 
             if (state.work.length === 1) {
@@ -75,18 +75,52 @@ export const workoutSlice = createSlice({
         },
         removeWork: (state, action) => {
             state.work.splice(action.payload.index, 1)
+
+            state.work = state.work.map((work, index) => {
+                const newWork = {...work}
+                newWork.index = index
+                return newWork
+            })
         },
         moveWorkUp: (state, action) => {
-            const i = action.payload.index
-            const element = state.work[i]
-            state.work.splice(i, 1)
-            state.work.splice(i-1, 0, element)
+            const indexToMoveUp = action.payload.index
+            if (indexToMoveUp > 0) {
+                const indexToMoveDown = indexToMoveUp - 1
+
+                state.work = state.work.map(work => {
+                    if (work.index === indexToMoveUp) {
+                        const newWork = {...work}
+                        newWork.index = indexToMoveUp - 1
+                        return newWork
+                    } else if (work.index === indexToMoveDown) {
+                        const newWork = {...work}
+                        newWork.index = indexToMoveDown + 1
+                        return newWork
+                    } else {
+                        return {...work}
+                    }
+                })
+            }
         },
         moveWorkDown: (state, action) => {
-            const i = action.payload.index
-            const element = state.work[i]
-            state.work.splice(i, 1)
-            state.work.splice(i+1, 0, element)
+            const indexToMoveDown = action.payload.index
+            if (indexToMoveDown < state.work.length - 1) {
+                const indexToMoveUp = indexToMoveDown + 1
+
+                state.work = state.work.map(work => {
+                    if (work.index === indexToMoveUp) {
+                        const newWork = {...work}
+                        newWork.index = indexToMoveUp - 1
+                        return newWork
+                    } else if (work.index === indexToMoveDown) {
+                        const newWork = {...work}
+                        newWork.index = indexToMoveDown + 1
+                        return newWork
+                    } else {
+                        return {...work}
+                    }
+                })
+            }
         },
         selectWork: (state, action) => {
             state.currentWork = action.payload.workIndex
@@ -126,7 +160,7 @@ export const workoutSlice = createSlice({
             const workStart = action.payload.workTime.start
             const workEnd = action.payload.workTime.end
 
-            if( !workId || !workStart || !workEnd) {
+            if (!workId || !workStart || !workEnd) {
                 return
             }
 
@@ -143,9 +177,9 @@ export const workoutSlice = createSlice({
             }
 
 
-            for (let iw=0; iw<state.work.length; iw++) {
+            for (let iw = 0; iw < state.work.length; iw++) {
                 const work = state.work[iw]
-                for (let is=0; is<work.sets.length; is++){
+                for (let is = 0; is < work.sets.length; is++) {
                     const set = work.sets[is]
                     if (set.id === setId) {
                         state.work[iw].sets[is].numberReps = reps
@@ -162,9 +196,9 @@ export const workoutSlice = createSlice({
             }
 
 
-            for (let iw=0; iw<state.work.length; iw++) {
+            for (let iw = 0; iw < state.work.length; iw++) {
                 const work = state.work[iw]
-                for (let is=0; is<work.sets.length; is++){
+                for (let is = 0; is < work.sets.length; is++) {
                     const set = work.sets[is]
                     if (set.id === setId) {
                         state.work[iw].sets[is].weight = weight
@@ -179,15 +213,28 @@ export const workoutSlice = createSlice({
                 return
             }
 
+            let work = {}
 
-            for (let iw=0; iw<state.work.length; iw++) {
-                const work = state.work[iw]
-                for (let is=0; is<work.sets.length; is++){
-                    const set = work.sets[is]
+            let setToRemove = {}
+            let indexOfSetToRemove = -1
+
+            for (let iw = 0; iw < state.work.length; iw++) {
+                const w = state.work[iw]
+                for (let is = 0; is < w.sets.length; is++) {
+                    const set = w.sets[is]
                     if (set.id === setId) {
-                        state.work[iw].sets[is].finished = 'finished' in set ? !set.finished: true
+                        setToRemove = state.work[iw].sets[is]
+                        indexOfSetToRemove = is
+                        work = w
                     }
                 }
+            }
+
+            const newSet = {...setToRemove}
+            newSet.finished = !setToRemove.finished
+
+            if (work !== {} && indexOfSetToRemove !== -1) {
+                work.sets.splice(indexOfSetToRemove, 1, newSet)
             }
         },
     }

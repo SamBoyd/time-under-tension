@@ -7142,7 +7142,7 @@ prompts@^2.0.1, prompts@^2.4.0:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.6.1, prop-types@^15.7.2, prop-types@^15.8.1:
+prop-types@^15.7.2, prop-types@^15.8.1:
   version "15.8.1"
   resolved "https://registry.npmjs.org/prop-types/-/prop-types-15.8.1.tgz"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -7311,19 +7311,6 @@ react-native-input-spinner@^1.7.12:
   integrity sha512-U6Cprz8TocsBjbk2fXeaQs5wuHnJCrbIlVbSgL/5FF9X5Mpzp/xcTyqF4I/fUL0z5uZrVceAmEJ2pWBcAJPtew==
   dependencies:
     prop-types "^15.7.2"
-
-react-native-numeric-input@^1.9.1:
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/react-native-numeric-input/-/react-native-numeric-input-1.9.1.tgz#eff20699a51ecce6cbd1e3682f68dad981d84e35"
-  integrity sha512-uJiMjundXHiBcBLHgSqbfSjLdBM+4OBgLJLSsYG5/+XST5XWufsU8eZaEsn1miOkhjj2B7WgshjNX2Qm+4n3kw==
-  dependencies:
-    prop-types "^15.6.1"
-    react-native-pixel-perfect "^1.0.1"
-
-react-native-pixel-perfect@^1.0.1:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-native-pixel-perfect/-/react-native-pixel-perfect-1.0.2.tgz#8e6dc97e377caa4bd07f9e584ba438d53c0e25e8"
-  integrity sha512-0IvYCNkxuQbQC9q4tI+C3i6o38nbx916p7gBRBWuPxDhKBCuTkVV3VukcfW6vtjRlwQm6kwQcF9OtI+yUBt+YA==
 
 react-native-ratings@8.0.4:
   version "8.0.4"
@@ -8785,6 +8772,11 @@ timed-out@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/timed-out/-/timed-out-4.0.1.tgz#f32eacac5a175bea25d7fab565ab3ed8741ef56f"
   integrity sha1-8y6srFoXW+ol1/q1Zas+2HQe9W8=
+
+timekeeper@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/timekeeper/-/timekeeper-2.2.0.tgz#9645731fce9e3280a18614a57a9d1b72af3ca368"
+  integrity sha512-W3AmPTJWZkRwu+iSNxPIsLZ2ByADsOLbbLxe46UJyWj3mlYLlwucKiq+/dPm0l9wTzqoF3/2PH0AGFCebjq23A==
 
 tmp@^0.0.29:
   version "0.0.29"

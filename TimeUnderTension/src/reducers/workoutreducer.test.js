@@ -93,7 +93,8 @@ describe('For Workout can', () => {
                                 weight: 40,
                                 workTime: null
                             }
-                        ]
+                        ],
+                        index: 0
                     }
                 ],
                 finished_at: null,
@@ -133,7 +134,8 @@ describe('For Workout can', () => {
                                 weight: 40,
                                 workTime: null
                             }
-                        ]
+                        ],
+                        index: 0
                     }
                 ],
                 finished_at: null,
@@ -178,21 +180,103 @@ describe('For Workout can', () => {
                                 id: expect.any(String),
                                 numberReps: 12,
                                 weight: 40,
-                                workTime: null
+                                workTime: null,
+                                finished: false
                             },
                             {
                                 id: expect.any(String),
                                 numberReps: 12,
                                 weight: 40,
-                                workTime: null
+                                workTime: null,
+                                finished: false
                             },
                             {
                                 id: expect.any(String),
                                 numberReps: 12,
                                 weight: 40,
-                                workTime: null
+                                workTime: null,
+                                finished: false
                             }
-                        ]
+                        ],
+                        index: 0
+                    }
+                ],
+                finished_at: null,
+                currentWork: 0
+            }
+        )
+
+        const newerState = workoutReducer(newState, addWork({exercise: exercise}))
+
+        expect(newerState).toEqual(
+            {
+                name: 'New workout',
+                id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
+                created_at: "2022-01-19T17:53:11.336Z",
+                work: [
+                    {
+                        id: expect.any(String),
+                        exercise: {
+                            id: expect.any(String),
+                            name: 'Bench press',
+                            category: exerciseCategory.chest
+                        },
+                        sets: [
+                            {
+                                id: expect.any(String),
+                                numberReps: 12,
+                                weight: 40,
+                                workTime: null,
+                                finished: false
+                            },
+                            {
+                                id: expect.any(String),
+                                numberReps: 12,
+                                weight: 40,
+                                workTime: null,
+                                finished: false
+                            },
+                            {
+                                id: expect.any(String),
+                                numberReps: 12,
+                                weight: 40,
+                                workTime: null,
+                                finished: false
+                            }
+                        ],
+                        index: 0
+                    },
+                    {
+                        id: expect.any(String),
+                        exercise: {
+                            id: expect.any(String),
+                            name: 'Bench press',
+                            category: exerciseCategory.chest
+                        },
+                        sets: [
+                            {
+                                id: expect.any(String),
+                                numberReps: 12,
+                                weight: 40,
+                                workTime: null,
+                                finished: false
+                            },
+                            {
+                                id: expect.any(String),
+                                numberReps: 12,
+                                weight: 40,
+                                workTime: null,
+                                finished: false
+                            },
+                            {
+                                id: expect.any(String),
+                                numberReps: 12,
+                                weight: 40,
+                                workTime: null,
+                                finished: false
+                            }
+                        ],
+                        index: 1
                     }
                 ],
                 finished_at: null,
@@ -211,12 +295,14 @@ describe('For Workout can', () => {
                 {
                     id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
                     exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                    sets: []
+                    sets: [],
+                    index: 0
                 },
                 {
                     id: 'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
                     exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                    sets: []
+                    sets: [],
+                    index: 1
                 }
             ],
             finished_at: null
@@ -233,7 +319,8 @@ describe('For Workout can', () => {
                     {
                         id: 'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
                         exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: []
+                        sets: [],
+                        index: 0
                     }
                 ],
                 finished_at: null
@@ -250,17 +337,20 @@ describe('For Workout can', () => {
                 {
                     id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
                     exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                    sets: []
+                    sets: [],
+                    index: 0
                 },
                 {
                     id: 'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
                     exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                    sets: []
+                    sets: [],
+                    index: 1
                 },
                 {
                     id: 'ccccccc-85f7-4e85-a238-c9e6265cda2e',
                     exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                    sets: []
+                    sets: [],
+                    index: 2
                 }
             ],
             finished_at: null
@@ -275,19 +365,22 @@ describe('For Workout can', () => {
                 created_at: "2022-01-19T17:53:11.336Z",
                 work: [
                     {
-                        id: 'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
-                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: []
-                    },
-                    {
                         id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
                         exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: []
+                        sets: [],
+                        index: 1
+                    },
+                    {
+                        id: 'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
+                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
+                        sets: [],
+                        index: 0
                     },
                     {
                         id: 'ccccccc-85f7-4e85-a238-c9e6265cda2e',
                         exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: []
+                        sets: [],
+                        index: 2
                     }
                 ],
                 finished_at: null
@@ -303,19 +396,22 @@ describe('For Workout can', () => {
                 created_at: "2022-01-19T17:53:11.336Z",
                 work: [
                     {
+                        id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
+                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
+                        sets: [],
+                        index: 2
+                    },
+                    {
                         id: 'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
                         exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: []
+                        sets: [],
+                        index: 0
                     },
                     {
                         id: 'ccccccc-85f7-4e85-a238-c9e6265cda2e',
                         exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: []
-                    },
-                    {
-                        id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: []
+                        sets: [],
+                        index: 1
                     }
                 ],
                 finished_at: null
@@ -373,7 +469,8 @@ describe('For Work can', () => {
                     sets: [
                         {id: "341de2a2-da16-462a-9fc4-266f7b542234"},
                         {id: "41479206-10ed-4877-9466-d5c1f122b667"},
-                    ]
+                    ],
+                    index: 0
                 }
             ],
             finished_at: null
@@ -399,10 +496,12 @@ describe('For Work can', () => {
                                 id: expect.any(String),
                                 numberReps: 12,
                                 weight: 40,
-                                workTime: null
+                                workTime: null,
+                                finished: false
                             }
 
-                        ]
+                        ],
+                        index: 0
                     }
                 ],
                 finished_at: null
@@ -423,7 +522,8 @@ describe('For Work can', () => {
                         {id: "341de2a2-da16-462a-9fc4-266f7b542234"},
                         {id: "41479206-10ed-4877-9466-d5c1f122b667"},
                         {id: "cc511608-72c6-451c-8f86-eea8bdb55fc4"},
-                    ]
+                    ],
+                    index: 0
                 }
             ],
             finished_at: null
@@ -446,7 +546,8 @@ describe('For Work can', () => {
                         sets: [
                             {id: "341de2a2-da16-462a-9fc4-266f7b542234"},
                             {id: "cc511608-72c6-451c-8f86-eea8bdb55fc4"},
-                        ]
+                        ],
+                        index: 0
                     }
                 ],
                 finished_at: null
@@ -463,7 +564,8 @@ describe('For Work can', () => {
                 {
                     id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
                     exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                    sets: []
+                    sets: [],
+                    index: 0
                 }
             ],
             finished_at: null
@@ -484,7 +586,8 @@ describe('For Work can', () => {
                         id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
                         exercise: {type: 'placeholder', value: 'Choose an exercise'},
                         sets: [],
-                        restTime: 35
+                        restTime: 35,
+                        index: 0
                     }
                 ],
                 finished_at: null
@@ -501,7 +604,8 @@ describe('For Work can', () => {
                 {
                     id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
                     exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                    sets: []
+                    sets: [],
+                    index: 0
                 }
             ],
             finished_at: null
@@ -522,7 +626,8 @@ describe('For Work can', () => {
                         id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
                         exercise: {type: 'placeholder', value: 'Choose an exercise'},
                         sets: [],
-                        workTime: {start: 35, end: 60}
+                        workTime: {start: 35, end: 60},
+                        index: 0
                     }
                 ],
                 finished_at: null
@@ -546,15 +651,18 @@ describe('For Set can', () => {
                             id: "341de2a2-da16-462a-9fc4-266f7b542234",
                             numberReps: 12,
                             weight: 40,
-                            workTime: null
+                            workTime: null,
+                            finished: false
                         },
                         {
                             id: "41479206-10ed-4877-9466-d5c1f122b667",
                             numberReps: 12,
                             weight: 40,
-                            workTime: null
+                            workTime: null,
+                            finished: false
                         },
-                    ]
+                    ],
+                    index: 0
                 }
             ],
             finished_at: null
@@ -579,15 +687,18 @@ describe('For Set can', () => {
                                 id: "341de2a2-da16-462a-9fc4-266f7b542234",
                                 numberReps: 10,
                                 weight: 40,
-                                workTime: null
+                                workTime: null,
+                                finished: false
                             },
                             {
                                 id: "41479206-10ed-4877-9466-d5c1f122b667",
                                 numberReps: 12,
                                 weight: 40,
-                                workTime: null
+                                workTime: null,
+                                finished: false
                             },
-                        ]
+                        ],
+                        index: 0
                     }
                 ],
                 finished_at: null
@@ -609,15 +720,18 @@ describe('For Set can', () => {
                             id: "341de2a2-da16-462a-9fc4-266f7b542234",
                             numberReps: 12,
                             weight: 40,
-                            workTime: null
+                            workTime: null,
+                            finished: false
                         },
                         {
                             id: "41479206-10ed-4877-9466-d5c1f122b667",
                             numberReps: 12,
                             weight: 40,
-                            workTime: null
+                            workTime: null,
+                            finished: false
                         },
-                    ]
+                    ],
+                    index: 0
                 }
             ],
             finished_at: null
@@ -642,15 +756,18 @@ describe('For Set can', () => {
                                 id: "341de2a2-da16-462a-9fc4-266f7b542234",
                                 numberReps: 12,
                                 weight: 30,
-                                workTime: null
+                                workTime: null,
+                                finished: false
                             },
                             {
                                 id: "41479206-10ed-4877-9466-d5c1f122b667",
                                 numberReps: 12,
                                 weight: 40,
-                                workTime: null
+                                workTime: null,
+                                finished: false
                             },
-                        ]
+                        ],
+                        index: 0
                     }
                 ],
                 finished_at: null
@@ -672,15 +789,18 @@ describe('For Set can', () => {
                             id: "341de2a2-da16-462a-9fc4-266f7b542234",
                             numberReps: 12,
                             weight: 40,
-                            workTime: null
+                            workTime: null,
+                            finished: false
                         },
                         {
                             id: "41479206-10ed-4877-9466-d5c1f122b667",
                             numberReps: 12,
                             weight: 40,
-                            workTime: null
+                            workTime: null,
+                            finished: false
                         },
-                    ]
+                    ],
+                    index: 0
                 }
             ],
             finished_at: null
@@ -711,9 +831,11 @@ describe('For Set can', () => {
                                 id: "41479206-10ed-4877-9466-d5c1f122b667",
                                 numberReps: 12,
                                 weight: 40,
-                                workTime: null
+                                workTime: null,
+                                finished: false
                             },
-                        ]
+                        ],
+                        index: 0
                     }
                 ],
                 finished_at: null
@@ -745,9 +867,11 @@ describe('For Set can', () => {
                                 id: "41479206-10ed-4877-9466-d5c1f122b667",
                                 numberReps: 12,
                                 weight: 40,
-                                workTime: null
+                                workTime: null,
+                                finished: false
                             },
-                        ]
+                        ],
+                        index: 0
                     }
                 ],
                 finished_at: null
@@ -776,9 +900,11 @@ describe('For Set can', () => {
                             id: "41479206-10ed-4877-9466-d5c1f122b667",
                             numberReps: 12,
                             weight: 40,
-                            workTime: null
+                            workTime: null,
+                            finished: false
                         },
-                    ]
+                    ],
+                    index: 0
                 }
             ],
             finished_at: null
@@ -810,9 +936,11 @@ describe('For Set can', () => {
                                 id: "41479206-10ed-4877-9466-d5c1f122b667",
                                 numberReps: 12,
                                 weight: 40,
-                                workTime: null
+                                workTime: null,
+                                finished: false
                             },
-                        ]
+                        ],
+                        index: 0
                     }
                 ],
                 finished_at: time.toISOString()
