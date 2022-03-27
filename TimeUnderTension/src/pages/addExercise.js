@@ -3,13 +3,12 @@ import {useDispatch, useSelector} from "react-redux";
 
 import {changeNewExerciseField, selectExercises} from "../reducers/exercisesReducer";
 import {resetNewExerciseAndMoveToManageExercises, saveNewExerciseAndMoveToManageExercises} from "../reducers/actions";
-import {StyleSheet, TextInput, View} from "react-native";
-import { Dropdown } from 'react-native-element-dropdown';
-import {TextH1, TextNormal} from "../components/styled/text";
-import Header from "../components/header";
+import {StyleSheet} from "react-native";
+import {Dropdown} from 'react-native-element-dropdown';
 import theme from "../theme";
 import {Button} from "../components/styled/button";
 import {Input} from "react-native-elements";
+import BasePage from "../components/basePage";
 
 const AddExercise = () => {
     const dispatch = useDispatch()
@@ -40,53 +39,39 @@ const AddExercise = () => {
         }
     }
 
-    const exerciseCategories = exercises.categories.map(cat=> {return {"label": cat, "value": cat}})
+    const exerciseCategories = exercises.categories.map(cat => {
+        return {"label": cat, "value": cat}
+    })
 
     const styles = StyleSheet.create({
-        backButton: {
 
-        },
-
-        header: {
-            title: {
-                color: theme.colors.tertiary
-            }
-        },
-
-        wrapper: {
-            padding: 20,
-        }
     })
     return (
-        <View>
-            <Header
-                leftComponent={<Button onPress={goBack} title="back" containerStyle={styles.backButton}/>}
-                centerComponent={<TextH1 style={styles.header.title}>Add exercise</TextH1>}
+        <BasePage
+            leftHeaderComponent={<Button onPress={goBack} title="back" />}
+            headerTitle="Add exercise"
+        >
+            <Dropdown
+                data={exerciseCategories}
+                value={exercises.newExercise.category || ""}
+                onChange={selectCategory}
+                placeholder="Select category"
+                labelField="label"
+                valueField="value"
             />
 
-            <View style={styles.wrapper}>
-                <Dropdown
-                    data={exerciseCategories}
-                    value={exercises.newExercise.category || ""}
-                    onChange={selectCategory}
-                    placeholder="Select category"
-                    labelField="label"
-                    valueField="value"
-                />
+            <Input
+                onChangeText={changeField('name')}
+                value={exercises.newExercise.name}
+                placeholder={'Exercise name'}
+            />
 
-                <Input
-                    onChangeText={changeField('name')}
-                    value={exercises.newExercise.name}
-                    placeholder={'Exercise name'}
-                />
-
-                {validate() && (
-                    <Button onPress={saveExercise} title="Save" />
-                ) || (
-                    <Button onPress={saveExercise} disabled title="Save" />
-                )}
-            </View>
-        </View>
+            {validate() && (
+                <Button onPress={saveExercise} title="Save"/>
+            ) || (
+                <Button onPress={saveExercise} disabled title="Save"/>
+            )}
+        </BasePage>
     )
 }
 

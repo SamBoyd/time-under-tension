@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 
 import {selectUiState} from "./reducers/uiStateReducer";
 import {PAGE} from './constants';
-import Workout from "./components/workout";
+import Workout from "./pages/workout";
 import PickExercise from "./pages/pickExercise";
 import MainPage from "./pages/mainPage";
 import CreateTemplateWorkout from "./pages/createTemplateWorkout";

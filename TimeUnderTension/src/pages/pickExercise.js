@@ -3,22 +3,15 @@ import {useDispatch, useSelector} from "react-redux";
 
 import {PAGE} from '../constants'
 import {pickExerciseForTemplateWorkoutAction, pickExerciseForWorkoutAction} from "../reducers/actions"
-import {
-    followRedirect,
-    moveToCreateTemplate,
-    moveToMainPage,
-    moveToWorkout,
-    selectUiState
-} from "../reducers/uiStateReducer";
+import {followRedirect, selectUiState} from "../reducers/uiStateReducer";
 import {selectExercises} from "../reducers/exercisesReducer";
-import {Dimensions, StyleSheet, Text, View} from "react-native";
-import SectionList from "react-native/Libraries/Lists/SectionList";
-import {TextBold, TextH1, TextNormal} from "../components/styled/text";
+import {Dimensions, StyleSheet} from "react-native";
+import {TextNormal} from "../components/styled/text";
 import {Button} from "../components/styled/button";
-import {Avatar, Icon, ListItem} from "react-native-elements";
-import Header from "../components/header";
+import {ListItem} from "react-native-elements";
 import theme from "../theme";
 import {capitalizeFirstLetter} from "../utils/textUtils";
+import BasePage from "../components/basePage";
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -67,21 +60,6 @@ const PickExercise = () => {
 
 
     const styles = StyleSheet.create({
-        wrapper: {
-            backgroundColor: theme.colors.tertiary,
-            height: windowHeight,
-            width: windowWidth,
-
-        },
-
-
-        backButton: {},
-
-        header: {
-            title: {
-                color: theme.colors.tertiary
-            }
-        },
 
         listWrapper: {
             backgroundColor: theme.colors.tertiary,
@@ -99,48 +77,44 @@ const PickExercise = () => {
             paddingTop: 5,
             paddingBottom: 5,
             text: {
-              fontSize: 12,
+                fontSize: 12,
             },
         },
     })
 
 
     return (
-        <View style={styles.wrapper}>
-            <Header
-                leftComponent={<Button onPress={goBack} title="back" containerStyle={styles.backButton}/>}
-                centerComponent={<TextH1 style={styles.header.title}>Pick an exercise</TextH1>}
-            />
-
-            <View syle={styles.listWrapper}>
-                {sortedExercises.map(category => {
-                    return <ListItem.Accordion
-                        noRotation
-                        content={
+        <BasePage
+            leftHeaderComponent={<Button onPress={goBack} title="back" containerStyle={styles.backButton}/>}
+            headerTitle="Pick an exercise"
+        >
+            {sortedExercises.map(category => {
+                return <ListItem.Accordion
+                    noRotation
+                    content={
+                        <ListItem.Content>
+                            <ListItem.Title>{capitalizeFirstLetter(category.title)}</ListItem.Title>
+                        </ListItem.Content>
+                    }
+                    isExpanded={expandedSection === category.title}
+                    onPress={toggleExpandSection(category.title)}
+                    containerStyle={styles.listHeader}
+                >
+                    {category.data.map((item, i) => {
+                        return <ListItem
+                            key={i}
+                            onPress={selectExercise(item)}
+                            bottomDivider
+                            containerStyle={styles.listItem}
+                        >
                             <ListItem.Content>
-                                <ListItem.Title>{capitalizeFirstLetter(category.title)}</ListItem.Title>
+                                <ListItem.Title style={styles.listItem.text}>{item.name}</ListItem.Title>
                             </ListItem.Content>
-                        }
-                        isExpanded={expandedSection === category.title}
-                        onPress={toggleExpandSection(category.title)}
-                        containerStyle={styles.listHeader}
-                    >
-                        {category.data.map((item, i) => {
-                            return <ListItem
-                                key={i}
-                                onPress={selectExercise(item)}
-                                bottomDivider
-                                containerStyle={styles.listItem}
-                            >
-                                <ListItem.Content >
-                                    <ListItem.Title style={styles.listItem.text}>{item.name}</ListItem.Title>
-                                </ListItem.Content>
-                            </ListItem>
-                        })}
-                    </ListItem.Accordion>
-                })}
-            </View>
-        </View>
+                        </ListItem>
+                    })}
+                </ListItem.Accordion>
+            })}
+        </BasePage>
     )
 }
 

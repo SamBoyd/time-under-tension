@@ -1,46 +1,31 @@
 import React from 'react'
 import {useDispatch} from "react-redux";
-import {Dimensions, StyleSheet} from "react-native";
+import {Dimensions, StyleSheet, View} from "react-native";
 
 import {moveToManageExercises, moveToWorkout} from "../reducers/uiStateReducer";
 import TemplateWorkouts from "../components/templateWorkouts";
 import History from "../components/history";
-import {ScrollView, View} from "react-native";
-import {SafeAreaView} from "react-native-safe-area-context";
 import {Button} from "../components/styled/button";
-import Header from "../components/header"
 
-import theme from '../theme'
+import theme, {standardHorizontalPadding, standardVerticalPadding} from '../theme'
+
+import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import BasePage from "../components/basePage";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 
 const styles = StyleSheet.create({
-    wrapper: {
-        flex: 1,
-    },
-
-    scrollWrapper: {
-        flex: 1,
-        backgroundColor: theme.colors.tertiary,
-        paddingLeft: 20,
-        paddingRight: 20,
-        height: windowHeight,
-    },
-
-    newWorkoutButton: {
-        marginTop: 20,
-        marginLeft: 20,
-        marginRight: 20,
-    },
-
-    manageExercisesButton: {
-        marginLeft: 20,
-        marginRight: 20,
-        marginBottom: 100,
+    button: {
+        marginTop: standardVerticalPadding,
+        marginHorizontal: standardHorizontalPadding,
     },
 })
+
+const MainPageButton = props => <View style={styles.button}>
+    <Button {...props}/>
+</View>
 
 function MainPage() {
     const dispatch = useDispatch()
@@ -54,24 +39,15 @@ function MainPage() {
     }
 
     return (
-        <SafeAreaView style={styles.wrapper}>
-            <Header />
-            <View style={styles.scrollWrapper}>
-                <ScrollView>
-                    <View style={styles.newWorkoutButton}>
-                        <Button onPress={newBlankWorkout} title="New blank workout" />
-                    </View>
+        <BasePage>
+            <MainPageButton onPress={newBlankWorkout} title="New blank workout"/>
 
-                    <TemplateWorkouts />
+            <TemplateWorkouts/>
 
-                    <History />
+            <History/>
 
-                    <View style={styles.manageExercisesButton}>
-                        <Button onPress={clickManageExercises} title="Manage Exercises" />
-                    </View>
-                </ScrollView>
-            </View>
-        </SafeAreaView>
+            <MainPageButton onPress={clickManageExercises} title="Manage Exercises"/>
+        </BasePage>
     )
 }
 

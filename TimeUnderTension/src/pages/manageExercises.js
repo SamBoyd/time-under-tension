@@ -3,16 +3,15 @@ import React from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {removeExercise, selectExercises} from "../reducers/exercisesReducer";
 import {moveToAddExercise, moveToMainPage} from "../reducers/uiStateReducer";
-import {FlatList, ScrollView, View, StyleSheet, Dimensions} from "react-native";
+import {Dimensions, FlatList, StyleSheet, View} from "react-native";
 import {TextBold, TextH1, TextNormal} from "../components/styled/text";
 import {Button} from "../components/styled/button";
 import {Divider, Icon} from "react-native-elements";
 import {FlexRowView} from "../components/styled/view";
-import Header from "../components/header";
 
 import theme from '../theme'
 import {capitalizeFirstLetter} from "../utils/textUtils";
-import SafeAreaView from "react-native/Libraries/Components/SafeAreaView/SafeAreaView";
+import BasePage from "../components/basePage";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -40,24 +39,17 @@ const ManageExercises = () => {
             // height: windowHeight,
             flex: 1,
         },
-        header: {
-            title: {
-                color: theme.colors.tertiary
-            }
-        },
 
         scrollWrapper: {
-            flex:1,
+            flex: 1,
             paddingLeft: 20,
             paddingTop: 10,
             paddingRight: 20,
             backgroundColor: theme.colors.tertiary
         },
         containerView: {
-            containerStyle: {
-            },
-            containerContentStyle: {
-            },
+            containerStyle: {},
+            containerContentStyle: {},
         },
 
         subsection: {
@@ -100,45 +92,36 @@ const ManageExercises = () => {
     }
 
     return (
-        <SafeAreaView style={styles.wrapperView}>
-            <Header
-                leftComponent={<Button onPress={goBack} title="back" containerStyle={styles.backButton}/>}
-                centerComponent={<TextH1 style={styles.header.title}>Managing Exercises</TextH1>}
+        <BasePage
+            headerTitle="Managing Exercises"
+            leftHeaderComponent={<Button onPress={goBack} title="back" />}
+        >
+            {sortedExercises.map(({title, data}) => {
+                return (
+                    <>
+                        <View style={styles.subsection}>
+                            <View style={styles.subsection.header}>
+                                <TextBold>{capitalizeFirstLetter(title)}</TextBold>
+                            </View>
+                            <FlatList
+                                nestedScrollEnabled
+                                data={data}
+                                renderItem={({item}) => <Item id={item.id} name={item.name}
+                                                              category={item.category}/>}
+                                keyExtractor={item => item.id}
+                            />
+                        </View>
+                        <Divider/>
+                    </>
+                )
+            })}
+
+            <Button
+                onPress={addExercise}
+                title="Add"
+                containerStyle={styles.addButton}
             />
-
-            <View style={styles.scrollWrapper}>
-                <ScrollView
-                    style={styles.containerView.containerStyle}
-                    contentContainerStyle={styles.containerView.containerContentStyle}
-                >
-                    {sortedExercises.map(({title, data}) => {
-                        return (
-                            <>
-                                <View style={styles.subsection}>
-                                    <View style={styles.subsection.header}>
-                                        <TextBold>{capitalizeFirstLetter(title)}</TextBold>
-                                    </View>
-                                    <FlatList
-                                        nestedScrollEnabled
-                                        data={data}
-                                        renderItem={({item}) => <Item id={item.id} name={item.name}
-                                                                      category={item.category}/>}
-                                        keyExtractor={item => item.id}
-                                    />
-                                </View>
-                                <Divider/>
-                            </>
-                        )
-                    })}
-
-                    <Button
-                        onPress={addExercise}
-                        title="Add"
-                        containerStyle={styles.addButton}
-                    />
-                </ScrollView>
-            </View>
-        </SafeAreaView>
+        </BasePage>
     )
 }
 

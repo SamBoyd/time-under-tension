@@ -1,14 +1,8 @@
 import React, {useState} from 'react'
-import {useSelector, useDispatch} from "react-redux";
-import {ScrollView, Text, View, StyleSheet, Dimensions} from "react-native";
+import {useDispatch, useSelector} from "react-redux";
+import {Dimensions, StyleSheet, View} from "react-native";
 
-import {
-    editTemplateName,
-    moveWorkDown,
-    moveWorkUp,
-    removeWork,
-    selectTemplateWorkout
-} from "../reducers/templateWorkoutReducer";
+import {editTemplateName, selectTemplateWorkout} from "../reducers/templateWorkoutReducer";
 import {moveToMainPage, moveToPickExerciseForTemplateWorkout} from "../reducers/uiStateReducer";
 import TemplateWork from "../components/templateWork";
 import {
@@ -16,13 +10,12 @@ import {
     cancelEditTemplateAndMoveToMainPage,
     saveTemplateAndMoveToMainPage
 } from "../reducers/actions";
-import SafeAreaView from "react-native/Libraries/Components/SafeAreaView/SafeAreaView";
 import {TextH1, TextNormal} from "../components/styled/text";
 import {Button} from "../components/styled/button";
 import {FlexRowView} from "../components/styled/view";
 import {Icon, Input} from "react-native-elements";
-import Header from "../components/header";
 import theme from "../theme"
+import BasePage from "../components/basePage";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -61,28 +54,12 @@ const CreateTemplateWorkout = () => {
     }
 
     const styles = StyleSheet.create({
-        wrapperView: {
-            flex: 1,
-        },
-
-        headerTitle: {
-            color: theme.colors.tertiary,
-        },
-
-        scrollWrapper: {
-            flex: 1,
-            backgroundColor: theme.colors.tertiary,
-            paddingLeft: 20,
-            paddingRight: 20,
-            height: windowHeight
-        },
-
         editTitleWrapper: {
-          alignItems: "center"
+            alignItems: "center"
         },
 
         editTitleContainer: {
-          maxWidth: windowWidth - 150
+            maxWidth: windowWidth - 150
 
         },
         saveTitleContainer: {
@@ -112,71 +89,65 @@ const CreateTemplateWorkout = () => {
     const workComponents = newTemplate.work.map((work, i) => <TemplateWork work={work} workIndex={i}/>)
 
     const templateTitle = <>
-                {editingExistingTemplate && (
-                    <TextNormal htmlFor='template-title'>Editing</TextNormal>
-                )}
-                {uiState.editingTitle && (
-                    <FlexRowView viewStyle={styles.editTitleWrapper}>
-                        <Input
-                            value={newTemplate.name}
-                            onChangeText={updateTitle}
-                            containerStyle={styles.editTitleContainer}
-                            rightIcon={<Icon
-                                name={"save"}
-                                onPress={toggleEditTitle}
-                                containerStyle={styles.saveTitleContainer}
-                                size={styles.titleWrapper.editIcon.size}
-                            />}
-                        />
+        {editingExistingTemplate && (
+            <TextNormal htmlFor='template-title'>Editing</TextNormal>
+        )}
+        {uiState.editingTitle && (
+            <FlexRowView viewStyle={styles.editTitleWrapper}>
+                <Input
+                    value={newTemplate.name}
+                    onChangeText={updateTitle}
+                    containerStyle={styles.editTitleContainer}
+                    rightIcon={<Icon
+                        name={"save"}
+                        onPress={toggleEditTitle}
+                        containerStyle={styles.saveTitleContainer}
+                        size={styles.titleWrapper.editIcon.size}
+                    />}
+                />
 
-                    </FlexRowView>
-                ) || (
-                    <FlexRowView>
-                        <TextH1 id='template-title'>
-                            {newTemplate.name}
-                        </TextH1>
-                        <Icon name='edit'
-                              onPress={toggleEditTitle}
-                              size={styles.titleWrapper.editIcon.size}
-                              style={styles.titleWrapper.editIcon}
-                              containerStyle={styles.titleWrapper.editIcon}
-                        />
-                    </FlexRowView>
-                )}
-            </>
+            </FlexRowView>
+        ) || (
+            <FlexRowView>
+                <TextH1 id='template-title'>
+                    {newTemplate.name}
+                </TextH1>
+                <Icon name='edit'
+                      onPress={toggleEditTitle}
+                      size={styles.titleWrapper.editIcon.size}
+                      style={styles.titleWrapper.editIcon}
+                      containerStyle={styles.titleWrapper.editIcon}
+                />
+            </FlexRowView>
+        )}
+    </>
 
     return (
-        <SafeAreaView style={styles.wrapperView}>
-            <Header
-                leftComponent={<Button onPress={backToMainPage} title="back" containerStyle={styles.backButton}/>}
-                centerComponent={<TextH1 style={styles.headerTitle}>Create template workout</TextH1>}
+        <BasePage
+            leftHeaderComponent={<Button onPress={backToMainPage} title="back" />}
+            headerTitle="Create template workout"
+        >
+            <View style={styles.titleWrapper}>
+                {templateTitle}
+            </View>
+
+            <View style={styles.workWrapper}>
+                {workComponents}
+            </View>
+
+
+            <Button
+                onPress={addNewWork}
+                title="Add work"
+
             />
 
-            <View style={styles.scrollWrapper}>
-                <ScrollView>
-                    <View style={styles.titleWrapper}>
-                        {templateTitle}
-                    </View>
-
-                    <View style={styles.workWrapper}>
-                        {workComponents}
-                    </View>
-
-
-                    <Button
-                        onPress={addNewWork}
-                        title="Add work"
-
-                    />
-
-                    <Button
-                        onPress={saveTemplate}
-                        title="Save"
-                        style={styles.saveButton}
-                    />
-                </ScrollView>
-            </View>
-        </SafeAreaView>
+            <Button
+                onPress={saveTemplate}
+                title="Save"
+                style={styles.saveButton}
+            />
+        </BasePage>
     )
 }
 

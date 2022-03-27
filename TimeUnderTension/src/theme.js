@@ -1,3 +1,8 @@
+import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
+
+export const standardVerticalPadding = hp(3)
+export const standardHorizontalPadding = wp(10)
+
 const theme = {
     colors: {
         primary: '#FA9500',
