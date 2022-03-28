@@ -18,7 +18,7 @@ const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
     button: {
-        marginTop: standardVerticalPadding,
+        marginVertical: standardVerticalPadding,
         marginHorizontal: standardHorizontalPadding,
     },
 })

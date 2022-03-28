@@ -12,6 +12,7 @@ import {OverlaySlider} from "./styled/input";
 
 import theme from '../theme'
 
+import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -49,27 +50,25 @@ const Set = props => {
     if (props.active) {
         styles = StyleSheet.create({
             container: {
-                marginTop: 5,
+                marginTop: hp(1),
                 justifyContent: "space-evenly",
                 alignItems: 'center',
-                width: windowWidth * 0.8,
                 backgroundColor: theme.colors.primary,
                 color: theme.colors.white,
-
             },
             setIndex: {
                 color: theme.colors.white,
             },
             repsAndWeight: {
-                width: 50,
+                width: wp(10),
                 justifyContent: "space-between",
                 textStyle: {
                     color: theme.colors.white,
                 }
             },
             checkbox: {
-                height: 15,
-                width: 15,
+                height: hp(2),
+                width: wp(2),
                 uncheckedIcon: {
                     color: theme.colors.white,
                 },
@@ -85,19 +84,18 @@ const Set = props => {
     } else {
         styles = StyleSheet.create({
             container: {
-                marginTop: 5,
+                marginTop: hp(1),
                 justifyContent: "space-evenly",
                 alignItems: 'center',
-                width: windowWidth * 0.8,
             },
             repsAndWeight: {
-                width: 50,
+                width: wp(10),
                 justifyContent: "space-between",
                 textStyle: {}
             },
             checkbox: {
-                height: 15,
-                width: 15,
+                height: hp(2),
+                width: hp(2),
                 uncheckedIcon: {
                     color: theme.colors.secondary,
                 },

@@ -5,21 +5,19 @@ import React, {useState} from "react";
 import {FlexRowView} from "./view";
 
 import {Slider} from '@miblanchard/react-native-slider';
+import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 
 export const OverlaySlider = props => {
     const [state, setState] = useState({editing: false})
     const [sliderValue, setSliderValue] = useState(props.value)
-    const style = StyleSheet.create({
-        width: 100,
-        height: 40,
+    const styles = StyleSheet.create({
         overlay: {
-            width: '75%',
-            height: 70,
+            width: wp(85),
+            height: hp(10),
+            justifyContent: "center",
         }
     })
-
-    var {width, height} = Dimensions.get('window');
 
     const setSliderRounded = value => {
         setSliderValue(Math.round(value))
@@ -36,7 +34,7 @@ export const OverlaySlider = props => {
 
     return (
         <>
-            <Overlay overlayStyle={style.overlay} isVisible={state.editing} onBackdropPress={saveEdit}>
+            <Overlay overlayStyle={styles.overlay} isVisible={state.editing} onBackdropPress={saveEdit}>
                 <FlexRowView>
                     <Text>{props.overlayTitle}</Text>
                     <Text>: {sliderValue}</Text>

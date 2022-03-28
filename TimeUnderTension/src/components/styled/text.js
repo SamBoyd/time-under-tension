@@ -1,8 +1,9 @@
 import React from 'react';
 import {Text, withTheme} from "react-native-elements";
+import theme from "../../theme";
 
 const h1Style = {
-    fontSize: 14,
+    fontSize: theme.Text.style.fontSize,
     fontWeight: "bold"
 }
 export const TextH1 = props => <Text h1 {...props} h1Style={[props.style, h1Style]}/>

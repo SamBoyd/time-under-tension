@@ -8,15 +8,11 @@ import Work from '../components/work'
 import {moveToMainPage, moveToPickExerciseForWorkout} from "../reducers/uiStateReducer";
 import {finishWorkoutAndMoveToMainPage} from "../reducers/actions";
 import Timer from "../components/timer";
-import {TextH1} from "../components/styled/text";
 import {Button} from "../components/styled/button";
 
-import theme from '../theme'
-import {Divider} from "react-native-elements";
+import theme, {standardHorizontalPadding, standardVerticalPadding} from '../theme'
 import BasePage from "../components/basePage";
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 const Workout = () => {
     const dispatch = useDispatch()
@@ -35,13 +31,9 @@ const Workout = () => {
     }
 
     const styles = StyleSheet.create({
-        backButton: {},
-
-        finishButton: {},
-
         addWorkButton: {
-            marginTop: 20,
-            width: 200,
+            marginTop: standardVerticalPadding,
+            paddingHorizontal: standardHorizontalPadding,
             alignSelf: "center",
         }
     })
@@ -65,7 +57,7 @@ const Workout = () => {
                                               containerStyle={styles.finishButton}/>}
             >
                 {workComponents}
-                <Divider/>
+
                 <Button onPress={addNewWork} title="Add work" containerStyle={styles.addWorkButton}/>
 
             </BasePage>

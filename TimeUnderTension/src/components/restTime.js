@@ -1,6 +1,7 @@
 import theme from "../theme";
 import {OverlaySlider} from "./styled/input";
 import React from "react";
+import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 
 const RestTime = props => {
@@ -13,11 +14,9 @@ const RestTime = props => {
         textStyle={{
             borderWidth: 1,
             borderColor: theme.colors.secondary,
-            borderRadius: 10,
-            paddingTop: 2,
-            paddingBottom: 2,
-            paddingLeft: 10,
-            paddingRight: 10,
+            borderRadius: wp(2),
+            paddingVertical: wp(1),
+            paddingHorizontal: wp(2),
             textAlign: 'center',
             textAlignVertical: 'center',
             ...props.styles,

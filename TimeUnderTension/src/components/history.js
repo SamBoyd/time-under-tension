@@ -1,17 +1,17 @@
 import React from 'react'
 import {useSelector, useDispatch} from "react-redux";
 import {selectHistory} from "../reducers/historyReducer";
-import styled from "styled-components";
 
 import dateFormat, { masks } from "dateformat";
 import {StyleSheet, View} from "react-native";
 import {Header, Text} from "react-native-elements";
 import {TextH1, TextLighter, TextNormal} from "./styled/text";
 import {FlexRowView} from "./styled/view";
+import {standardHorizontalPadding, standardVerticalPadding} from "../theme";
 
 const styles = StyleSheet.create({
     wrapper: {
-        marginBottom: 20,
+        marginBottom: standardVerticalPadding,
     },
 
     row: {
@@ -19,9 +19,7 @@ const styles = StyleSheet.create({
     },
 
     tile: {
-        paddingLeft: 10,
-        paddingTop: 5,
-        paddingBottom: 5,
+        paddingTop: standardVerticalPadding,
     }
 });
 

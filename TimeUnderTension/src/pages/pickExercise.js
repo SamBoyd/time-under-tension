@@ -9,9 +9,10 @@ import {Dimensions, StyleSheet} from "react-native";
 import {TextNormal} from "../components/styled/text";
 import {Button} from "../components/styled/button";
 import {ListItem} from "react-native-elements";
-import theme from "../theme";
+import theme, {standardHorizontalPadding, standardVerticalPadding} from "../theme";
 import {capitalizeFirstLetter} from "../utils/textUtils";
 import BasePage from "../components/basePage";
+import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -67,15 +68,14 @@ const PickExercise = () => {
 
         listHeader: {
             backgroundColor: theme.colors.tertiary,
-            paddingLeft: 20,
-            paddingTop: 10,
-            paddingBottom: 5,
+            paddingLeft: standardHorizontalPadding,
+            paddingTop: standardVerticalPadding,
         },
         listItem: {
             backgroundColor: theme.colors.tertiary,
-            paddingLeft: 40,
-            paddingTop: 5,
-            paddingBottom: 5,
+            paddingLeft: standardHorizontalPadding,
+            paddingTop: hp(1),
+            paddingBottom: hp(1),
             text: {
                 fontSize: 12,
             },

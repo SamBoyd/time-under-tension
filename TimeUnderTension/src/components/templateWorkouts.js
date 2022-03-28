@@ -7,6 +7,7 @@ import TemplateWorkoutTile from "./TemplateWorkoutTile";
 import {StyleSheet, View} from "react-native";
 import {TextH1} from "./styled/text";
 import {Button} from "./styled/button";
+import {standardHorizontalPadding, standardVerticalPadding} from "../theme";
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -18,14 +19,12 @@ const styles = StyleSheet.create({
     },
 
     templateTile: {
-
+        rowGap: standardVerticalPadding,
     },
 
     createButton: {
-        marginTop: 10,
-        marginBottom: 10,
-        marginLeft: 20,
-        marginRight: 20,
+        marginVertical: standardVerticalPadding,
+        marginHorizontal: standardHorizontalPadding,
     }
 })
 

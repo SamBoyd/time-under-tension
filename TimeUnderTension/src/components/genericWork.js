@@ -17,7 +17,7 @@ import {FlexRowView} from "./styled/view";
 import {Button} from "./styled/button";
 
 
-import RestTime from "./resetTime";
+import RestTime from "./restTime";
 import WorkTime from "./workTime";
 import {Card, Divider, Icon, Overlay} from "react-native-elements";
 import theme from "../theme";

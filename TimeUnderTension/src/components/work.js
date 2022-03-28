@@ -18,10 +18,11 @@ import {FlexRowView} from "./styled/view";
 import {Button} from "./styled/button";
 
 
-import RestTime from "./resetTime";
+import RestTime from "./restTime";
 import WorkTime from "./workTime";
 import {Card, Divider, Icon, Overlay} from "react-native-elements";
 import theme from "../theme";
+import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -94,8 +95,8 @@ const Work = props => {
                 actionsIcon: {
                     container: {
                         position: 'absolute',
-                        top: 0,
-                        right: 0,
+                        top: hp(1),
+                        right: hp(1),
                     }
                 },
             },
@@ -104,31 +105,28 @@ const Work = props => {
                 borderRadius: theme.borderRadius,
                 borderWidth: 1,
                 borderColor: theme.colors.secondary,
-                padding: 10,
+                padding: wp(0),
                 backgroundColor: theme.colors.tertiary,
 
                 flexDirection: 'column'
             },
             wrapperStyle: {
-                // marginTop: 10,
-                width: windowWidth,
+                width: wp(100),
             },
         },
 
 
         setsContainer: {
-            marginTop: 10,
+            marginTop: hp(0),
         },
 
         title: {
             containerStyle: {
-                height: 30,
-                justifyContent: 'center'
+                paddingTop: hp(2)
             },
         },
         timingContainer: {
-            marginLeft: 50,
-            marginRight: 50,
+            paddingHorizontal: wp(6),
             flexDirection: "row",
             justifyContent: 'space-between',
         },
@@ -138,7 +136,7 @@ const Work = props => {
         addSet: {
             width: '60%',
             alignSelf: 'center',
-            marginTop: 10,
+            marginTop: hp(1),
         }
     })
 
@@ -152,7 +150,8 @@ const Work = props => {
 
     return (
         <Card containerStyle={styles.card.containerStyle}>
-                <Card.Title>{props.exercise.name}</Card.Title>
+
+                <Card.Title style={styles.title.containerStyle}>{props.exercise.name}</Card.Title>
 
                 <Icon
                     name='menu'

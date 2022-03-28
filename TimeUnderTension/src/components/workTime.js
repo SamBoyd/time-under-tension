@@ -3,17 +3,18 @@ import theme from "../theme";
 import {OverlaySlider} from "./styled/input";
 import {TextNormal} from "./styled/text";
 import React from "react";
+import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
+
+
+const u = wp(1)
 
 const WorkTime = props => {
     return <FlexRowView
         viewStyle={{
             borderWidth: 1,
             borderColor: theme.colors.secondary,
-            borderRadius: 10,
-            paddingTop: 2,
-            paddingBottom: 2,
-            paddingLeft: 10,
-            paddingRight: 10,
+            borderRadius: wp(2),
+            padding: wp(1),
 
             textAlign: 'center',
             textAlignVertical: 'center',

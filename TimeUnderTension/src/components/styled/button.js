@@ -36,8 +36,6 @@ export const Button = props => {
             borderColor: theme.colors.secondary,
             paddingTop: 0,
             paddingBottom: 0,
-            paddingLeft: 10,
-            paddingRight: 10,
         }}
         titleStyle={{
             color: theme.colors.secondary,

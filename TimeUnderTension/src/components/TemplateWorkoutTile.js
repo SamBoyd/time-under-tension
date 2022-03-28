@@ -4,13 +4,12 @@ import {createWorkoutFromTemplateAndMoveToWorkout, moveToEditTemplate} from "../
 import {StyleSheet, FlatList, View} from "react-native";
 import {TextLighter, TextNormal} from "./styled/text";
 import {EditButton} from "./styled/button";
+import {standardHorizontalPadding, standardVerticalPadding} from "../theme";
 
 
 const styles = StyleSheet.create({
     wrapper: {
-        paddingTop: 5,
-        paddingBottom: 5,
-        paddingLeft: 10,
+        paddingTop: standardVerticalPadding,
     },
 
     row: {

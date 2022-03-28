@@ -19,6 +19,7 @@ import {FlexRowView} from "./styled/view";
 import {Button} from "./styled/button";
 
 import theme from '../theme'
+import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -28,8 +29,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         left: 0,
         bottom: 0,
-        width: '100%',
-        height: 75,
+        width: wp(100),
+        height: hp(10),
 
         borderTopWidth: 2,
         borderColor: theme.colors.primary,

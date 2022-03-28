@@ -14,11 +14,11 @@ import {TextH1, TextNormal} from "../components/styled/text";
 import {Button} from "../components/styled/button";
 import {FlexRowView} from "../components/styled/view";
 import {Icon, Input} from "react-native-elements";
-import theme from "../theme"
+import theme, {standardHorizontalPadding, standardVerticalPadding} from "../theme"
 import BasePage from "../components/basePage";
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
+
 
 const CreateTemplateWorkout = () => {
     const dispatch = useDispatch()
@@ -59,30 +59,30 @@ const CreateTemplateWorkout = () => {
         },
 
         editTitleContainer: {
-            maxWidth: windowWidth - 150
+            maxWidth: wp(75)
 
         },
         saveTitleContainer: {
-            // justifyContent: 'center'
+
         },
 
         titleWrapper: {
-            marginTop: 20,
+            marginTop: standardVerticalPadding,
             alignItems: "center",
 
             editIcon: {
                 size: 15,
-                marginLeft: 10,
+                marginLeft: wp(1),
             }
         },
 
         workWrapper: {
             marginTop: 0,
-            marginBottom: 20,
+            marginBottom: standardVerticalPadding,
         },
 
         saveButton: {
-            marginTop: 10,
+
         }
     })
 
@@ -135,17 +135,14 @@ const CreateTemplateWorkout = () => {
                 {workComponents}
             </View>
 
-
             <Button
                 onPress={addNewWork}
                 title="Add work"
-
             />
 
             <Button
                 onPress={saveTemplate}
                 title="Save"
-                style={styles.saveButton}
             />
         </BasePage>
     )

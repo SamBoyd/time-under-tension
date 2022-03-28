@@ -9,12 +9,11 @@ import {Button} from "../components/styled/button";
 import {Divider, Icon} from "react-native-elements";
 import {FlexRowView} from "../components/styled/view";
 
-import theme from '../theme'
+import theme, {standardHorizontalPadding, standardVerticalPadding} from '../theme'
 import {capitalizeFirstLetter} from "../utils/textUtils";
 import BasePage from "../components/basePage";
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 
 const ManageExercises = () => {
@@ -35,34 +34,21 @@ const ManageExercises = () => {
 
     const styles = StyleSheet.create({
         wrapperView: {
-            width: windowWidth,
-            // height: windowHeight,
+            width: wp(100),
             flex: 1,
-        },
-
-        scrollWrapper: {
-            flex: 1,
-            paddingLeft: 20,
-            paddingTop: 10,
-            paddingRight: 20,
-            backgroundColor: theme.colors.tertiary
-        },
-        containerView: {
-            containerStyle: {},
-            containerContentStyle: {},
         },
 
         subsection: {
-            marginTop: 10,
-            marginBottom: 10,
+            marginTop: standardVerticalPadding,
+            marginBottom: standardVerticalPadding,
             header: {
-                marginBottom: 5,
+                marginBottom: hp(1),
             },
         },
 
         item: {
-            marginTop: 5,
-            marginLeft: 10,
+            marginTop: hp(1),
+            marginLeft: standardHorizontalPadding,
             alignItems: "center",
             icon: {
                 position: "absolute",
@@ -72,9 +58,9 @@ const ManageExercises = () => {
         },
 
         addButton: {
-            marginTop: 20,
+            marginTop: standardVerticalPadding,
             justifyContent: "center",
-            marginBottom: 100,
+            marginBottom: 200,
         }
     })
 
