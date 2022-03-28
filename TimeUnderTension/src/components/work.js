@@ -2,25 +2,16 @@ import React, {useState} from "react";
 import {useDispatch} from "react-redux";
 
 import Set from './set'
-import {
-    addSet,
-    changeRestTime,
-    changeWorkTime,
-    moveWorkDown,
-    moveWorkUp,
-    removeSet,
-    removeWork
-} from "../reducers/workoutReducer";
+import {addSet, changeRestTime, moveWorkDown, moveWorkUp, removeWork} from "../reducers/workoutReducer";
 import {DEFAULT_REST_TIME, DEFAULT_WORK_TIME_LOWER, DEFAULT_WORK_TIME_UPPER} from "../constants";
 import {Dimensions, StyleSheet, View} from "react-native";
-import {TextH1} from "./styled/text";
 import {FlexRowView} from "./styled/view";
 import {Button} from "./styled/button";
 
 
 import RestTime from "./restTime";
 import WorkTime from "./workTime";
-import {Card, Divider, Icon, Overlay} from "react-native-elements";
+import {Card, Icon, Overlay} from "react-native-elements";
 import theme from "../theme";
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
@@ -46,26 +37,6 @@ const Work = props => {
         }))
     }
 
-    const fireChangeWorkTimeStart = value => {
-        dispatch(changeWorkTime({
-            workId: props.id,
-            workTime: {
-                start: value,
-                end: workTimeEnd
-            }
-        }))
-    }
-
-    const fireChangeWorkTimeEnd = value => {
-        dispatch(changeWorkTime({
-            workId: props.id,
-            workTime: {
-                start: workTimeStart,
-                end: value
-            }
-        }))
-    }
-
     const removeWorkByIndex = index => () => {
         dispatch(removeWork({index: index}))
     }
@@ -82,14 +53,7 @@ const Work = props => {
         setShowActionsOverlay(!showActionsOverlay)
     }
 
-
-    if (workTimeStart > workTimeEnd) {
-        fireChangeWorkTimeEnd(workTimeStart+1)
-    }
-
-
     const styles = StyleSheet.create({
-
         card: {
             titleBar: {
                 actionsIcon: {
@@ -151,14 +115,14 @@ const Work = props => {
     return (
         <Card containerStyle={styles.card.containerStyle}>
 
-                <Card.Title style={styles.title.containerStyle}>{props.exercise.name}</Card.Title>
+            <Card.Title style={styles.title.containerStyle}>{props.exercise.name}</Card.Title>
 
-                <Icon
-                    name='menu'
-                    onPress={toggleShowWorkActionsOverlay}
-                    containerStyle={styles.card.titleBar.actionsIcon.container}
-                />
-            <Card.Divider />
+            <Icon
+                name='menu'
+                onPress={toggleShowWorkActionsOverlay}
+                containerStyle={styles.card.titleBar.actionsIcon.container}
+            />
+            <Card.Divider/>
 
             <FlexRowView viewStyle={styles.timingContainer}>
                 <RestTime
@@ -167,10 +131,9 @@ const Work = props => {
                 />
 
                 <WorkTime
+                    workId={props.id}
                     workTimeStart={workTimeStart}
                     workTimeEnd={workTimeEnd}
-                    fireChangeWorkTimeStart={fireChangeWorkTimeStart}
-                    fireChangeWorkTimeEnd={fireChangeWorkTimeEnd}
                 />
             </FlexRowView>
 
@@ -193,9 +156,9 @@ const Work = props => {
                 onBackdropPress={toggleShowWorkActionsOverlay}
                 overlayStyle={styles.overlay}
             >
-                <Button onPress={removeWorkByIndex(props.workIndex)} title={`Remove work ${props.workIndex}`} />
-                <Button onPress={moveWorkUpByIndex(props.workIndex)} title={`Move work up`} />
-                <Button onPress={moveWorkDownByIndex(props.workIndex)} title={`Move work down`} />
+                <Button onPress={removeWorkByIndex(props.workIndex)} title={`Remove work ${props.workIndex}`}/>
+                <Button onPress={moveWorkUpByIndex(props.workIndex)} title={`Move work up`}/>
+                <Button onPress={moveWorkDownByIndex(props.workIndex)} title={`Move work down`}/>
             </Overlay>
         </Card>
     )
