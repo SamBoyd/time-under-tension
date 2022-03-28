@@ -31,6 +31,7 @@ const getInitialState = () => {
         id: uuidv4(),
         created_at: (new Date()).toISOString(),
         work: [],
+        started_at: null,
         finished_at: null,
         currentWork: null
     }
@@ -44,6 +45,11 @@ export const workoutSlice = createSlice({
             Object.keys(action.payload.template).forEach(
                 key => state[key] = action.payload.template[key]
             )
+        },
+        startWorkoutIfNotStarted: (state, action) => {
+            if (state.started_at === null) {
+                state.started_at = (new Date()).toISOString()
+            }
         },
         resetToInitialWorkout: (state) => {
             const initialState = getInitialState()
@@ -242,7 +248,7 @@ export const workoutSlice = createSlice({
 
 export const selectWorkout = state => state.workout
 export const {
-    resetToInitialWorkout,
+    resetToInitialWorkout, startWorkoutIfNotStarted,
     removeWork, addWork, moveWorkUp, moveWorkDown, selectWork,
     addSet, removeSet, changeRestTime, changeWorkTime,
     changeSetReps, changeSetWeight, finishSet,

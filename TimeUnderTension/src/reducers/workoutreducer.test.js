@@ -13,7 +13,7 @@ import workoutReducer, {
     moveWorkUp,
     removeSet,
     removeWork, resetToInitialWorkout,
-    selectWork, setWorkoutFinished
+    selectWork, setWorkoutFinished, startWorkoutIfNotStarted
 } from "./workoutReducer";
 import {exerciseCategory} from "../constants";
 
@@ -29,6 +29,34 @@ describe('For Workout can', () => {
                 id: expect.any(String),
                 created_at: expect.any(String),
                 work: [],
+                started_at: null,
+                finished_at: null,
+                currentWork: null
+            }
+        )
+    })
+
+    test('test can start a workout', () => {
+        const previousState = {
+            name: 'New workout',
+            id: expect.any(String),
+            created_at: expect.any(String),
+            work: [],
+            started_at: null,
+            finished_at: null,
+            currentWork: null
+        }
+        const time = new Date(1330688329321);
+
+        tk.freeze(time)
+        const state = workoutReducer(previousState, startWorkoutIfNotStarted())
+        expect(state).toEqual(
+            {
+                name: 'New workout',
+                id: expect.any(String),
+                created_at: expect.any(String),
+                work: [],
+                started_at: time.toISOString(),
                 finished_at: null,
                 currentWork: null
             }
@@ -47,6 +75,7 @@ describe('For Workout can', () => {
                 id: expect.any(String),
                 created_at: expect.any(String),
                 work: [],
+                started_at: null,
                 finished_at: null,
                 currentWork: null
             }

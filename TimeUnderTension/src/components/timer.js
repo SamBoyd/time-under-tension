@@ -3,7 +3,7 @@ import {Dimensions, StyleSheet} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {incrementCount, moveToSetup, moveToWork, selectTimer} from "../reducers/timerReducer";
-import {finishSetAction, selectWorkAndResetTimer} from "../reducers/actions";
+import {finishSetAction, moveToSetupAndStartWorkout, selectWorkAndResetTimer} from "../reducers/actions";
 
 import {
     DEFAULT_REST_TIME,
@@ -60,7 +60,7 @@ const timerText = state => <FlexRowView viewStyle={styles.textContainer}>
 
 const ready = dispatch => {
     const click = () => {
-        dispatch(moveToSetup())
+        moveToSetupAndStartWorkout(dispatch)
     }
     return (
         <View style={styles.statusContainer}>
