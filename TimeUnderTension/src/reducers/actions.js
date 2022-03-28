@@ -66,6 +66,7 @@ export const finishWorkoutAndMoveToMainPage = (dispatch, workout) => {
     w.finished_at = new Date().toISOString()
     dispatch(addWorkoutToHistory({workout: w}))
     dispatch(resetToInitialWorkout())
+    dispatch(resetTimer())
     dispatch(moveToMainPage())
 }
 
