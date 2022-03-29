@@ -10,7 +10,7 @@ const getNewSet = () => {
         workTime: null
     }
 }
-const getNewWork = (exercise) => {
+const getNewWork = (exercise, index) => {
     return {
         id: uuidv4(),
         exercise: exercise,
@@ -18,7 +18,8 @@ const getNewWork = (exercise) => {
             getNewSet(),
             getNewSet(),
             getNewSet()
-        ]
+        ],
+        index: index,
     }
 }
 
@@ -51,7 +52,8 @@ const getInitialState = () => {
                             getNewSet(),
                             getNewSet(),
                             getNewSet()
-                        ]
+                        ],
+                        index: 0,
                     },
                     {
                         id: uuidv4(),
@@ -64,7 +66,8 @@ const getInitialState = () => {
                             getNewSet(),
                             getNewSet(),
                             getNewSet()
-                        ]
+                        ],
+                        index: 1,
                     }
                 ]
             },
@@ -84,7 +87,8 @@ const getInitialState = () => {
                             getNewSet(),
                             getNewSet(),
                             getNewSet()
-                        ]
+                        ],
+                        index: 0,
                     },
                     {
                         id: uuidv4(),
@@ -97,7 +101,8 @@ const getInitialState = () => {
                             getNewSet(),
                             getNewSet(),
                             getNewSet()
-                        ]
+                        ],
+                        index: 1,
                     }
                 ]
             },
@@ -117,7 +122,8 @@ const getInitialState = () => {
                             getNewSet(),
                             getNewSet(),
                             getNewSet()
-                        ]
+                        ],
+                        index: 0,
                     },
                     {
                         id: uuidv4(),
@@ -130,7 +136,8 @@ const getInitialState = () => {
                             getNewSet(),
                             getNewSet(),
                             getNewSet()
-                        ]
+                        ],
+                        index: 1,
                     }
                 ]
             }
@@ -182,23 +189,57 @@ export const templateWorkoutSlice = createSlice({
             if (!exercise) {
                 return
             }
-            let newWork = getNewWork(exercise)
+            let newWork = getNewWork(exercise, state.newTemplate.work.length ?? 0)
             state.newTemplate.work.push(newWork)
         },
         removeWork: (state, action) => {
             state.newTemplate.work.splice(action.payload.index, 1)
+
+            state.newTemplate.work = state.newTemplate.work.map((work, index) => {
+                const newWork = {...work}
+                newWork.index = index
+                return newWork
+            })
         },
         moveWorkUp: (state, action) => {
-            const i = action.payload.index
-            const element = state.newTemplate.work[i]
-            state.newTemplate.work.splice(i, 1)
-            state.newTemplate.work.splice(i-1, 0, element)
+            const indexToMoveUp = action.payload.index
+            if (indexToMoveUp > 0) {
+                const indexToMoveDown = indexToMoveUp - 1
+
+                state.newTemplate.work = state.newTemplate.work.map(work => {
+                    if (work.index === indexToMoveUp) {
+                        const newWork = {...work}
+                        newWork.index = indexToMoveUp - 1
+                        return newWork
+                    } else if (work.index === indexToMoveDown) {
+                        const newWork = {...work}
+                        newWork.index = indexToMoveDown + 1
+                        return newWork
+                    } else {
+                        return {...work}
+                    }
+                })
+            }
         },
         moveWorkDown: (state, action) => {
-            const i = action.payload.index
-            const element = state.newTemplate.work[i]
-            state.newTemplate.work.splice(i, 1)
-            state.newTemplate.work.splice(i+1, 0, element)
+            const indexToMoveDown = action.payload.index
+            if (indexToMoveDown < state.newTemplate.work.length - 1) {
+                const indexToMoveUp = indexToMoveDown + 1
+
+                state.newTemplate.work = state.newTemplate.work.map(work => {
+                    if (work.index === indexToMoveUp) {
+                        const newWork = {...work}
+                        newWork.index = indexToMoveUp - 1
+                        return newWork
+                    } else if (work.index === indexToMoveDown) {
+                        const newWork = {...work}
+                        newWork.index = indexToMoveDown + 1
+                        return newWork
+                    } else {
+                        return {...work}
+                    }
+                })
+            }
         },
 
         addSet: (state, action) => {

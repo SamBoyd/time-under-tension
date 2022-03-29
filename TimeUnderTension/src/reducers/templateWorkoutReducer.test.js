@@ -3,12 +3,14 @@ import {v4 as uuidv4} from 'uuid';
 
 import workoutReducer, {
     addSet,
-    addWork, cancelEditTemplate,
+    addWork,
+    cancelEditTemplate,
     changeRestTime,
     changeSetReps,
     changeSetWeight,
     changeWorkTime,
-    editTemplate, editTemplateName,
+    editTemplate,
+    editTemplateName,
     moveWorkDown,
     moveWorkUp,
     removeSet,
@@ -493,7 +495,80 @@ describe('When creating a template workout can', () => {
                                     weight: 40,
                                     workTime: null
                                 }
-                            ]
+                            ],
+                            index: 0
+                        }
+                    ]
+                }
+            }
+        )
+
+        const newerState = workoutReducer(newState, addWork({exercise: exercise}))
+
+        expect(newerState).toEqual(
+            {
+                newTemplate: {
+                    name: 'New template workout',
+                    id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
+                    created_at: "2022-01-19T17:53:11.336Z",
+                    work: [
+                        {
+                            id: expect.any(String),
+                            exercise: {
+                                id: expect.any(String),
+                                name: 'Bench press',
+                                category: exerciseCategory.chest
+                            },
+                            sets: [
+                                {
+                                    id: expect.any(String),
+                                    numberReps: 12,
+                                    weight: 40,
+                                    workTime: null
+                                },
+                                {
+                                    id: expect.any(String),
+                                    numberReps: 12,
+                                    weight: 40,
+                                    workTime: null
+                                },
+                                {
+                                    id: expect.any(String),
+                                    numberReps: 12,
+                                    weight: 40,
+                                    workTime: null
+                                }
+                            ],
+                            index: 0
+                        },
+                        {
+                            id: expect.any(String),
+                            exercise: {
+                                id: expect.any(String),
+                                name: 'Bench press',
+                                category: exerciseCategory.chest
+                            },
+                            sets: [
+                                {
+                                    id: expect.any(String),
+                                    numberReps: 12,
+                                    weight: 40,
+                                    workTime: null
+                                },
+                                {
+                                    id: expect.any(String),
+                                    numberReps: 12,
+                                    weight: 40,
+                                    workTime: null
+                                },
+                                {
+                                    id: expect.any(String),
+                                    numberReps: 12,
+                                    weight: 40,
+                                    workTime: null
+                                }
+                            ],
+                            index: 1
                         }
                     ]
                 }
@@ -512,13 +587,15 @@ describe('When creating a template workout can', () => {
                     {
                         id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
                         exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: []
+                        sets: [],
+                        index: 0
                     },
                     {
                         id: 'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
                         exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: []
-                    }
+                        sets: [],
+                        index: 1
+                    },
                 ]
             }
         }
@@ -535,7 +612,8 @@ describe('When creating a template workout can', () => {
                         {
                             id: 'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
                             exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                            sets: []
+                            sets: [],
+                            index: 0
                         }
                     ]
                 }
@@ -553,17 +631,20 @@ describe('When creating a template workout can', () => {
                     {
                         id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
                         exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: []
+                        sets: [],
+                        index: 0,
                     },
                     {
                         id: 'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
                         exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: []
+                        sets: [],
+                        index: 1,
                     },
                     {
                         id: 'ccccccc-85f7-4e85-a238-c9e6265cda2e',
                         exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: []
+                        sets: [],
+                        index: 2,
                     }
                 ]
             }
@@ -579,19 +660,22 @@ describe('When creating a template workout can', () => {
                     created_at: "2022-01-19T17:53:11.336Z",
                     work: [
                         {
-                            id: 'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
-                            exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                            sets: []
-                        },
-                        {
                             id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
                             exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                            sets: []
+                            sets: [],
+                            index: 1,
+                        },
+                        {
+                            id: 'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
+                            exercise: {type: 'placeholder', value: 'Choose an exercise'},
+                            sets: [],
+                            index: 0,
                         },
                         {
                             id: 'ccccccc-85f7-4e85-a238-c9e6265cda2e',
                             exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                            sets: []
+                            sets: [],
+                            index: 2,
                         }
                     ]
                 }
@@ -608,19 +692,22 @@ describe('When creating a template workout can', () => {
                     created_at: "2022-01-19T17:53:11.336Z",
                     work: [
                         {
+                            id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
+                            exercise: {type: 'placeholder', value: 'Choose an exercise'},
+                            sets: [],
+                            index: 2,
+                        },
+                        {
                             id: 'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
                             exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                            sets: []
+                            sets: [],
+                            index: 0,
                         },
                         {
                             id: 'ccccccc-85f7-4e85-a238-c9e6265cda2e',
                             exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                            sets: []
-                        },
-                        {
-                            id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                            exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                            sets: []
+                            sets: [],
+                            index: 1,
                         }
                     ]
                 }
