@@ -11,6 +11,8 @@ import theme, {standardHorizontalPadding, standardVerticalPadding} from '../them
 
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import BasePage from "../components/basePage";
+import {wrapMapToPropsConstant} from "react-redux/lib/connect/wrapMapToProps";
+import {persistor} from "../store";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -38,6 +40,10 @@ function MainPage() {
         dispatch(moveToManageExercises())
     }
 
+    const purgeStore = () => {
+        persistor.purge()
+    }
+
     return (
         <BasePage>
             <MainPageButton onPress={newBlankWorkout} title="New blank workout"/>
@@ -47,6 +53,8 @@ function MainPage() {
             <History/>
 
             <MainPageButton onPress={clickManageExercises} title="Manage Exercises"/>
+
+            <MainPageButton onPress={purgeStore()} title="Purge store" />
         </BasePage>
     )
 }
