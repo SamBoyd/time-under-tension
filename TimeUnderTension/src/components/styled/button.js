@@ -32,7 +32,7 @@ export const Button = props => {
         buttonStyle={{
             backgroundColor: theme.colors.tertiary,
             borderWidth: 1,
-            borderRadius: 5,
+            borderRadius: theme.borderRadius,
             borderColor: theme.colors.secondary,
             paddingTop: 0,
             paddingBottom: 0,

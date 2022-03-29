@@ -29,8 +29,6 @@ const GenericWork = props => {
     const [showActionsOverlay, setShowActionsOverlay] = useState(false)
     const dispatch = useDispatch()
 
-    console.log(JSON.stringify(props))
-
     const restTime = props.restTime || DEFAULT_REST_TIME;
     const workTimeStart = props.workTime?.start ?? DEFAULT_WORK_TIME_LOWER;
     const workTimeEnd = props.workTime?.end ?? DEFAULT_WORK_TIME_UPPER;

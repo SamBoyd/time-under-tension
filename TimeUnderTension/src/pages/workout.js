@@ -1,6 +1,7 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {StyleSheet, View} from "react-native";
+import {standardHorizontalPadding, standardVerticalPadding} from '../theme'
 
 
 import {selectWorkout} from "../reducers/workoutReducer";
@@ -9,10 +10,8 @@ import {moveToMainPage, moveToPickExerciseForWorkout} from "../reducers/uiStateR
 import {finishWorkoutAndMoveToMainPage} from "../reducers/actions";
 import Timer from "../components/timer";
 import {Button} from "../components/styled/button";
-
-import {standardHorizontalPadding, standardVerticalPadding} from '../theme'
 import BasePage from "../components/basePage";
-
+import {WorkoutDuration} from "../components/workoutDuration";
 
 const Workout = () => {
     const dispatch = useDispatch()
@@ -61,6 +60,8 @@ const Workout = () => {
                 leftHeaderComponent={<Button onPress={goBack} title="back" containerStyle={styles.backButton}/>}
                 rightHeaderComponent={finishButton}
             >
+                {workoutStarted && <WorkoutDuration startedAt={workout.started_at}/>}
+
                 {workComponents}
 
                 <Button onPress={addNewWork} title="Add work" containerStyle={styles.addWorkButton}/>
