@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {Dimensions, StyleSheet, View} from "react-native";
 
-import {editTemplateName, selectTemplateWorkout} from "../reducers/templateWorkoutReducer";
+import {editTemplateName, selectNewTemplateWorkout} from "../reducers/newTemplateWorkoutReducer";
 import {moveToMainPage, moveToPickExerciseForTemplateWorkout} from "../reducers/uiStateReducer";
 import TemplateWork from "../components/templateWork";
 import {
@@ -18,15 +18,17 @@ import theme, {standardHorizontalPadding, standardVerticalPadding} from "../them
 import BasePage from "../components/basePage";
 
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {loadWorkByIds} from "../utils/stateUtils";
+import {selectWork} from "../reducers/workReducer";
 
 
 const CreateTemplateWorkout = () => {
     const dispatch = useDispatch()
-    const templateWorkouts = useSelector(selectTemplateWorkout)
+    const newTemplate = useSelector(selectNewTemplateWorkout)
+    const workState = useSelector(selectWork)
     const [uiState, setUiState] = useState({
         editingTitle: false
     })
-    const newTemplate = templateWorkouts.newTemplate
     const editingExistingTemplate = 'indexInTemplates' in newTemplate
 
     const backToMainPage = () => {
@@ -50,7 +52,7 @@ const CreateTemplateWorkout = () => {
     }
 
     const saveTemplate = () => {
-        saveTemplateAndMoveToMainPage(dispatch)
+        saveTemplateAndMoveToMainPage(dispatch, newTemplate)
     }
 
     const styles = StyleSheet.create({
@@ -86,7 +88,8 @@ const CreateTemplateWorkout = () => {
         }
     })
 
-    const workComponents = newTemplate.work.map((work, i) => <TemplateWork work={work} workIndex={i}/>)
+    const work = loadWorkByIds(newTemplate.work, workState)
+    const workComponents = work.map((work, i) => <TemplateWork work={work} workIndex={i}/>)
 
     const templateTitle = <>
         {editingExistingTemplate && (

@@ -8,6 +8,9 @@ export const uiStateSlice = createSlice({
         page: PAGE.main
     },
     reducers: {
+        reset: state => {
+            state.page = PAGE.main
+        },
         moveToMainPage: state => {
             state.page = PAGE.main
         },
@@ -40,6 +43,7 @@ export const uiStateSlice = createSlice({
 
 export const selectUiState = state => state.uiState
 export const {
+    reset,
     moveToMainPage, moveToPickExerciseForWorkout,
     moveToPickExerciseForTemplateWorkout, moveToWorkout,
     moveToCreateTemplate, followRedirect,

@@ -12,7 +12,8 @@ import {
     DEFAULT_WORK_TIME_UPPER,
     TIMER_STATE
 } from "../constants";
-import {selectWork, selectWorkout} from "../reducers/workoutReducer";
+import {selectWorkout} from "../reducers/workoutReducer";
+import {selectWork} from "../reducers/workReducer";
 import {View} from "react-native";
 import {TextBold, TextNormal} from "./styled/text";
 import {FlexRowView} from "./styled/view";
@@ -20,6 +21,9 @@ import {Button} from "./styled/button";
 
 import theme from '../theme'
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {loadSetsByIds, loadWorkByIds} from "../utils/stateUtils";
+import {selectSet} from "../reducers/setReducer";
+import {isRealValue} from "../utils/utils";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -92,27 +96,28 @@ const rest = count => {
     return timerText(`Rest - ${count}`)
 }
 
-const findNextSet = workout => {
-    const work = workout.work[workout.currentWork]
-    if (work) {
-        for (const si in work.sets) {
-            const set = work.sets[si]
-            if (!set.finished) {
-                return set
-            }
-        }
-    }
-}
+
 
 
 const Timer = () => {
     const timer = useSelector(selectTimer)
     const workout = useSelector(selectWorkout)
+    const workState = useSelector(selectWork)
+    const setState = useSelector(selectSet)
     const dispatch = useDispatch()
 
-    const nextSet = findNextSet(workout)
+    let currentWork, sets, currentSet
+    if (workout.currentWork !== null && workout.currentWork < workout.work.length) {
+        const works = loadWorkByIds(workout.work, workState)
+        currentWork = works[workout.currentWork]
+    }
 
-    if (!nextSet && workout.work.length > 0) {
+    if (isRealValue(currentWork) && 0 < currentWork.sets.length) {
+        sets = loadSetsByIds(currentWork.sets, setState)
+        currentSet = sets.find(s => !s.finished)
+    }
+
+    if (currentWork && currentWork.sets.length > 0 && !isRealValue(currentSet) && workout.work.length > 0 && workout.currentWork < workout.work.length) {
         selectWorkAndResetTimer(workout.currentWork + 1, dispatch)
     }
 
@@ -140,7 +145,7 @@ const Timer = () => {
             timerText = setup(timer.count);
             break
         case TIMER_STATE.work:
-            timerText = work(dispatch, timer.count, DEFAULT_WORK_TIME_LOWER, DEFAULT_WORK_TIME_UPPER, nextSet);
+            timerText = work(dispatch, timer.count, currentWork.workTimeStart || DEFAULT_WORK_TIME_LOWER, currentWork.workTimeStart || DEFAULT_WORK_TIME_UPPER, currentSet);
             break
         case TIMER_STATE.rest:
             timerText = rest(timer.count);

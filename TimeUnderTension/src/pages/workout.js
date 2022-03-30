@@ -12,10 +12,16 @@ import Timer from "../components/timer";
 import {Button} from "../components/styled/button";
 import BasePage from "../components/basePage";
 import {WorkoutDuration} from "../components/workoutDuration";
+import {selectWork} from "../reducers/workReducer";
 
 const Workout = () => {
     const dispatch = useDispatch()
     const workout = useSelector(selectWorkout)
+    const workState = useSelector(selectWork)
+
+    const work = workout.work.map(workId => {
+        return workState.find(w => w.id === workId)
+    })
 
     const goBack = () => {
         dispatch(moveToMainPage())
@@ -37,10 +43,11 @@ const Workout = () => {
         }
     })
 
-    const workComponents = workout.work.map((work, i) => {
+    const workComponents = work.map((work, i) => {
         return (
             <Work
                 {...work}
+                key={i}
                 workIndex={i}
                 active={workout.currentWork === i}
             />

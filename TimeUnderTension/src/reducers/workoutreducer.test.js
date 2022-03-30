@@ -95,81 +95,25 @@ describe('For Workout can', () => {
                 name: 'Tuesday workout',
                 id: 'fa2de79b-85f7-4e85-a238-c9e62651111',
                 created_at: "2022-01-21T17:53:11.336Z",
-                work: [
-                    {
-                        id: uuidv4(),
-                        exercise: {
-                            id: uuidv4(),
-                            name: 'Bench press',
-                            category: exerciseCategory.chest
-                        },
-                        sets: [
-                            {
-                                id: uuidv4(),
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null
-                            },
-                            {
-                                id: uuidv4(),
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null
-                            },
-                            {
-                                id: uuidv4(),
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null
-                            }
-                        ],
-                        index: 0
-                    }
-                ],
+                work: [uuidv4(), uuidv4()],
                 finished_at: null,
-                currentWork: 0
+                started_at: null,
+                currentWork: null,
             }
 
-            const newState = workoutReducer(previousState, createWorkoutFromTemplate({template: templateWorkout}))
+            const newState = workoutReducer(previousState, createWorkoutFromTemplate(templateWorkout))
 
             expect(newState).toEqual({
                 name: 'Tuesday workout',
-                id: 'fa2de79b-85f7-4e85-a238-c9e62651111',
+                id: expect.any(String),
                 created_at: "2022-01-21T17:53:11.336Z",
-                work: [
-                    {
-                        id: expect.any(String),
-                        exercise: {
-                            id: expect.any(String),
-                            name: 'Bench press',
-                            category: exerciseCategory.chest
-                        },
-                        sets: [
-                            {
-                                id: expect.any(String),
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null
-                            },
-                            {
-                                id: expect.any(String),
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null
-                            },
-                            {
-                                id: expect.any(String),
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null
-                            }
-                        ],
-                        index: 0
-                    }
-                ],
+                work: [expect.any(String), expect.any(String)],
                 finished_at: null,
+                started_at: null,
                 currentWork: 0
             })
+
+            expect(newState.id).not.toEqual(templateWorkout.id)
         }
     )
 
@@ -189,125 +133,27 @@ describe('For Workout can', () => {
             category: exerciseCategory.chest
         }
 
-        const newState = workoutReducer(previousState, addWork({exercise: exercise}))
+        const newState = workoutReducer(previousState, addWork('fa2de79b-85f7-4e85-a238-c9e6265c1111'))
 
         expect(newState).toEqual(
             {
                 name: 'New workout',
                 id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
                 created_at: "2022-01-19T17:53:11.336Z",
-                work: [
-                    {
-                        id: expect.any(String),
-                        exercise: {
-                            id: expect.any(String),
-                            name: 'Bench press',
-                            category: exerciseCategory.chest
-                        },
-                        sets: [
-                            {
-                                id: expect.any(String),
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null,
-                                finished: false
-                            },
-                            {
-                                id: expect.any(String),
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null,
-                                finished: false
-                            },
-                            {
-                                id: expect.any(String),
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null,
-                                finished: false
-                            }
-                        ],
-                        index: 0
-                    }
-                ],
+                work: ['fa2de79b-85f7-4e85-a238-c9e6265c1111'],
                 finished_at: null,
                 currentWork: 0
             }
         )
 
-        const newerState = workoutReducer(newState, addWork({exercise: exercise}))
+        const newerState = workoutReducer(newState, addWork('fa2de79b-85f7-4e85-a238-c9e6265c2222'))
 
         expect(newerState).toEqual(
             {
                 name: 'New workout',
                 id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
                 created_at: "2022-01-19T17:53:11.336Z",
-                work: [
-                    {
-                        id: expect.any(String),
-                        exercise: {
-                            id: expect.any(String),
-                            name: 'Bench press',
-                            category: exerciseCategory.chest
-                        },
-                        sets: [
-                            {
-                                id: expect.any(String),
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null,
-                                finished: false
-                            },
-                            {
-                                id: expect.any(String),
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null,
-                                finished: false
-                            },
-                            {
-                                id: expect.any(String),
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null,
-                                finished: false
-                            }
-                        ],
-                        index: 0
-                    },
-                    {
-                        id: expect.any(String),
-                        exercise: {
-                            id: expect.any(String),
-                            name: 'Bench press',
-                            category: exerciseCategory.chest
-                        },
-                        sets: [
-                            {
-                                id: expect.any(String),
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null,
-                                finished: false
-                            },
-                            {
-                                id: expect.any(String),
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null,
-                                finished: false
-                            },
-                            {
-                                id: expect.any(String),
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null,
-                                finished: false
-                            }
-                        ],
-                        index: 1
-                    }
-                ],
+                work: ['fa2de79b-85f7-4e85-a238-c9e6265c1111', 'fa2de79b-85f7-4e85-a238-c9e6265c2222'],
                 finished_at: null,
                 currentWork: 0
             }
@@ -320,38 +166,18 @@ describe('For Workout can', () => {
             name: 'New workout',
             id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
             created_at: "2022-01-19T17:53:11.336Z",
-            work: [
-                {
-                    id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                    exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                    sets: [],
-                    index: 0
-                },
-                {
-                    id: 'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
-                    exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                    sets: [],
-                    index: 1
-                }
-            ],
+            work: ['fa2de79b-85f7-4e85-a238-c9e6265c1111', 'fa2de79b-85f7-4e85-a238-c9e6265c2222'],
             finished_at: null
         }
 
-        const newState = workoutReducer(previousState, removeWork({index: 0}))
+        const newState = workoutReducer(previousState, removeWork('fa2de79b-85f7-4e85-a238-c9e6265c1111'))
 
         expect(newState).toEqual(
             {
                 name: 'New workout',
                 id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
                 created_at: "2022-01-19T17:53:11.336Z",
-                work: [
-                    {
-                        id: 'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
-                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: [],
-                        index: 0
-                    }
-                ],
+                work: ['fa2de79b-85f7-4e85-a238-c9e6265c2222'],
                 finished_at: null
             }
         )
@@ -363,29 +189,14 @@ describe('For Workout can', () => {
             id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
             created_at: "2022-01-19T17:53:11.336Z",
             work: [
-                {
-                    id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                    exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                    sets: [],
-                    index: 0
-                },
-                {
-                    id: 'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
-                    exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                    sets: [],
-                    index: 1
-                },
-                {
-                    id: 'ccccccc-85f7-4e85-a238-c9e6265cda2e',
-                    exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                    sets: [],
-                    index: 2
-                }
+                'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
+                'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
+                'ccccccc-85f7-4e85-a238-c9e6265cda2e'
             ],
             finished_at: null
         }
 
-        let newState = workoutReducer(previousState, moveWorkDown({index: 0}))
+        let newState = workoutReducer(previousState, moveWorkDown('aaaaaaa-85f7-4e85-a238-c9e6265cda2e'))
 
         expect(newState).toEqual(
             {
@@ -393,30 +204,15 @@ describe('For Workout can', () => {
                 id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
                 created_at: "2022-01-19T17:53:11.336Z",
                 work: [
-                    {
-                        id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: [],
-                        index: 1
-                    },
-                    {
-                        id: 'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
-                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: [],
-                        index: 0
-                    },
-                    {
-                        id: 'ccccccc-85f7-4e85-a238-c9e6265cda2e',
-                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: [],
-                        index: 2
-                    }
+                    'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
+                    'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
+                    'ccccccc-85f7-4e85-a238-c9e6265cda2e'
                 ],
                 finished_at: null
             }
         )
 
-        newState = workoutReducer(newState, moveWorkUp({index: 2}))
+        newState = workoutReducer(newState, moveWorkUp('ccccccc-85f7-4e85-a238-c9e6265cda2e'))
 
         expect(newState).toEqual(
             {
@@ -424,24 +220,9 @@ describe('For Workout can', () => {
                 id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
                 created_at: "2022-01-19T17:53:11.336Z",
                 work: [
-                    {
-                        id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: [],
-                        index: 2
-                    },
-                    {
-                        id: 'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
-                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: [],
-                        index: 0
-                    },
-                    {
-                        id: 'ccccccc-85f7-4e85-a238-c9e6265cda2e',
-                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: [],
-                        index: 1
-                    }
+                    'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
+                    'ccccccc-85f7-4e85-a238-c9e6265cda2e',
+                    'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
                 ],
                 finished_at: null
             }
@@ -480,499 +261,6 @@ describe('For Workout can', () => {
                 ],
                 finished_at: null,
                 currentWork: 1
-            }
-        )
-    })
-})
-
-describe('For Work can', () => {
-    test('can add a set', () => {
-        const previousState = {
-            name: 'New workout',
-            id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
-            created_at: "2022-01-19T17:53:11.336Z",
-            work: [
-                {
-                    id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                    exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                    sets: [
-                        {id: "341de2a2-da16-462a-9fc4-266f7b542234"},
-                        {id: "41479206-10ed-4877-9466-d5c1f122b667"},
-                    ],
-                    index: 0
-                }
-            ],
-            finished_at: null
-        }
-
-        const newState = workoutReducer(previousState, addSet({
-            workId: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e'
-        }))
-
-        expect(newState).toEqual(
-            {
-                name: 'New workout',
-                id: expect.any(String),
-                created_at: expect.any(String),
-                work: [
-                    {
-                        id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: [
-                            {id: "341de2a2-da16-462a-9fc4-266f7b542234"},
-                            {id: "41479206-10ed-4877-9466-d5c1f122b667"},
-                            {
-                                id: expect.any(String),
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null,
-                                finished: false
-                            }
-
-                        ],
-                        index: 0
-                    }
-                ],
-                finished_at: null
-            }
-        )
-    })
-
-    test('remove a set', () => {
-        const previousState = {
-            name: 'New workout',
-            id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
-            created_at: "2022-01-19T17:53:11.336Z",
-            work: [
-                {
-                    id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                    exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                    sets: [
-                        {id: "341de2a2-da16-462a-9fc4-266f7b542234"},
-                        {id: "41479206-10ed-4877-9466-d5c1f122b667"},
-                        {id: "cc511608-72c6-451c-8f86-eea8bdb55fc4"},
-                    ],
-                    index: 0
-                }
-            ],
-            finished_at: null
-        }
-
-        const newState = workoutReducer(previousState, removeSet({
-            setId: "41479206-10ed-4877-9466-d5c1f122b667",
-            workId: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e'
-        }))
-
-        expect(newState).toEqual(
-            {
-                name: 'New workout',
-                id: expect.any(String),
-                created_at: expect.any(String),
-                work: [
-                    {
-                        id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: [
-                            {id: "341de2a2-da16-462a-9fc4-266f7b542234"},
-                            {id: "cc511608-72c6-451c-8f86-eea8bdb55fc4"},
-                        ],
-                        index: 0
-                    }
-                ],
-                finished_at: null
-            }
-        )
-    })
-
-    test('change rest time', () => {
-        const previousState = {
-            name: 'New workout',
-            id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
-            created_at: "2022-01-19T17:53:11.336Z",
-            work: [
-                {
-                    id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                    exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                    sets: [],
-                    index: 0
-                }
-            ],
-            finished_at: null
-        }
-
-        const newState = workoutReducer(previousState, changeRestTime({
-            workId: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-            restTime: 35
-        }))
-
-        expect(newState).toEqual(
-            {
-                name: 'New workout',
-                id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
-                created_at: "2022-01-19T17:53:11.336Z",
-                work: [
-                    {
-                        id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: [],
-                        restTime: 35,
-                        index: 0
-                    }
-                ],
-                finished_at: null
-            }
-        )
-    })
-
-    test('change work time', () => {
-        const previousState = {
-            name: 'New workout',
-            id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
-            created_at: "2022-01-19T17:53:11.336Z",
-            work: [
-                {
-                    id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                    exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                    sets: [],
-                    index: 0
-                }
-            ],
-            finished_at: null
-        }
-
-        const newState = workoutReducer(previousState, changeWorkTime({
-            workId: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-            workTime: {start: 35, end: 60}
-        }))
-
-        expect(newState).toEqual(
-            {
-                name: 'New workout',
-                id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
-                created_at: "2022-01-19T17:53:11.336Z",
-                work: [
-                    {
-                        id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: [],
-                        workTime: {start: 35, end: 60},
-                        index: 0
-                    }
-                ],
-                finished_at: null
-            }
-        )
-    })
-})
-
-describe('For Set can', () => {
-    test('change the number of reps', () => {
-        const previousState = {
-            name: 'New workout',
-            id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
-            created_at: "2022-01-19T17:53:11.336Z",
-            work: [
-                {
-                    id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                    exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                    sets: [
-                        {
-                            id: "341de2a2-da16-462a-9fc4-266f7b542234",
-                            numberReps: 12,
-                            weight: 40,
-                            workTime: null,
-                            finished: false
-                        },
-                        {
-                            id: "41479206-10ed-4877-9466-d5c1f122b667",
-                            numberReps: 12,
-                            weight: 40,
-                            workTime: null,
-                            finished: false
-                        },
-                    ],
-                    index: 0
-                }
-            ],
-            finished_at: null
-        }
-
-        const newState = workoutReducer(previousState, changeSetReps({
-            setId: '341de2a2-da16-462a-9fc4-266f7b542234',
-            reps: 10
-        }))
-
-        expect(newState).toEqual(
-            {
-                name: 'New workout',
-                id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
-                created_at: "2022-01-19T17:53:11.336Z",
-                work: [
-                    {
-                        id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: [
-                            {
-                                id: "341de2a2-da16-462a-9fc4-266f7b542234",
-                                numberReps: 10,
-                                weight: 40,
-                                workTime: null,
-                                finished: false
-                            },
-                            {
-                                id: "41479206-10ed-4877-9466-d5c1f122b667",
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null,
-                                finished: false
-                            },
-                        ],
-                        index: 0
-                    }
-                ],
-                finished_at: null
-            }
-        )
-    })
-
-    test('change the weight', () => {
-        const previousState = {
-            name: 'New workout',
-            id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
-            created_at: "2022-01-19T17:53:11.336Z",
-            work: [
-                {
-                    id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                    exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                    sets: [
-                        {
-                            id: "341de2a2-da16-462a-9fc4-266f7b542234",
-                            numberReps: 12,
-                            weight: 40,
-                            workTime: null,
-                            finished: false
-                        },
-                        {
-                            id: "41479206-10ed-4877-9466-d5c1f122b667",
-                            numberReps: 12,
-                            weight: 40,
-                            workTime: null,
-                            finished: false
-                        },
-                    ],
-                    index: 0
-                }
-            ],
-            finished_at: null
-        }
-
-        const newState = workoutReducer(previousState, changeSetWeight({
-            setId: '341de2a2-da16-462a-9fc4-266f7b542234',
-            weight: 30
-        }))
-
-        expect(newState).toEqual(
-            {
-                name: 'New workout',
-                id: expect.any(String),
-                created_at: expect.any(String),
-                work: [
-                    {
-                        id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: [
-                            {
-                                id: "341de2a2-da16-462a-9fc4-266f7b542234",
-                                numberReps: 12,
-                                weight: 30,
-                                workTime: null,
-                                finished: false
-                            },
-                            {
-                                id: "41479206-10ed-4877-9466-d5c1f122b667",
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null,
-                                finished: false
-                            },
-                        ],
-                        index: 0
-                    }
-                ],
-                finished_at: null
-            }
-        )
-    })
-
-    test('finish the set', () => {
-        const previousState = {
-            name: 'New workout',
-            id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
-            created_at: "2022-01-19T17:53:11.336Z",
-            work: [
-                {
-                    id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                    exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                    sets: [
-                        {
-                            id: "341de2a2-da16-462a-9fc4-266f7b542234",
-                            numberReps: 12,
-                            weight: 40,
-                            workTime: null,
-                            finished: false
-                        },
-                        {
-                            id: "41479206-10ed-4877-9466-d5c1f122b667",
-                            numberReps: 12,
-                            weight: 40,
-                            workTime: null,
-                            finished: false
-                        },
-                    ],
-                    index: 0
-                }
-            ],
-            finished_at: null
-        }
-
-        const newState = workoutReducer(previousState, finishSet({
-            setId: '341de2a2-da16-462a-9fc4-266f7b542234'
-        }))
-
-        expect(newState).toEqual(
-            {
-                name: 'New workout',
-                id: expect.any(String),
-                created_at: expect.any(String),
-                work: [
-                    {
-                        id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: [
-                            {
-                                id: "341de2a2-da16-462a-9fc4-266f7b542234",
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null,
-                                finished: true
-                            },
-                            {
-                                id: "41479206-10ed-4877-9466-d5c1f122b667",
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null,
-                                finished: false
-                            },
-                        ],
-                        index: 0
-                    }
-                ],
-                finished_at: null
-            }
-        )
-
-        const newerState = workoutReducer(newState, finishSet({
-            setId: '341de2a2-da16-462a-9fc4-266f7b542234'
-        }))
-
-        expect(newerState).toEqual(
-            {
-                name: 'New workout',
-                id: expect.any(String),
-                created_at: expect.any(String),
-                work: [
-                    {
-                        id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: [
-                            {
-                                id: "341de2a2-da16-462a-9fc4-266f7b542234",
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null,
-                                finished: false
-                            },
-                            {
-                                id: "41479206-10ed-4877-9466-d5c1f122b667",
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null,
-                                finished: false
-                            },
-                        ],
-                        index: 0
-                    }
-                ],
-                finished_at: null
-            }
-        )
-    })
-
-    test('can set workout finished', () => {
-        const previousState = {
-            name: 'New workout',
-            id: expect.any(String),
-            created_at: expect.any(String),
-            work: [
-                {
-                    id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                    exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                    sets: [
-                        {
-                            id: "341de2a2-da16-462a-9fc4-266f7b542234",
-                            numberReps: 12,
-                            weight: 40,
-                            workTime: null,
-                            finished: true
-                        },
-                        {
-                            id: "41479206-10ed-4877-9466-d5c1f122b667",
-                            numberReps: 12,
-                            weight: 40,
-                            workTime: null,
-                            finished: false
-                        },
-                    ],
-                    index: 0
-                }
-            ],
-            finished_at: null
-        }
-
-        const time = new Date(1330688329321);
-
-        tk.freeze(time)
-        const nextState = workoutReducer(previousState, setWorkoutFinished())
-
-        expect(nextState).toEqual(
-            {
-                name: 'New workout',
-                id: expect.any(String),
-                created_at: expect.any(String),
-                work: [
-                    {
-                        id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
-                        exercise: {type: 'placeholder', value: 'Choose an exercise'},
-                        sets: [
-                            {
-                                id: "341de2a2-da16-462a-9fc4-266f7b542234",
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null,
-                                finished: true
-                            },
-                            {
-                                id: "41479206-10ed-4877-9466-d5c1f122b667",
-                                numberReps: 12,
-                                weight: 40,
-                                workTime: null,
-                                finished: false
-                            },
-                        ],
-                        index: 0
-                    }
-                ],
-                finished_at: time.toISOString()
             }
         )
     })

@@ -2,25 +2,32 @@ import devToolsEnhancer from 'remote-redux-devtools';
 import {persistReducer, persistStore} from "redux-persist";
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import AsyncStorage from '@react-native-async-storage/async-storage'
+import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE} from "redux-persist/es/constants";
+import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
 
 import workoutReducer from './reducers/workoutReducer'
 import uiStateReducer from "./reducers/uiStateReducer";
 import timerReducer from "./reducers/timerReducer";
-import templateWorkoutReducer from "./reducers/templateWorkoutReducer";
-import historyReducer from "./reducers/historyReducer";
+import workoutTemplateReducer from "./reducers/workoutTemplatesReducer";
+import workoutHistoryReducer from "./reducers/workoutHistoryReducer";
 import exercisesReducer from "./reducers/exercisesReducer";
-import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE} from "redux-persist/es/constants";
-import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
+import setReducer from "./reducers/setReducer";
+import workReducer from "./reducers/workReducer";
+import newTemplateWorkoutReducer from "./reducers/newTemplateWorkoutReducer";
 
 
 const rootReducer = combineReducers({
     workout: workoutReducer,
     uiState: uiStateReducer,
     timer: timerReducer,
-    templateWorkouts: templateWorkoutReducer,
-    history: historyReducer,
+    templates: workoutTemplateReducer,
+    newTemplateWorkout: newTemplateWorkoutReducer,
+    history: workoutHistoryReducer,
     exercises: exercisesReducer,
+    set: setReducer,
+    work: workReducer,
 })
+
 
 const persistConfig = {
     key: 'root',
@@ -42,8 +49,9 @@ const store = configureStore({
         }),
     enhancers: [devToolsEnhancer({
         name: 'Android app', realtime: true,
-        hostname: 'localhost', port: 8000,
+        hostname: 'localhost', port: 8002,
         maxAge: 30, actionsBlacklist: ['EFFECT_RESOLVED'],
+        suppressConnectErrors: false,
         secure: false,
         actionSanitizer: (action) => (
             action.type === 'FILE_DOWNLOAD_SUCCESS' && action.data ?

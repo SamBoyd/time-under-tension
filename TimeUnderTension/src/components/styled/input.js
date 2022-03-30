@@ -38,13 +38,13 @@ export const OverlaySlider = props => {
         }
     }
 
-    const toggleEdit = (props) => {
+    const toggleEdit = () => {
         setState({editing: !state.editing})
     }
 
     const saveEdit = () => {
-        toggleEdit()
         props.onChangeText(sliderValue)
+        toggleEdit()
     }
 
     return (

@@ -7,6 +7,10 @@ const timerReducer = createSlice({
         state: TIMER_STATE.ready
     },
     reducers: {
+        reset: state => {
+            state.state = TIMER_STATE.ready
+            state.count = 0
+        },
         moveToReady: state => {
             state.state = TIMER_STATE.ready
         },
@@ -38,6 +42,7 @@ const timerReducer = createSlice({
 
 export const selectTimer = state => state.timer
 export const {
+    reset,
     moveToReady, moveToSetup, moveToWork, moveToRest,
     incrementCount, resetCount, resetTimer
 } = timerReducer.actions

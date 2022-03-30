@@ -1,11 +1,10 @@
 import {
-    addWork,
+    addWork as addWorkToWorkout,
     createWorkoutFromTemplate,
-    finishSet,
     resetToInitialWorkout,
     selectWork, startWorkoutIfNotStarted
 } from "./workoutReducer";
-import {addWork as addTemplateWork, cancelEditTemplate, editTemplate, saveTemplate} from "./templateWorkoutReducer";
+import {addWork as addTemplateWork, editTemplate, resetTemplate} from "./newTemplateWorkoutReducer";
 import {
     followRedirect,
     moveToCreateTemplate,
@@ -14,25 +13,35 @@ import {
     moveToWorkout
 } from "./uiStateReducer";
 import {moveToRest, moveToSetup, resetTimer} from "./timerReducer";
-import {addWorkoutToHistory} from "./historyReducer";
-import structuredClone from '@ungap/structured-clone';
+import {addWorkoutToHistory} from "./workoutHistoryReducer";
 import {resetNewExercise, saveNewExercise} from "./exercisesReducer";
+import {addSetToWork, addWork, newWorkForExercise} from "./workReducer";
+import {addSet, finishSet, getNewSet} from "./setReducer";
+import {addToTemplates} from "./workoutTemplatesReducer";
 
 export const pickExerciseForWorkoutAction = exercise => dispatch => {
-    dispatch(addWork({exercise: exercise}))
+    const newWork = newWorkForExercise(exercise)
+    dispatch(addWorkToWorkout(newWork.id))
+    dispatch(addWork(newWork))
     dispatch(followRedirect())
 }
 
+export const addSetAction = (dispatch, workId) => {
+    const newSet = getNewSet()
+    dispatch(addSet(newSet))
+    dispatch(addSetToWork({workId: workId, setId: newSet.id}))
+}
+
 export const pickExerciseForTemplateWorkoutAction = exercise => dispatch => {
-    dispatch(addTemplateWork({exercise: exercise}))
+    const newWork = newWorkForExercise(exercise)
+    dispatch(addTemplateWork(newWork.id))
+    dispatch(addWork(newWork))
     dispatch(followRedirect())
 }
 
 
 export const finishSetAction = (dispatch, set) => () => {
-    if (set) {
-        dispatch(finishSet({setId: set.id}))
-    }
+    dispatch(finishSet(set.id))
     dispatch(moveToRest())
 }
 
@@ -41,13 +50,14 @@ export const selectWorkAndResetTimer = (workIndex, dispatch) => {
     dispatch(resetTimer())
 }
 
-export const saveTemplateAndMoveToMainPage = (dispatch) => {
-    dispatch(saveTemplate())
+export const saveTemplateAndMoveToMainPage = (dispatch, newTemplate) => {
+    dispatch(addToTemplates(newTemplate))
+    dispatch(resetTemplate())
     dispatch(moveToMainPage())
 }
 
-export const moveToEditTemplate = (dispatch, templateId) => {
-    dispatch(editTemplate({id: templateId}))
+export const moveToEditTemplate = (dispatch, template) => {
+    dispatch(editTemplate(template))
     dispatch(moveToCreateTemplate())
 }
 
@@ -57,12 +67,12 @@ export const cancelEditTemplateAndMoveToMainPage = (dispatch) => {
 }
 
 export const createWorkoutFromTemplateAndMoveToWorkout = (dispatch, template) => {
-    dispatch(createWorkoutFromTemplate({template: template}))
+    dispatch(createWorkoutFromTemplate(template))
     dispatch(moveToWorkout())
 }
 
 export const finishWorkoutAndMoveToMainPage = (dispatch, workout) => {
-    const w = structuredClone(workout)
+    const w = {...workout}
     w.finished_at = new Date().toISOString()
     dispatch(addWorkoutToHistory({workout: w}))
     dispatch(resetToInitialWorkout())

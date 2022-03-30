@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 import Set from './set'
 import {
@@ -21,6 +21,8 @@ import RestTime from "./restTime";
 import WorkTime from "./workTime";
 import {Card, Divider, Icon, Overlay} from "react-native-elements";
 import theme from "../theme";
+import {selectSet} from "../reducers/setReducer";
+import {loadSetsByIds} from "../utils/stateUtils";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -28,24 +30,18 @@ const windowHeight = Dimensions.get('window').height;
 const GenericWork = props => {
     const [showActionsOverlay, setShowActionsOverlay] = useState(false)
     const dispatch = useDispatch()
+    const setState = useSelector(selectSet)
+    const sets = loadSetsByIds(props.sets, setState)
 
     const restTime = props.restTime || DEFAULT_REST_TIME;
-    const workTimeStart = props.workTime?.start ?? DEFAULT_WORK_TIME_LOWER;
-    const workTimeEnd = props.workTime?.end ?? DEFAULT_WORK_TIME_UPPER;
-
+    const workTimeStart = props.workTimeStart || DEFAULT_WORK_TIME_LOWER;
+    const workTimeEnd = props.workTimeEnd || DEFAULT_WORK_TIME_UPPER;
 
     const toggleShowWorkActionsOverlay = () => {
         setShowActionsOverlay(!showActionsOverlay)
     }
 
-
-    if (workTimeStart > workTimeEnd) {
-        fireChangeWorkTimeEnd(workTimeStart+1)
-    }
-
-
     const styles = StyleSheet.create({
-
         card: {
             titleBar: {
                 actionsIcon: {
@@ -100,7 +96,7 @@ const GenericWork = props => {
     })
 
     let active = -1
-    for (const [i, set] of props.sets.entries()) {
+    for (const [i, set] of sets.entries()) {
         if (!set.finished) {
             active = i
             break;
@@ -133,13 +129,14 @@ const GenericWork = props => {
             </FlexRowView>
 
             <View style={styles.setsContainer}>
-                {props.sets.map((set, index) => {
+                {sets.map((set, index) => {
                     return <Set
                         key={index}
                         index={index}
                         {...set}
                         workId={props.id}
                         active={props.active && active === index}
+                        fireRemoveSet={props.fireRemoveSet}
                     />
                 })}
             </View>

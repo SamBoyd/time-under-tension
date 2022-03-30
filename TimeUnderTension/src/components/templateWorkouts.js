@@ -2,24 +2,25 @@ import React from 'react'
 import {useDispatch, useSelector} from "react-redux";
 
 import {moveToCreateTemplate} from "../reducers/uiStateReducer";
-import {selectTemplateWorkout} from "../reducers/templateWorkoutReducer";
+import {selectNewTemplateWorkout} from "../reducers/newTemplateWorkoutReducer";
 import TemplateWorkoutTile from "./TemplateWorkoutTile";
 import {StyleSheet, View} from "react-native";
-import {TextH1} from "./styled/text";
+import {TextH1, TextNormal} from "./styled/text";
 import {Button} from "./styled/button";
 import {standardHorizontalPadding, standardVerticalPadding} from "../theme";
+import {selectTemplates} from "../reducers/workoutTemplatesReducer";
 
 const styles = StyleSheet.create({
-    wrapper: {
+    wrapper: {},
 
-    },
-
-    header: {
-
-    },
+    header: {},
 
     templateTile: {
         rowGap: standardVerticalPadding,
+    },
+
+    noTemplates: {
+        paddingTop: standardVerticalPadding,
     },
 
     createButton: {
@@ -28,9 +29,10 @@ const styles = StyleSheet.create({
     }
 })
 
+const NoTemplateWorkouts = <View style={styles.noTemplates}><TextNormal>There are no templates</TextNormal></View>
 const TemplateWorkouts = () => {
     const dispatch = useDispatch()
-    const templateWorkouts = useSelector(selectTemplateWorkout)
+    const templateWorkouts = useSelector(selectTemplates)
 
     const createTemplate = () => {
         dispatch(moveToCreateTemplate())
@@ -43,13 +45,17 @@ const TemplateWorkouts = () => {
             </View>
 
             <View style={styles.templateTile}>
-                {templateWorkouts.templates.map((template, index) => {
-                    return <TemplateWorkoutTile key={index} template={template} />
-                })}
+                {templateWorkouts.length > 0 && (
+                    templateWorkouts.map((template, index) => {
+                        return <TemplateWorkoutTile key={index} template={template}/>
+                    })
+                ) || (
+                    NoTemplateWorkouts
+                )}
             </View>
 
             <View style={styles.createButton}>
-                <Button style={{}} onPress={createTemplate} title="Create new template" />
+                <Button style={{}} onPress={createTemplate} title="Create new template"/>
             </View>
         </View>
     )

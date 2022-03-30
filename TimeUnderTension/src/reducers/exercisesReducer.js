@@ -16,6 +16,10 @@ const exercisesReducer = createSlice({
     name: 'exercises',
     initialState: getInitialState(),
     reducers: {
+        reset: state => {
+            const initialState = getInitialState()
+            Object.keys(initialState).forEach(key => state[key] = initialState[key])
+        },
         addExercise: (state, action) => {
             state.exercises.push(action.payload.exercise)
         },
@@ -57,6 +61,7 @@ const exercisesReducer = createSlice({
 
 export const selectExercises = state => state.exercises
 export const {
+    reset,
     addExercise, removeExercise,
     addCategory, removeCategory,
     resetNewExercise, changeNewExerciseField, saveNewExercise

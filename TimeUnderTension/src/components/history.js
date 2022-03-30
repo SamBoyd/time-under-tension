@@ -1,10 +1,12 @@
 import React from 'react'
 import {useSelector, useDispatch} from "react-redux";
-import {selectHistory} from "../reducers/historyReducer";
-
-import dateFormat, { masks } from "dateformat";
 import {StyleSheet, View} from "react-native";
-import {Header, Text} from "react-native-elements";
+
+import {selectHistory} from "../reducers/workoutHistoryReducer";
+import {selectWork} from "../reducers/workReducer";
+import {loadWorkByIds} from "../utils/stateUtils";
+
+import dateFormat from "dateformat";
 import {TextH1, TextLighter, TextNormal} from "./styled/text";
 import {FlexRowView} from "./styled/view";
 import {standardHorizontalPadding, standardVerticalPadding} from "../theme";
@@ -24,27 +26,39 @@ const styles = StyleSheet.create({
 });
 
 const HistoryTile = props => {
+    const workState = useSelector(selectWork)
+
+    const work = loadWorkByIds(props.work, workState)
     return (
         <View style={styles.tile}>
             <FlexRowView>
                 <TextNormal>{props.name}</TextNormal>
                 <TextLighter className="date"> - {dateFormat(props.created_at, 'ddd, dS mmmm yyyy')}</TextLighter>
             </FlexRowView>
-            {props.work.map((work, i) =>
-                <TextLighter key={i}>{work.exercise.name} - {work.sets.length} sets</TextLighter>
+            {work.map((w, i) =>
+                <TextLighter key={i}>{w.exercise.name} - {w.sets.length} sets</TextLighter>
             )}
         </View>
     )
 }
 
+const NoHistoryTile = <View style={styles.tile}>
+    <FlexRowView>
+        <TextNormal>There is no history</TextNormal>
+    </FlexRowView>
+</View>
+
 const History = () => {
     const history = useSelector(selectHistory)
-
     return (
         <View style={styles.wrapper}>
             <TextH1>History</TextH1>
 
-            {history.map((workout, i) => <HistoryTile key={i} {...workout}/>)}
+            {history.length > 0 && (
+                history.map((workout, i) => <HistoryTile key={i} {...workout}/>)
+            ) || (
+                NoHistoryTile
+            )}
         </View>
     )
 }

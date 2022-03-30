@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import {changeSetReps, changeSetWeight, removeSet} from "../reducers/templateWorkoutReducer";
+import {changeSetReps, changeSetWeight, removeSet} from "../reducers/newTemplateWorkoutReducer";
 import {View} from "react-native";
 import InputSpinner from "react-native-input-spinner";
 import {TextNormal} from "./styled/text";

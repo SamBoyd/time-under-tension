@@ -17,10 +17,10 @@ export const TIMER_STATE = {
     rest: 'rest'
 }
 
-export const DEFAULT_SETUP_TIME = 10
-export const DEFAULT_WORK_TIME_LOWER = 40
-export const DEFAULT_WORK_TIME_UPPER = 50
-export const DEFAULT_REST_TIME = 45
+export const DEFAULT_SETUP_TIME = 2
+export const DEFAULT_WORK_TIME_LOWER = 2
+export const DEFAULT_WORK_TIME_UPPER = 3
+export const DEFAULT_REST_TIME = 3
 
 
 export const exerciseCategory = {

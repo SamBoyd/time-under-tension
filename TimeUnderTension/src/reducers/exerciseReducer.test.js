@@ -141,7 +141,10 @@ describe('Exercise reducer can', () => {
                 'category': 'chest',
             }],
             categories: ['chest', 'arms'],
-            newExercise: {}
+            newExercise: {
+                'name': '',
+                'category': '',
+            }
         })
 
     })

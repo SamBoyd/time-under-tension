@@ -1,6 +1,6 @@
 import React from 'react'
 import {useDispatch} from "react-redux";
-import {Dimensions, StyleSheet, View} from "react-native";
+import {StyleSheet, View} from "react-native";
 
 import {moveToManageExercises, moveToWorkout} from "../reducers/uiStateReducer";
 import TemplateWorkouts from "../components/templateWorkouts";
@@ -9,14 +9,9 @@ import {Button} from "../components/styled/button";
 
 import theme, {standardHorizontalPadding, standardVerticalPadding} from '../theme'
 
-import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import BasePage from "../components/basePage";
-import {wrapMapToPropsConstant} from "react-redux/lib/connect/wrapMapToProps";
 import {persistor} from "../store";
-
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
-
+import {resetEntireState} from "../utils/resetState";
 
 const styles = StyleSheet.create({
     button: {
@@ -41,7 +36,7 @@ function MainPage() {
     }
 
     const purgeStore = () => {
-        persistor.purge()
+        resetEntireState(dispatch)
     }
 
     return (
@@ -54,7 +49,7 @@ function MainPage() {
 
             <MainPageButton onPress={clickManageExercises} title="Manage Exercises"/>
 
-            <MainPageButton onPress={purgeStore()} title="Purge store" />
+            <MainPageButton onPress={purgeStore} title="Purge store" />
         </BasePage>
     )
 }

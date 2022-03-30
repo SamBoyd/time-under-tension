@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import {useDispatch} from "react-redux";
 
 import TemplateSet from "./templateSet";
 import {
@@ -9,7 +9,7 @@ import {
     moveWorkDown, moveWorkUp,
     removeSet,
     removeWork
-} from "../reducers/templateWorkoutReducer";
+} from "../reducers/newTemplateWorkoutReducer";
 import {DEFAULT_REST_TIME, DEFAULT_WORK_TIME_LOWER, DEFAULT_WORK_TIME_UPPER} from "../constants";
 import {View, StyleSheet} from "react-native";
 import InputSpinner from "react-native-input-spinner";
@@ -18,43 +18,53 @@ import {FlexRowView} from "./styled/view";
 import {Icon} from "react-native-elements";
 import {Button} from "./styled/button";
 import GenericWork from "./genericWork";
+import {addSetAction} from "../reducers/actions";
+import {updateRestOnWork, updateSetsOnWork, updateWorkTimeOnWork} from "../reducers/workReducer";
 
 const Work = props => {
     const dispatch = useDispatch()
 
     const work = props.work
 
+    const restTime = work.restTime || DEFAULT_REST_TIME;
+    const workTimeStart = work.workTimeStart || DEFAULT_WORK_TIME_LOWER
+    const workTimeEnd = work.workTimeEnd || DEFAULT_WORK_TIME_UPPER
+
+
     const fireAddSet = () => {
-        dispatch(addSet({workId: work.id}))
+        addSetAction(dispatch, work.id)
     }
 
-    const fireChangeRestTime = event => {
-        dispatch(changeRestTime({
+    const fireRemoveSet = setId => {
+        const newSets = work.sets.filter(s => s !== setId)
+        dispatch(updateSetsOnWork({
             workId: work.id,
-            restTime: event.target.value
+            sets: newSets
         }))
     }
 
-    const fireChangeWorkTimeStart = event => {
-        dispatch(changeWorkTime({
+    const fireChangeRestTime = value => {
+        dispatch(updateRestOnWork({
             workId: work.id,
-            workTime: {
-                start: event.target.value,
-                end: workTimeEnd
-            }
+            restTime: value
         }))
     }
 
-    const fireChangeWorkTimeEnd = event => {
-        dispatch(changeWorkTime({
+    const fireChangeWorkTimeStart = value => {
+        dispatch(updateWorkTimeOnWork({
             workId: work.id,
-            workTime: {
-                start: workTimeStart,
-                end: event.target.value
-            }
+            workTimeStart: value,
+            workTimeEnd: workTimeEnd
         }))
     }
 
+    const fireChangeWorkTimeEnd = value => {
+        dispatch(updateWorkTimeOnWork({
+            workId: work.id,
+            workTimeStart: workTimeStart,
+            workTimeEnd: value
+        }))
+    }
     const removeWorkByIndex = index => () => {
         dispatch(removeWork({index: index}))
     }
@@ -72,6 +82,7 @@ const Work = props => {
             {...work}
             workIndex={props.workIndex}
             fireAddSet={fireAddSet}
+            fireRemoveSet={fireRemoveSet}
             fireChangeRestTime={fireChangeRestTime}
             fireChangeWorkTimeStart={fireChangeWorkTimeStart}
             fireChangeWorkTimeEnd={fireChangeWorkTimeEnd}

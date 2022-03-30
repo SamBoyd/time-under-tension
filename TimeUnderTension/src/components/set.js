@@ -1,6 +1,6 @@
 import React from "react";
 import {useDispatch} from "react-redux";
-import {changeSetReps, changeSetWeight, finishSet, removeSet} from "../reducers/workoutReducer";
+import {changeSetReps, changeSetWeight, finishSet, removeSet} from "../reducers/setReducer";
 import {Text, View, StyleSheet, Dimensions} from "react-native";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import InputSpinner from "react-native-input-spinner";
@@ -13,6 +13,7 @@ import {OverlaySlider} from "./styled/input";
 import theme from '../theme'
 
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {updateSetsOnWork} from "../reducers/workReducer";
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -39,10 +40,6 @@ const Set = props => {
         // dispatch(finishSet({
         //     setId: props.id
         // }))
-    }
-
-    const fireRemoveSetById = setId => () => {
-        dispatch(removeSet({setId: props.id, workId: props.workId}))
     }
 
     let styles
@@ -157,7 +154,7 @@ const Set = props => {
             />
             <Icon
                 name='delete'
-                onPress={fireRemoveSetById(props.id)}
+                onPress={() => props.fireRemoveSet(props.id)}
                 {...styles.removeIcon}
             />
         </FlexRowView>

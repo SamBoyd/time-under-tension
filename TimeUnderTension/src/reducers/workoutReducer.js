@@ -41,10 +41,18 @@ export const workoutSlice = createSlice({
     name: 'workout',
     initialState: getInitialState(),
     reducers: {
+        reset: state => {
+            const initialState = getInitialState()
+            Object.keys(initialState).forEach(key => state[key] = initialState[key])
+        },
         createWorkoutFromTemplate: (state, action) => {
-            Object.keys(action.payload.template).forEach(
-                key => state[key] = action.payload.template[key]
+            Object.keys(action.payload).forEach(
+                key => state[key] = action.payload[key]
             )
+            state.id = uuidv4()
+            state.currentWork = 0
+            state.started_at = null
+            state.finished_at = null
         },
         startWorkoutIfNotStarted: (state, action) => {
             if (state.started_at === null) {
@@ -68,190 +76,47 @@ export const workoutSlice = createSlice({
         },
 
         addWork: (state, action) => {
-            const exercise = action.payload.exercise;
-            if (!exercise) {
-                return
-            }
-            let newWork = getNewWork(exercise, state.work.length)
+            let newWork = action.payload
             state.work.push(newWork)
-
             if (state.work.length === 1) {
                 state.currentWork = 0
             }
         },
         removeWork: (state, action) => {
-            state.work.splice(action.payload.index, 1)
-
-            state.work = state.work.map((work, index) => {
-                const newWork = {...work}
-                newWork.index = index
-                return newWork
-            })
+            const workId = action.payload
+            state.work = state.work.filter(id => workId !== id)
         },
         moveWorkUp: (state, action) => {
-            const indexToMoveUp = action.payload.index
+            const indexToMoveUp = state.work.indexOf(action.payload)
             if (indexToMoveUp > 0) {
-                const indexToMoveDown = indexToMoveUp - 1
-
-                state.work = state.work.map(work => {
-                    if (work.index === indexToMoveUp) {
-                        const newWork = {...work}
-                        newWork.index = indexToMoveUp - 1
-                        return newWork
-                    } else if (work.index === indexToMoveDown) {
-                        const newWork = {...work}
-                        newWork.index = indexToMoveDown + 1
-                        return newWork
-                    } else {
-                        return {...work}
-                    }
-                })
+                let work = [...state.work]
+                const workToMove = work[indexToMoveUp]
+                work.splice(indexToMoveUp, 1)
+                work.splice(indexToMoveUp - 1, 0, workToMove)
+                state.work = work
             }
         },
         moveWorkDown: (state, action) => {
-            const indexToMoveDown = action.payload.index
+            const indexToMoveDown = state.work.indexOf(action.payload)
             if (indexToMoveDown < state.work.length - 1) {
-                const indexToMoveUp = indexToMoveDown + 1
-
-                state.work = state.work.map(work => {
-                    if (work.index === indexToMoveUp) {
-                        const newWork = {...work}
-                        newWork.index = indexToMoveUp - 1
-                        return newWork
-                    } else if (work.index === indexToMoveDown) {
-                        const newWork = {...work}
-                        newWork.index = indexToMoveDown + 1
-                        return newWork
-                    } else {
-                        return {...work}
-                    }
-                })
+                let work = [...state.work]
+                const workToMove = work[indexToMoveDown]
+                work.splice(indexToMoveDown, 1)
+                work.splice(indexToMoveDown + 1, 0, workToMove)
+                state.work = work
             }
         },
         selectWork: (state, action) => {
             state.currentWork = action.payload.workIndex
-        },
-
-        addSet: (state, action) => {
-            const workId = action.payload.workId
-            if (!workId) {
-                return
-            }
-            const workIndex = state.work.findIndex(work => work.id === workId)
-            state.work[workIndex].sets.push(getNewSet())
-        },
-        removeSet: (state, action) => {
-            const setId = action.payload.setId
-            const workId = action.payload.workId
-            if (!setId || !workId) {
-                return
-            }
-
-            const workIndex = state.work.findIndex(work => work.id === workId)
-            const setIndex = state.work[workIndex].sets.findIndex(set => set.id === setId)
-
-            state.work[workIndex].sets.splice(setIndex, 1)
-        },
-        changeRestTime: (state, action) => {
-            const workId = action.payload.workId
-            const restTime = action.payload.restTime
-            if (!workId || !restTime) {
-                return
-            }
-            const workIndex = state.work.findIndex(work => work.id === workId)
-            state.work[workIndex].restTime = restTime
-        },
-        changeWorkTime: (state, action) => {
-            const workId = action.payload.workId
-            const workStart = action.payload.workTime.start
-            const workEnd = action.payload.workTime.end
-
-            if (!workId || !workStart || !workEnd) {
-                return
-            }
-
-            const workIndex = state.work.findIndex(work => work.id === workId)
-            state.work[workIndex].workTime = {start: workStart, end: workEnd}
-        },
-
-        changeSetReps: (state, action) => {
-            const setId = action.payload.setId
-            const reps = action.payload.reps
-
-            if (!setId || !reps) {
-                return
-            }
-
-
-            for (let iw = 0; iw < state.work.length; iw++) {
-                const work = state.work[iw]
-                for (let is = 0; is < work.sets.length; is++) {
-                    const set = work.sets[is]
-                    if (set.id === setId) {
-                        state.work[iw].sets[is].numberReps = reps
-                    }
-                }
-            }
-        },
-        changeSetWeight: (state, action) => {
-            const setId = action.payload.setId
-            const weight = action.payload.weight
-
-            if (!setId || !weight) {
-                return
-            }
-
-
-            for (let iw = 0; iw < state.work.length; iw++) {
-                const work = state.work[iw]
-                for (let is = 0; is < work.sets.length; is++) {
-                    const set = work.sets[is]
-                    if (set.id === setId) {
-                        state.work[iw].sets[is].weight = weight
-                    }
-                }
-            }
-        },
-        finishSet: (state, action) => {
-            const setId = action.payload.setId
-
-            if (!setId) {
-                return
-            }
-
-            let work = {}
-
-            let setToRemove = {}
-            let indexOfSetToRemove = -1
-
-            for (let iw = 0; iw < state.work.length; iw++) {
-                const w = state.work[iw]
-                for (let is = 0; is < w.sets.length; is++) {
-                    const set = w.sets[is]
-                    if (set.id === setId) {
-                        setToRemove = state.work[iw].sets[is]
-                        indexOfSetToRemove = is
-                        work = w
-                    }
-                }
-            }
-
-            const newSet = {...setToRemove}
-            newSet.finished = !setToRemove.finished
-
-            if (work !== {} && indexOfSetToRemove !== -1) {
-                work.sets.splice(indexOfSetToRemove, 1, newSet)
-            }
         },
     }
 })
 
 export const selectWorkout = state => state.workout
 export const {
+    reset,
     resetToInitialWorkout, startWorkoutIfNotStarted,
     removeWork, addWork, moveWorkUp, moveWorkDown, selectWork,
-    addSet, removeSet, changeRestTime, changeWorkTime,
-    changeSetReps, changeSetWeight, finishSet,
     createWorkoutFromTemplate, setWorkoutFinished
 } = workoutSlice.actions
 
