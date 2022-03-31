@@ -50,12 +50,15 @@ const NoHistoryTile = <View style={styles.tile}>
 
 const History = () => {
     const history = useSelector(selectHistory)
+
+    const sortedHistory = [...history].sort((a, b) => new Date(a.created_at) > new Date(b.created_at))
+
     return (
         <View style={styles.wrapper}>
             <TextH1>History</TextH1>
 
             {history.length > 0 && (
-                history.map((workout, i) => <HistoryTile key={i} {...workout}/>)
+                sortedHistory.map((workout, i) => <HistoryTile key={i} {...workout}/>)
             ) || (
                 NoHistoryTile
             )}
