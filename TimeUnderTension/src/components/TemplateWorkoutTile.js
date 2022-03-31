@@ -11,7 +11,6 @@ import {loadWorkByIds} from "../utils/stateUtils";
 
 const styles = StyleSheet.create({
     wrapper: {
-        paddingTop: standardVerticalPadding,
     },
 
     row: {

@@ -9,6 +9,7 @@ import {TextH1, TextNormal} from "./styled/text";
 import {Button} from "./styled/button";
 import {standardHorizontalPadding, standardVerticalPadding} from "../theme";
 import {selectTemplates} from "../reducers/workoutTemplatesReducer";
+import {FlexColumnView} from "./styled/view";
 
 const styles = StyleSheet.create({
     wrapper: {},
@@ -16,7 +17,8 @@ const styles = StyleSheet.create({
     header: {},
 
     templateTile: {
-        rowGap: standardVerticalPadding,
+        marginTop: standardVerticalPadding,
+        rowGap: standardVerticalPadding
     },
 
     noTemplates: {
@@ -44,7 +46,7 @@ const TemplateWorkouts = () => {
                 <TextH1>Template workouts</TextH1>
             </View>
 
-            <View style={styles.templateTile}>
+            <FlexColumnView viewStyle={styles.templateTile} rowGap={styles.templateTile.rowGap}>
                 {templateWorkouts.length > 0 && (
                     templateWorkouts.map((template, index) => {
                         return <TemplateWorkoutTile key={index} template={template}/>
@@ -52,7 +54,7 @@ const TemplateWorkouts = () => {
                 ) || (
                     NoTemplateWorkouts
                 )}
-            </View>
+            </FlexColumnView>
 
             <View style={styles.createButton}>
                 <Button style={{}} onPress={createTemplate} title="Create new template"/>

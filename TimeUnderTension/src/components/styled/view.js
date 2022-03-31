@@ -14,4 +14,21 @@ const styles = StyleSheet.create({
 
 export const FlexRowView = props => <View {...props} style={{...styles.row, ...props.viewStyle}}/>
 
-export const FlexColumnView = props => <View {...props} style={{...styles.column, ...props.viewStyle}}/>
+export const FlexColumnView = props => {
+    if (!('rowGap') in props) {
+        return <View {...props} style={{...styles.column, ...props.viewStyle}}/>
+    }
+
+
+    const wrappedChildren = props.children.map((child, index) => {
+        if (index === 0) {
+            return <View>{child}</View>
+        } else {
+            return <View style={{marginTop: props.rowGap}}>{child}</View>
+        }
+    })
+
+    return <View {...props} style={{...styles.column, ...props.viewStyle}}>
+        {wrappedChildren}
+    </View>
+}
