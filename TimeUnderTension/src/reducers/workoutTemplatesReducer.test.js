@@ -1,5 +1,5 @@
 import templateReducer, {
-    addToTemplates,
+    addToTemplates, deleteTemplate,
 } from "./workoutTemplatesReducer";
 import 'react-native-get-random-values';
 import {v4 as uuidv4} from 'uuid';
@@ -64,6 +64,32 @@ describe('The template reducer can', () => {
                 otherArray: [1, 2, 3, 4, 5, 6, 7],
                 anotherProperty: true,
             },
+            {id: 'fa2de79b-85f7-4e85-a238-c9e6265cd222'},
+        ])
+    })
+
+    test('delete templates', () => {
+        const previousState = [
+            {id: 'fa2de79b-85f7-4e85-a238-c9e6265cd111'},
+            {
+                id: 'fa2de79b-85f7-4e85-a238-c9e6265cd33',
+                otherProperty: {test: 'test'},
+                otherArray: [1, 2, 3, 4],
+            },
+            {id: 'fa2de79b-85f7-4e85-a238-c9e6265cd222'},
+        ]
+
+        const nextState = templateReducer(previousState, deleteTemplate('fa2de79b-85f7-4e85-a238-c9e6265cd33'))
+
+        expect(nextState).toEqual([
+            {id: 'fa2de79b-85f7-4e85-a238-c9e6265cd111'},
+            {id: 'fa2de79b-85f7-4e85-a238-c9e6265cd222'},
+        ])
+
+        const newerState = templateReducer(nextState, deleteTemplate('fa2de79b-85f7-4e85-a238-c9e6265cd33'))
+
+        expect(newerState).toEqual([
+            {id: 'fa2de79b-85f7-4e85-a238-c9e6265cd111'},
             {id: 'fa2de79b-85f7-4e85-a238-c9e6265cd222'},
         ])
     })

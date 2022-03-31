@@ -20,13 +20,21 @@ const workoutTemplatesSlice = createSlice({
             } else {
                 state.splice(indexOfExistingTemplate, 1, newTemplate)
             }
-        }
+        },
+        deleteTemplate: (state, action) => {
+            const templateId = action.payload
+            const indexToRemove = state.map(t => t.id).indexOf(templateId)
+            if (indexToRemove !== -1) {
+                state.splice(indexToRemove, 1)
+            }
+        },
     }
 })
 
 export const selectTemplates = state => state.templates
 export const {
     reset,
-    addToTemplates
+    addToTemplates,
+    deleteTemplate
 } = workoutTemplatesSlice.actions
 export default workoutTemplatesSlice.reducer
