@@ -27,7 +27,7 @@ const getNewWork = (exercise, index) => {
 
 const getInitialState = () => {
     return {
-        name: 'New workout',
+        name: 'Workout',
         id: uuidv4(),
         created_at: (new Date()).toISOString(),
         work: [],

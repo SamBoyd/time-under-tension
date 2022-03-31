@@ -25,7 +25,7 @@ describe('For Workout can', () => {
         const state = workoutReducer(undefined, {})
         expect(state).toEqual(
             {
-                name: 'New workout',
+                name: 'Workout',
                 id: expect.any(String),
                 created_at: expect.any(String),
                 work: [],
@@ -71,7 +71,7 @@ describe('For Workout can', () => {
         const state = workoutReducer(previousState, resetToInitialWorkout())
         expect(state).toEqual(
             {
-                name: 'New workout',
+                name: 'Workout',
                 id: expect.any(String),
                 created_at: expect.any(String),
                 work: [],
