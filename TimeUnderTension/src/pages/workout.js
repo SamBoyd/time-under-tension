@@ -63,7 +63,7 @@ const Workout = () => {
     return (
         <>
             <BasePage
-                headerTitle="Workout"
+                headerTitle={workout.name || "Workout"}
                 leftHeaderComponent={<Button onPress={goBack} title="back" containerStyle={styles.backButton}/>}
                 rightHeaderComponent={finishButton}
             >
