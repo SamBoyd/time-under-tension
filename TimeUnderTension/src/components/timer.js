@@ -24,6 +24,7 @@ import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-nativ
 import {loadSetsByIds, loadWorkByIds} from "../utils/stateUtils";
 import {selectSet} from "../reducers/setReducer";
 import {isRealValue} from "../utils/utils";
+import {playConfiguredTargetWorkSound, playConfiguredWorkSound} from "../services/soundService";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -97,8 +98,6 @@ const rest = count => {
 }
 
 
-
-
 const Timer = () => {
     const timer = useSelector(selectTimer)
     const workout = useSelector(selectWorkout)
@@ -122,9 +121,19 @@ const Timer = () => {
     }
 
     if (timer.state === TIMER_STATE.setup && timer.count >= DEFAULT_SETUP_TIME) {
+        playConfiguredWorkSound()
         dispatch(moveToWork())
     } else if (timer.state === TIMER_STATE.rest && timer.count >= DEFAULT_REST_TIME) {
+        playConfiguredWorkSound()
         dispatch(moveToWork())
+    }
+
+    if (timer.state === TIMER_STATE.work && (
+            timer.count === (currentWork.workTimeStart || DEFAULT_WORK_TIME_LOWER) ||
+            timer.count === (currentWork.workTimeEnd || DEFAULT_WORK_TIME_UPPER)
+        )
+    ) {
+        playConfiguredTargetWorkSound()
     }
 
     useEffect(() => {
@@ -145,7 +154,7 @@ const Timer = () => {
             timerText = setup(timer.count);
             break
         case TIMER_STATE.work:
-            timerText = work(dispatch, timer.count, currentWork.workTimeStart || DEFAULT_WORK_TIME_LOWER, currentWork.workTimeStart || DEFAULT_WORK_TIME_UPPER, currentSet);
+            timerText = work(dispatch, timer.count, currentWork.workTimeStart || DEFAULT_WORK_TIME_LOWER, currentWork.workTimeEnd || DEFAULT_WORK_TIME_UPPER, currentSet);
             break
         case TIMER_STATE.rest:
             timerText = rest(timer.count);
