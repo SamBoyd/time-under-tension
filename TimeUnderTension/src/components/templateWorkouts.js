@@ -36,6 +36,7 @@ const TemplateWorkouts = () => {
     const dispatch = useDispatch()
     const templateWorkouts = useSelector(selectTemplates)
 
+    const sortedTemplate = [...templateWorkouts].sort((a, b) => new Date(a.created_at) > new Date(b.created_at))
     const createTemplate = () => {
         dispatch(moveToCreateTemplate())
     }
@@ -48,7 +49,7 @@ const TemplateWorkouts = () => {
 
             <FlexColumnView viewStyle={styles.templateTile} rowGap={styles.templateTile.rowGap}>
                 {templateWorkouts.length > 0 && (
-                    templateWorkouts.map((template, index) => {
+                    sortedTemplate.map((template, index) => {
                         return <TemplateWorkoutTile key={index} template={template}/>
                     })
                 ) || (
