@@ -137,7 +137,7 @@ const CreateTemplateWorkout = () => {
 
             <Button
                 onPress={addNewWork}
-                title="Add work"
+                title="Add"
             />
         </BasePage>
     )

@@ -148,9 +148,9 @@ const GenericWork = props => {
                 onBackdropPress={toggleShowWorkActionsOverlay}
                 overlayStyle={styles.overlay}
             >
-                <Button onPress={props.removeWorkByIndex(props.workIndex)} title={`Remove work ${props.workIndex}`} />
-                <Button onPress={props.moveWorkUpByIndex(props.workIndex)} title={`Move work up`} />
-                <Button onPress={props.moveWorkDownByIndex(props.workIndex)} title={`Move work down`} />
+                <Button onPress={props.removeWorkByIndex(props.workIndex)} title={`Remove ${props.exercise.name.toLowerCase()}`} />
+                <Button onPress={props.moveWorkUpByIndex(props.workIndex)} title={`Move up`} />
+                <Button onPress={props.moveWorkDownByIndex(props.workIndex)} title={`Move down`} />
             </Overlay>
         </Card>
     )
