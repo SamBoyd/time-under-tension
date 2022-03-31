@@ -19,17 +19,21 @@ import {addSetToWork, addWork, newWorkForExercise} from "./workReducer";
 import {addSet, finishSet, getNewSet} from "./setReducer";
 import {addToTemplates} from "./workoutTemplatesReducer";
 
-export const pickExerciseForWorkoutAction = exercise => dispatch => {
-    const newWork = newWorkForExercise(exercise)
-    dispatch(addWorkToWorkout(newWork.id))
-    dispatch(addWork(newWork))
-    dispatch(followRedirect())
-}
 
 export const addSetAction = (dispatch, workId) => {
     const newSet = getNewSet()
     dispatch(addSet(newSet))
     dispatch(addSetToWork({workId: workId, setId: newSet.id}))
+}
+
+export const pickExerciseForWorkoutAction = exercise => dispatch => {
+    const newWork = newWorkForExercise(exercise)
+    dispatch(addWorkToWorkout(newWork.id))
+    dispatch(addWork(newWork))
+    addSetAction(dispatch, newWork.id)
+    addSetAction(dispatch, newWork.id)
+    addSetAction(dispatch, newWork.id)
+    dispatch(followRedirect())
 }
 
 export const pickExerciseForTemplateWorkoutAction = exercise => dispatch => {
