@@ -64,9 +64,7 @@ const CreateTemplateWorkout = () => {
             maxWidth: wp(75)
 
         },
-        saveTitleContainer: {
-
-        },
+        saveTitleContainer: {},
 
         titleWrapper: {
             marginTop: standardVerticalPadding,
@@ -83,9 +81,7 @@ const CreateTemplateWorkout = () => {
             marginBottom: standardVerticalPadding,
         },
 
-        saveButton: {
-
-        }
+        saveButton: {}
     })
 
     const work = loadWorkByIds(newTemplate.work, workState)
@@ -127,8 +123,9 @@ const CreateTemplateWorkout = () => {
 
     return (
         <BasePage
-            leftHeaderComponent={<Button onPress={backToMainPage} title="back" />}
+            leftHeaderComponent={<Button onPress={backToMainPage} title="back"/>}
             headerTitle="Create template workout"
+            rightHeaderComponent={<Button onPress={saveTemplate} title="Save"/>}
         >
             <View style={styles.titleWrapper}>
                 {templateTitle}
@@ -141,11 +138,6 @@ const CreateTemplateWorkout = () => {
             <Button
                 onPress={addNewWork}
                 title="Add work"
-            />
-
-            <Button
-                onPress={saveTemplate}
-                title="Save"
             />
         </BasePage>
     )
