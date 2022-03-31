@@ -24,6 +24,7 @@ export const newTemplateWorkoutSlice = createSlice({
         },
         editTemplate: (state, action) => {
             Object.keys(action.payload).forEach(key => state[key] = action.payload[key])
+            state.existingTemplate = true
         },
         resetTemplate: state => {
             const newState = getInitialState()

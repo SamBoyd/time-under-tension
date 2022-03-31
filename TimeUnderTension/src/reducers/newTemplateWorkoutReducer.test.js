@@ -95,7 +95,8 @@ describe('When creating a template workout can', () => {
                 name: 'Someday workout',
                 id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
                 created_at: "2022-01-19T17:53:11.336Z",
-                work: ['fa2de79b-85f7-4e85-a238-c9e6265cd111', 'fa2de79b-85f7-4e85-a238-c9e6265cd222']
+                work: ['fa2de79b-85f7-4e85-a238-c9e6265cd111', 'fa2de79b-85f7-4e85-a238-c9e6265cd222'],
+                existingTemplate: true
             }
         )
     })

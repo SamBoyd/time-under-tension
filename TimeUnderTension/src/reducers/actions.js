@@ -4,7 +4,7 @@ import {
     resetToInitialWorkout,
     selectWork, startWorkoutIfNotStarted
 } from "./workoutReducer";
-import {addWork as addTemplateWork, editTemplate, resetTemplate} from "./newTemplateWorkoutReducer";
+import {reset as resetNewTemplate, addWork as addTemplateWork, editTemplate, resetTemplate} from "./newTemplateWorkoutReducer";
 import {
     followRedirect,
     moveToCreateTemplate,
@@ -62,7 +62,7 @@ export const moveToEditTemplate = (dispatch, template) => {
 }
 
 export const cancelEditTemplateAndMoveToMainPage = (dispatch) => {
-    dispatch(cancelEditTemplate())
+    dispatch(resetNewTemplate())
     dispatch(moveToMainPage())
 }
 

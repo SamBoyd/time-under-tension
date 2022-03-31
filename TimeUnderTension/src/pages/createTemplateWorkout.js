@@ -29,7 +29,7 @@ const CreateTemplateWorkout = () => {
     const [uiState, setUiState] = useState({
         editingTitle: false
     })
-    const editingExistingTemplate = 'indexInTemplates' in newTemplate
+    const editingExistingTemplate = 'existingTemplate' in newTemplate
 
     const backToMainPage = () => {
         if (!(editingExistingTemplate)) {

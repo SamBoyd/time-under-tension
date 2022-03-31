@@ -11,7 +11,15 @@ const workoutTemplatesSlice = createSlice({
         },
         addToTemplates: (state, action) => {
             const newTemplate = {...action.payload}
-            state.push(newTemplate)
+            delete newTemplate.existingTemplate
+
+            const indexOfExistingTemplate = state.map(t => t.id).indexOf(newTemplate.id)
+
+            if (indexOfExistingTemplate === -1) {
+                state.push(newTemplate)
+            } else {
+                state.splice(indexOfExistingTemplate, 1, newTemplate)
+            }
         }
     }
 })
