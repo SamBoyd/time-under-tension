@@ -19,14 +19,18 @@ export const FlexColumnView = props => {
         return <View {...props} style={{...styles.column, ...props.viewStyle}}/>
     }
 
-
-    const wrappedChildren = props.children.map((child, index) => {
-        if (index === 0) {
-            return <View key={index}>{child}</View>
-        } else {
-            return <View key={index} style={{marginTop: props.rowGap}}>{child}</View>
-        }
-    })
+    let wrappedChildren
+    if (props.children) {
+        const wrappedChildren = props.children.map((child, index) => {
+            if (index === 0) {
+                return <View key={index}>{child}</View>
+            } else {
+                return <View key={index} style={{marginTop: props.rowGap}}>{child}</View>
+            }
+        })
+    } else {
+        wrappedChildren = <></>
+    }
 
     return <View {...props} style={{...styles.column, ...props.viewStyle}}>
         {wrappedChildren}

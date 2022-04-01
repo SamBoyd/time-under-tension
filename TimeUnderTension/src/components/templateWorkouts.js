@@ -2,8 +2,6 @@ import React from 'react'
 import {useDispatch, useSelector} from "react-redux";
 
 import {moveToCreateTemplate} from "../reducers/uiStateReducer";
-import {selectNewTemplateWorkout} from "../reducers/newTemplateWorkoutReducer";
-import TemplateWorkoutTile from "./TemplateWorkoutTile";
 import {StyleSheet, View} from "react-native";
 import {TextH1, TextNormal} from "./styled/text";
 import {Button} from "./styled/button";
@@ -47,15 +45,15 @@ const TemplateWorkouts = () => {
                 <TextH1>Template workouts</TextH1>
             </View>
 
-            <FlexColumnView viewStyle={styles.templateTile} rowGap={styles.templateTile.rowGap}>
-                {templateWorkouts.length > 0 && (
-                    sortedTemplate.map((template, index) => {
+            {templateWorkouts.length > 0 && (
+                <FlexColumnView viewStyle={styles.templateTile} rowGap={styles.templateTile.rowGap}>
+                    {sortedTemplate.map((template, index) => {
                         return <TemplateWorkoutTile key={index} template={template}/>
-                    })
-                ) || (
-                    NoTemplateWorkouts
-                )}
-            </FlexColumnView>
+                    })}
+                </FlexColumnView>
+            ) || (
+                NoTemplateWorkouts
+            )}
 
             <View style={styles.createButton}>
                 <Button style={{}} onPress={createTemplate} title="Create new template"/>

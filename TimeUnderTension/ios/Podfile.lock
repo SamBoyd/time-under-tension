@@ -345,7 +345,7 @@ PODS:
     - React-jsi (= 0.67.4)
     - React-logger (= 0.67.4)
     - React-perflogger (= 0.67.4)
-  - RNCAsyncStorage (1.17.0):
+  - RNCAsyncStorage (1.17.1):
     - React-Core
   - RNVectorIcons (9.1.0):
     - React-Core
@@ -545,7 +545,7 @@ SPEC CHECKSUMS:
   React-RCTVibration: 3b52a7dced19cdb025b4f88ab26ceb2d85f30ba2
   React-runtimeexecutor: a9d3c82ddf7ffdad9fbe6a81c6d6f8c06385464d
   ReactCommon: 07d0c460b9ba9af3eaf1b8f5abe7daaad28c9c4e
-  RNCAsyncStorage: 4efdcd2f7378421b29467c9de58f43552b60cf5b
+  RNCAsyncStorage: 4e17811bcadfdc068cd3e2bb896f0fea0198710d
   RNVectorIcons: 7923e585eaeb139b9f4531d25a125a1500162a0b
   Yoga: d6b6a80659aa3e91aaba01d0012e7edcbedcbecd
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
