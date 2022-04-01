@@ -5,6 +5,7 @@ import humanizeDuration from "humanize-duration";
 import {View} from "react-native";
 import theme, {standardVerticalPadding} from "../theme";
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from "react-native-responsive-screen";
+import {Shadow} from "./styled/shadow";
 
 export const WorkoutDuration = props => {
     const [duration, setDuration] = useState(0)
@@ -20,9 +21,6 @@ export const WorkoutDuration = props => {
 
     const styles = {
         container: {
-            borderWidth: 1,
-            borderColor: theme.colors.secondary,
-            borderRadius: theme.borderRadius,
             marginTop: standardVerticalPadding,
             width: wp(50),
             alignSelf: 'flex-end',
@@ -35,7 +33,7 @@ export const WorkoutDuration = props => {
         },
 
         icon: {
-            color: theme.colors.secondary,
+            color: theme.colors.white,
         }
     }
 

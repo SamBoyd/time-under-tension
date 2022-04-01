@@ -40,9 +40,6 @@ const styles = StyleSheet.create({
         paddingBottom: 200,
     },
 
-    title: {
-        color: theme.colors.secondary
-    },
 })
 
 const BasePage = props => {
@@ -52,7 +49,7 @@ const BasePage = props => {
             <StatusBar translucent backgroundColor={styles.statusBar.color} barStyle="dark-content"/>
             <Header
                 leftComponent={props.leftHeaderComponent}
-                centerComponent={<View><TextH1 style={styles.title}>{props.headerTitle}</TextH1></View>}
+                centerComponent={<View><TextH1>{props.headerTitle}</TextH1></View>}
                 rightComponent={props.rightHeaderComponent}
             />
             <View style={styles.scrollWrapper}>

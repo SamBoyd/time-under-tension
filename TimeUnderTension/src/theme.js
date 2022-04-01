@@ -45,21 +45,13 @@ const theme = createTheme({
         //     };
     },
 
+    fontFamily: 'sf-ui-display-semibold',
+    textSize: 12,
 
     borderRadius: 8,
     internalPadding: wp(2),
     shadowDistance: 3,
-    Text: {
-        style: {
-            fontSize: 12,
-            color: '#CECABA'
-        },
-    },
-    Button: {
-        textStyle: {
-            fontSize: 12
-        },
-    },
+
     Input: {
         textStyle: {
             fontSize: 12

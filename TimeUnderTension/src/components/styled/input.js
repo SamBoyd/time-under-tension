@@ -51,11 +51,17 @@ export const OverlaySlider = props => {
 
     return (
         <ThemeProvider theme={theme}>
-            <Overlay overlayStyle={styles.overlay} isVisible={state.editing} onBackdropPress={saveEdit}>
+            <Overlay
+                isVisible={state.editing}
+                overlayStyle={styles.overlay}
+                onBackdropPress={saveEdit}
+            >
+
                 <FlexRowView>
                     <TextNormal>{props.overlayTitle}</TextNormal>
                     <TextNormal>: {tempSliderValue}</TextNormal>
                 </FlexRowView>
+
                 <Slider
                     minimumValue={props.minimumValue}
                     value={tempSliderValue}
@@ -63,7 +69,9 @@ export const OverlaySlider = props => {
                     onValueChange={setTempSliderRounded}
                     onSlidingComplete={setSliderRounded}
                 />
+
             </Overlay>
+
             <TextNormal
                 style={props.textStyle}
                 onPress={toggleEdit}

@@ -54,7 +54,8 @@ const GenericWork = props => {
                     }
                 },
                 text: {
-                    color: theme.colors.white
+                    color: theme.colors.white,
+                    fontFamily: theme.fontFamily,
                 }
             },
 

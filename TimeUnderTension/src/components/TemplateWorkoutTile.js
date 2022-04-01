@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {createWorkoutFromTemplateAndMoveToWorkout, moveToEditTemplate} from "../reducers/actions";
 import {StyleSheet, FlatList, View} from "react-native";
 import {TextH1, TextLighter, TextNormal} from "./styled/text";
-import {Button, EditButton} from "./styled/button";
+import {Button} from "./styled/button";
 import {standardHorizontalPadding, standardVerticalPadding} from "../theme";
 import {selectWork} from "../reducers/workReducer";
 import {loadWorkByIds} from "../utils/stateUtils";
