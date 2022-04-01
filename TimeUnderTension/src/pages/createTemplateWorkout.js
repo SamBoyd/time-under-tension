@@ -20,6 +20,7 @@ import BasePage from "../components/basePage";
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {loadWorkByIds} from "../utils/stateUtils";
 import {selectWork} from "../reducers/workReducer";
+import {ThemeProvider} from "react-native-elements";
 
 
 const CreateTemplateWorkout = () => {
@@ -64,6 +65,9 @@ const CreateTemplateWorkout = () => {
             maxWidth: wp(75)
 
         },
+        editTitleText: {
+          color: theme.Text.style.color
+        },
         saveTitleContainer: {},
 
         titleWrapper: {
@@ -88,15 +92,13 @@ const CreateTemplateWorkout = () => {
     const workComponents = work.map((work, i) => <TemplateWork work={work} workIndex={i}/>)
 
     const templateTitle = <>
-        {editingExistingTemplate && (
-            <TextNormal htmlFor='template-title'>Editing</TextNormal>
-        )}
         {uiState.editingTitle && (
             <FlexRowView viewStyle={styles.editTitleWrapper}>
                 <Input
                     value={newTemplate.name}
                     onChangeText={updateTitle}
                     containerStyle={styles.editTitleContainer}
+                    inputStyle={styles.editTitleText}
                     rightIcon={<Icon
                         name={"save"}
                         onPress={toggleEditTitle}
@@ -122,24 +124,26 @@ const CreateTemplateWorkout = () => {
     </>
 
     return (
-        <BasePage
-            leftHeaderComponent={<Button onPress={backToMainPage} title="back"/>}
-            headerTitle="Create template workout"
-            rightHeaderComponent={<Button onPress={saveTemplate} title="Save"/>}
-        >
-            <View style={styles.titleWrapper}>
-                {templateTitle}
-            </View>
+        <ThemeProvider theme={theme}>
+            <BasePage
+                leftHeaderComponent={<Button onPress={backToMainPage} title="back"/>}
+                headerTitle="Create template workout"
+                rightHeaderComponent={<Button onPress={saveTemplate} title="Save"/>}
+            >
+                <View style={styles.titleWrapper}>
+                    {templateTitle}
+                </View>
 
-            <View style={styles.workWrapper}>
-                {workComponents}
-            </View>
+                <View style={styles.workWrapper}>
+                    {workComponents}
+                </View>
 
-            <Button
-                onPress={addNewWork}
-                title="Add"
-            />
-        </BasePage>
+                <Button
+                    onPress={addNewWork}
+                    title="Add"
+                />
+            </BasePage>
+        </ThemeProvider>
     )
 }
 

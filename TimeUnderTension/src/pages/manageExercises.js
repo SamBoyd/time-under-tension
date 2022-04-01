@@ -6,7 +6,7 @@ import {moveToAddExercise, moveToMainPage} from "../reducers/uiStateReducer";
 import {Dimensions, FlatList, StyleSheet, View} from "react-native";
 import {TextBold, TextH1, TextNormal} from "../components/styled/text";
 import {Button} from "../components/styled/button";
-import {Divider, Icon} from "react-native-elements";
+import {Divider, Icon, ThemeProvider} from "react-native-elements";
 import {FlexRowView} from "../components/styled/view";
 
 import theme, {standardHorizontalPadding, standardVerticalPadding} from '../theme'
@@ -78,36 +78,38 @@ const ManageExercises = () => {
     }
 
     return (
-        <BasePage
-            headerTitle="Managing Exercises"
-            leftHeaderComponent={<Button onPress={goBack} title="back" />}
-        >
-            {sortedExercises.map(({title, data}) => {
-                return (
-                    <>
-                        <View style={styles.subsection}>
-                            <View style={styles.subsection.header}>
-                                <TextBold>{capitalizeFirstLetter(title)}</TextBold>
+        <ThemeProvider theme={theme}>
+            <BasePage
+                headerTitle="Managing Exercises"
+                leftHeaderComponent={<Button onPress={goBack} title="back"/>}
+            >
+                {sortedExercises.map(({title, data}) => {
+                    return (
+                        <>
+                            <View style={styles.subsection}>
+                                <View style={styles.subsection.header}>
+                                    <TextBold>{capitalizeFirstLetter(title)}</TextBold>
+                                </View>
+                                <FlatList
+                                    nestedScrollEnabled
+                                    data={data}
+                                    renderItem={({item}) => <Item id={item.id} name={item.name}
+                                                                  category={item.category}/>}
+                                    keyExtractor={item => item.id}
+                                />
                             </View>
-                            <FlatList
-                                nestedScrollEnabled
-                                data={data}
-                                renderItem={({item}) => <Item id={item.id} name={item.name}
-                                                              category={item.category}/>}
-                                keyExtractor={item => item.id}
-                            />
-                        </View>
-                        <Divider/>
-                    </>
-                )
-            })}
+                            <Divider/>
+                        </>
+                    )
+                })}
 
-            <Button
-                onPress={addExercise}
-                title="Add"
-                containerStyle={styles.addButton}
-            />
-        </BasePage>
+                <Button
+                    onPress={addExercise}
+                    title="Add"
+                    containerStyle={styles.addButton}
+                />
+            </BasePage>
+        </ThemeProvider>
     )
 }
 

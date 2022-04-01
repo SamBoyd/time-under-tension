@@ -70,6 +70,9 @@ const PickExercise = () => {
             backgroundColor: theme.colors.tertiary,
             paddingLeft: standardHorizontalPadding,
             paddingTop: standardVerticalPadding,
+            text: {
+                color: theme.colors.white,
+            }
         },
         listItem: {
             backgroundColor: theme.colors.tertiary,
@@ -78,6 +81,7 @@ const PickExercise = () => {
             paddingBottom: hp(1),
             text: {
                 fontSize: 12,
+                color: theme.colors.white,
             },
         },
     })
@@ -93,7 +97,7 @@ const PickExercise = () => {
                     noRotation
                     content={
                         <ListItem.Content>
-                            <ListItem.Title>{capitalizeFirstLetter(category.title)}</ListItem.Title>
+                            <ListItem.Title style={styles.listHeader.text}>{capitalizeFirstLetter(category.title)}</ListItem.Title>
                         </ListItem.Content>
                     }
                     isExpanded={expandedSection === category.title}

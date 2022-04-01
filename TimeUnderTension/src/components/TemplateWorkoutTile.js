@@ -2,18 +2,23 @@ import React, {useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {createWorkoutFromTemplateAndMoveToWorkout, moveToEditTemplate} from "../reducers/actions";
 import {StyleSheet, FlatList, View} from "react-native";
-import {TextLighter, TextNormal} from "./styled/text";
+import {TextH1, TextLighter, TextNormal} from "./styled/text";
 import {Button, EditButton} from "./styled/button";
 import {standardHorizontalPadding, standardVerticalPadding} from "../theme";
 import {selectWork} from "../reducers/workReducer";
 import {loadWorkByIds} from "../utils/stateUtils";
-import {Icon, Overlay} from "react-native-elements";
+import {Icon, Overlay, ThemeProvider} from "react-native-elements";
 import {FlexColumnView} from "./styled/view";
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from "react-native-responsive-screen";
 import {deleteTemplate as deleteTemplateAction} from "../reducers/workoutTemplatesReducer";
+import theme from '../theme'
 
 const styles = StyleSheet.create({
-    wrapper: {},
+    wrapper: {
+        backgroundColor: theme.colors.grey0,
+        borderRadius: theme.borderRadius,
+        padding: theme.internalPadding,
+    },
 
     row: {
         flexDirection: "row",
@@ -32,8 +37,11 @@ const styles = StyleSheet.create({
         rowGap: standardVerticalPadding,
         container: {
             width: wp(75),
+            backgroundColor: theme.colors.tertiary,
         },
-        wrapper: {
+        wrapper: {},
+        backdropStyle: {
+            backgroundColor: 'rgba(20, 14, 8, 0.8)',
         },
     }
 });
@@ -67,7 +75,7 @@ const TemplateWorkoutTile = props => {
     }
 
     return (
-        <>
+        <ThemeProvider theme={theme}>
             <View style={styles.wrapper}>
                 <View style={styles.row}>
                     <TextNormal onPress={startWorkoutFromTemplate}>{props.template.name}</TextNormal>
@@ -84,14 +92,18 @@ const TemplateWorkoutTile = props => {
                     keyExtractor={work => work.id}
                 />
             </View>
-            <Overlay overlayStyle={styles.overlay.container} isVisible={displayActionsOverlay} onBackdropPress={toggleOverlay}>
+            <Overlay isVisible={displayActionsOverlay}
+                     overlayStyle={styles.overlay.container}
+                     backdropStyle={styles.overlay.backdropStyle}
+                     onBackdropPress={toggleOverlay}
+            >
                 <FlexColumnView viewStyles={styles.overlay.wrapper} rowGap={styles.overlay.rowGap}>
-                    <TextNormal>{props.template.name}</TextNormal>
-                    <Button onPress={editTemplate} title="Edit" />
-                    <Button onPress={deleteTemplate} title="Delete" />
+                    <TextH1>{props.template.name}</TextH1>
+                    <Button onPress={editTemplate} title="Edit"/>
+                    <Button onPress={deleteTemplate} title="Delete"/>
                 </FlexColumnView>
             </Overlay>
-        </>
+        </ThemeProvider>
     )
 }
 

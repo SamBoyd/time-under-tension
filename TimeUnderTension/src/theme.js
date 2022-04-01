@@ -1,17 +1,21 @@
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {createTheme} from "@rneui/themed";
 
 export const standardVerticalPadding = hp(3)
 export const standardHorizontalPadding = wp(10)
 
-const theme = {
+const theme = createTheme({
     colors: {
-        primary: '#FA9500',
-        secondary: "#00272B",
-        tertiary: "#E5ECE9",
-        white: 'white',
+        primary: '#CDE6F5',
+        secondary: "#5F758E",
+        tertiary: "#141204",
+        white: '#CECABA',
         //     black;
-        grey0: "rgba(0, 0, 0, 0.5)",
-        //     grey1;
+        grey0: "#31302C",
+        grey1: "#5D5B54",
+
+        shadowLight: "#5D5B54",
+        shadowDark: "#141204",
         //     grey2;
         //     grey3;
         //     grey4;
@@ -41,11 +45,14 @@ const theme = {
         //     };
     },
 
-    borderRadius: 4,
 
+    borderRadius: 8,
+    internalPadding: wp(2),
+    shadowDistance: 3,
     Text: {
         style: {
             fontSize: 12,
+            color: '#CECABA'
         },
     },
     Button: {
@@ -57,7 +64,12 @@ const theme = {
         textStyle: {
             fontSize: 12
         }
+    },
+
+    Icon: {
+        color: '#CECABA',
     }
-};
+
+});
 
 export default theme;

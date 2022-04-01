@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 
 import {SafeAreaProvider} from "react-native-safe-area-context/src/SafeAreaContext";
-import {ThemeProvider} from "react-native-elements";
 
 import {
     Colors,
@@ -16,6 +15,7 @@ import {
 import MainApp from './src/App'
 import store, {persistor} from "./src/store";
 import theme from './src/theme'
+import {ThemeProvider} from "@rneui/themed";
 
 const App = () => {
     const isDarkMode = useColorScheme() === 'dark';

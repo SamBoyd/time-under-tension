@@ -16,14 +16,12 @@ const styles = StyleSheet.create({
     },
 
     header: {
-        height: hp(5),
+        height: hp(8),
         margin: 0,
         paddingVertical: hp(1),
         paddingHorizontal: wp(5),
 
-        backgroundColor: theme.colors.tertiary,
-        borderBottomWidth: 1,
-        borderBottomColor: theme.colors.secondary,
+        backgroundColor: theme.colors.grey0,
 
         flexDirection: "row",
         justifyContent: "space-between",

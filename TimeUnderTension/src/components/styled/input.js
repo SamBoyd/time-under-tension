@@ -1,4 +1,4 @@
-import {Overlay, Text} from "react-native-elements";
+import {Overlay} from "react-native-elements";
 import {StyleSheet} from "react-native";
 
 import React, {useState} from "react";
@@ -6,7 +6,9 @@ import {FlexRowView} from "./view";
 
 import {Slider} from '@miblanchard/react-native-slider';
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
-
+import {ThemeProvider} from "react-native-elements";
+import {theme} from '../../theme'
+import {TextNormal} from "./text";
 
 const AMOUNT_TO_ADD_TO_MAXIMUM_VALUE = 45
 
@@ -48,11 +50,11 @@ export const OverlaySlider = props => {
     }
 
     return (
-        <>
+        <ThemeProvider theme={theme}>
             <Overlay overlayStyle={styles.overlay} isVisible={state.editing} onBackdropPress={saveEdit}>
                 <FlexRowView>
-                    <Text>{props.overlayTitle}</Text>
-                    <Text>: {tempSliderValue}</Text>
+                    <TextNormal>{props.overlayTitle}</TextNormal>
+                    <TextNormal>: {tempSliderValue}</TextNormal>
                 </FlexRowView>
                 <Slider
                     minimumValue={props.minimumValue}
@@ -62,12 +64,12 @@ export const OverlaySlider = props => {
                     onSlidingComplete={setSliderRounded}
                 />
             </Overlay>
-            <Text
+            <TextNormal
                 style={props.textStyle}
                 onPress={toggleEdit}
             >
                 {sliderValue}
-            </Text>
-        </>
+            </TextNormal>
+        </ThemeProvider>
     )
 }

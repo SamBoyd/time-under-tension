@@ -22,9 +22,9 @@ export const FlexColumnView = props => {
 
     const wrappedChildren = props.children.map((child, index) => {
         if (index === 0) {
-            return <View>{child}</View>
+            return <View key={index}>{child}</View>
         } else {
-            return <View style={{marginTop: props.rowGap}}>{child}</View>
+            return <View key={index} style={{marginTop: props.rowGap}}>{child}</View>
         }
     })
 

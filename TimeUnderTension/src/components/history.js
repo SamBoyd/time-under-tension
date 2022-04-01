@@ -8,8 +8,8 @@ import {loadWorkByIds} from "../utils/stateUtils";
 
 import dateFormat from "dateformat";
 import {TextH1, TextLighter, TextNormal} from "./styled/text";
-import {FlexRowView} from "./styled/view";
-import {standardHorizontalPadding, standardVerticalPadding} from "../theme";
+import {FlexColumnView, FlexRowView} from "./styled/view";
+import theme, {standardHorizontalPadding, standardVerticalPadding} from "../theme";
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -21,7 +21,10 @@ const styles = StyleSheet.create({
     },
 
     tile: {
-        paddingTop: standardVerticalPadding,
+        marginTop: standardVerticalPadding,
+        backgroundColor: theme.colors.grey0,
+        borderRadius: theme.borderRadius,
+        padding: theme.internalPadding,
     }
 });
 

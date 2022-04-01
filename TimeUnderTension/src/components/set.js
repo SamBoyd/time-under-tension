@@ -51,31 +51,31 @@ const Set = props => {
                 justifyContent: "space-evenly",
                 alignItems: 'center',
                 backgroundColor: theme.colors.primary,
-                color: theme.colors.white,
+                color: 'white',
             },
             setIndex: {
-                color: theme.colors.white,
+                color: 'white',
             },
             repsAndWeight: {
                 width: wp(10),
                 justifyContent: "space-between",
                 textStyle: {
-                    color: theme.colors.white,
+                    color: 'white',
                 }
             },
             checkbox: {
                 height: hp(2),
                 width: wp(2),
                 uncheckedIcon: {
-                    color: theme.colors.white,
+                    color: 'white',
                 },
                 checkedIcon: {
-                    color: theme.colors.primary,
+                    color: 'white',
                 }
             },
             removeIcon: {
                 size: 15,
-                color: theme.colors.white,
+                color: 'white',
             }
         })
     } else {
@@ -94,10 +94,10 @@ const Set = props => {
                 height: hp(2),
                 width: hp(2),
                 uncheckedIcon: {
-                    color: theme.colors.secondary,
+                    color: theme.colors.white,
                 },
                 checkedIcon: {
-                    color: theme.colors.primary,
+                    color: theme.colors.white,
                 }
             },
             removeIcon: {

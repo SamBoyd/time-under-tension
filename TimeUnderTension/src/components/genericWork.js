@@ -13,16 +13,18 @@ import {
 } from "../reducers/workoutReducer";
 import {DEFAULT_REST_TIME, DEFAULT_WORK_TIME_LOWER, DEFAULT_WORK_TIME_UPPER} from "../constants";
 import {Dimensions, StyleSheet, View} from "react-native";
-import {FlexRowView} from "./styled/view";
+import {FlexColumnView, FlexRowView} from "./styled/view";
 import {Button} from "./styled/button";
+import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 
 import RestTime from "./restTime";
 import WorkTime from "./workTime";
-import {Card, Divider, Icon, Overlay} from "react-native-elements";
+import {Card, Divider, Icon, Overlay, ThemeProvider} from "react-native-elements";
 import theme from "../theme";
 import {selectSet} from "../reducers/setReducer";
 import {loadSetsByIds} from "../utils/stateUtils";
+import {TextH1} from "./styled/text";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -51,14 +53,16 @@ const GenericWork = props => {
                         right: 0,
                     }
                 },
+                text: {
+                    color: theme.colors.white
+                }
             },
 
             containerStyle: {
+                backgroundColor: theme.colors.grey0,
                 borderRadius: theme.borderRadius,
-                borderWidth: 1,
-                borderColor: theme.colors.secondary,
+                borderWidth: 0,
                 padding: 10,
-                backgroundColor: theme.colors.tertiary,
 
                 flexDirection: 'column'
             },
@@ -86,7 +90,16 @@ const GenericWork = props => {
             justifyContent: 'space-between',
         },
 
-        overlay: {},
+        overlay: {
+            backdrop: {
+                backgroundColor: 'rgba(20, 14, 8, 0.8)',
+            },
+            view: {
+                minWidth: wp(50),
+                backgroundColor: theme.colors.tertiary
+            },
+
+        },
 
         addSet: {
             width: '60%',
@@ -104,55 +117,62 @@ const GenericWork = props => {
     }
 
     return (
-        <Card containerStyle={styles.card.containerStyle}>
-            <Card.Title>{props.exercise.name}</Card.Title>
+        <ThemeProvider theme={theme}>
+            <Card containerStyle={styles.card.containerStyle}>
+                <Card.Title style={styles.card.titleBar.text}>{props.exercise.name}</Card.Title>
 
-            <Icon
-                name='menu'
-                onPress={toggleShowWorkActionsOverlay}
-                containerStyle={styles.card.titleBar.actionsIcon.container}
-            />
-            <Card.Divider />
-
-            <FlexRowView viewStyle={styles.timingContainer}>
-                <RestTime
-                    onChangeText={props.fireChangeRestTime}
-                    value={restTime}
+                <Icon
+                    name='menu'
+                    onPress={toggleShowWorkActionsOverlay}
+                    containerStyle={styles.card.titleBar.actionsIcon.container}
                 />
+                <Card.Divider/>
 
-                <WorkTime
-                    workTimeStart={workTimeStart}
-                    workTimeEnd={workTimeEnd}
-                    fireChangeWorkTimeStart={props.fireChangeWorkTimeStart}
-                    fireChangeWorkTimeEnd={props.fireChangeWorkTimeEnd}
-                />
-            </FlexRowView>
-
-            <View style={styles.setsContainer}>
-                {sets.map((set, index) => {
-                    return <Set
-                        key={index}
-                        index={index}
-                        {...set}
-                        workId={props.id}
-                        active={props.active && active === index}
-                        fireRemoveSet={props.fireRemoveSet}
+                <FlexRowView viewStyle={styles.timingContainer}>
+                    <RestTime
+                        onChangeText={props.fireChangeRestTime}
+                        value={restTime}
                     />
-                })}
-            </View>
 
-            <Button onPress={props.fireAddSet} title="Add Set" containerStyle={styles.addSet}/>
+                    <WorkTime
+                        workTimeStart={workTimeStart}
+                        workTimeEnd={workTimeEnd}
+                        fireChangeWorkTimeStart={props.fireChangeWorkTimeStart}
+                        fireChangeWorkTimeEnd={props.fireChangeWorkTimeEnd}
+                    />
+                </FlexRowView>
 
-            <Overlay
-                isVisible={showActionsOverlay}
-                onBackdropPress={toggleShowWorkActionsOverlay}
-                overlayStyle={styles.overlay}
-            >
-                <Button onPress={props.removeWorkByIndex(props.workIndex)} title={`Remove ${props.exercise.name.toLowerCase()}`} />
-                <Button onPress={props.moveWorkUpByIndex(props.workIndex)} title={`Move up`} />
-                <Button onPress={props.moveWorkDownByIndex(props.workIndex)} title={`Move down`} />
-            </Overlay>
-        </Card>
+                <View style={styles.setsContainer}>
+                    {sets.map((set, index) => {
+                        return <Set
+                            key={index}
+                            index={index}
+                            {...set}
+                            workId={props.id}
+                            active={props.active && active === index}
+                            fireRemoveSet={props.fireRemoveSet}
+                        />
+                    })}
+                </View>
+
+                <Button onPress={props.fireAddSet} title="Add Set" containerStyle={styles.addSet}/>
+
+                <Overlay
+                    isVisible={showActionsOverlay}
+                    onBackdropPress={toggleShowWorkActionsOverlay}
+                    overlayStyle={styles.overlay.view}
+                    backdropStyle={styles.overlay.backdrop}
+                >
+                    <FlexColumnView rowGap={theme.internalPadding}>
+                        <TextH1>{props.exercise.name}</TextH1>
+                        <Button onPress={props.removeWorkByIndex(props.workIndex)}
+                                title={`Remove`}/>
+                        <Button onPress={props.moveWorkUpByIndex(props.workIndex)} title={`Move up`}/>
+                        <Button onPress={props.moveWorkDownByIndex(props.workIndex)} title={`Move down`}/>
+                    </FlexColumnView>
+                </Overlay>
+            </Card>
+        </ThemeProvider>
     )
 }
 

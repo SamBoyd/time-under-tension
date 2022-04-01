@@ -25,6 +25,7 @@ import {loadSetsByIds, loadWorkByIds} from "../utils/stateUtils";
 import {selectSet} from "../reducers/setReducer";
 import {isRealValue} from "../utils/utils";
 import {playConfiguredTargetWorkSound, playConfiguredWorkSound} from "../services/soundService";
+import {ThemeProvider} from "react-native-elements";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
     },
 
     text: {
-        color: theme.colors.tertiary
+        // color: theme.colors.tertiary
     },
 
     statusContainer: {},
@@ -160,13 +161,15 @@ const Timer = () => {
             timerText = rest(timer.count);
             break
         default:
-            timerText = <View>Nothing here</View>
+            timerText = <View><TextNormal>Nothing here</TextNormal></View>
     }
 
     return (
-        <View style={styles.container}>
-            {timerText}
-        </View>
+        <ThemeProvider theme={theme}>
+            <View style={styles.container}>
+                {timerText}
+            </View>
+        </ThemeProvider>
     )
 }
 
