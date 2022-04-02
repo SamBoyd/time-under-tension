@@ -45,7 +45,7 @@ const theme = createTheme({
         //     };
     },
 
-    fontFamily: 'SFUIDisplay-Ultrathin',
+    fontFamily: 'SFUIDisplay-Medium',
     textSize: 12,
 
     borderRadius: 8,
