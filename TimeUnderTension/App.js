@@ -3,10 +3,8 @@ import type {Node} from 'react';
 import {Provider} from "react-redux";
 import {PersistGate} from "redux-persist/integration/react";
 import {
-    useColorScheme, View,
+    useColorScheme, SafeAreaView
 } from 'react-native';
-
-import {SafeAreaProvider} from "react-native-safe-area-context/src/SafeAreaContext";
 
 import {
     Colors,
@@ -14,8 +12,7 @@ import {
 
 import MainApp from './src/App'
 import store, {persistor} from "./src/store";
-import theme from './src/theme'
-import {ThemeProvider} from "@rneui/themed";
+import {NavigationContainer} from "@react-navigation/native";
 
 const App = () => {
     const isDarkMode = useColorScheme() === 'dark';
@@ -28,11 +25,11 @@ const App = () => {
         <React.StrictMode>
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
-                    <SafeAreaProvider>
-                        <ThemeProvider theme={theme}>
+                    <NavigationContainer>
+                        <SafeAreaView style={{flex: 1}}>
                             <MainApp/>
-                        </ThemeProvider>
-                    </SafeAreaProvider>
+                        </SafeAreaView>
+                    </NavigationContainer>
                 </PersistGate>
             </Provider>
         </React.StrictMode>

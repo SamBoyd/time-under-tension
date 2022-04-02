@@ -1,6 +1,5 @@
 import {persistor} from "../store";
 import {reset as workoutReducer} from "../reducers/workoutReducer";
-import {reset as uiStateReducer} from "../reducers/uiStateReducer";
 import {reset as timerReducer} from "../reducers/timerReducer";
 import {reset as newTemplateWorkoutReducer} from "../reducers/newTemplateWorkoutReducer";
 import {reset as historyReducer} from "../reducers/workoutHistoryReducer";
@@ -14,7 +13,6 @@ export const resetEntireState = dispatch => {
     persistor.purge()
 
     dispatch(workoutReducer())
-    dispatch(uiStateReducer())
     dispatch(timerReducer())
     dispatch(newTemplateWorkoutReducer())
     dispatch(workoutTemplatesReducer())

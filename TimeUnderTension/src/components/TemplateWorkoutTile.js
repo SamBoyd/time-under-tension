@@ -1,6 +1,5 @@
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
-import {createWorkoutFromTemplateAndMoveToWorkout, moveToEditTemplate} from "../reducers/actions";
 import {StyleSheet, FlatList, View} from "react-native";
 import {TextH1, TextLighter, TextNormal} from "./styled/text";
 import {Button} from "./styled/button";
@@ -12,6 +11,9 @@ import {FlexColumnView} from "./styled/view";
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from "react-native-responsive-screen";
 import {deleteTemplate as deleteTemplateAction} from "../reducers/workoutTemplatesReducer";
 import theme from '../theme'
+import {editTemplate as editTemplateAction} from "../reducers/newTemplateWorkoutReducer";
+import {createWorkoutFromTemplate} from "../reducers/workoutReducer";
+import {PAGE} from "../constants";
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -54,7 +56,8 @@ const TemplateWorkoutTile = props => {
     const work = loadWorkByIds(props.template.work, workState)
 
     const editTemplate = () => {
-        moveToEditTemplate(dispatch, props.template)
+        dispatch(editTemplateAction(props.template))
+        props.moveToCreateTemplate()
     }
 
     const deleteTemplate = () => {
@@ -67,7 +70,8 @@ const TemplateWorkoutTile = props => {
     }
 
     const startWorkoutFromTemplate = () => {
-        createWorkoutFromTemplateAndMoveToWorkout(dispatch, props.template)
+        dispatch(createWorkoutFromTemplate(template))
+        props.moveToWorkout()
     }
 
     const Work = ({exercise, sets}) => {

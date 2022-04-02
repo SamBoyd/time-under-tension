@@ -2,8 +2,7 @@ import React, {useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 
 import {PAGE} from '../constants'
-import {pickExerciseForTemplateWorkoutAction, pickExerciseForWorkoutAction} from "../reducers/actions"
-import {followRedirect, selectUiState} from "../reducers/uiStateReducer";
+import {addSetAction} from "../reducers/actions"
 import {selectExercises} from "../reducers/exercisesReducer";
 import {Dimensions, StyleSheet} from "react-native";
 import {TextNormal} from "../components/styled/text";
@@ -13,29 +12,57 @@ import theme, {standardHorizontalPadding, standardVerticalPadding} from "../them
 import {capitalizeFirstLetter} from "../utils/textUtils";
 import BasePage from "../components/basePage";
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {addWork, newWorkForExercise} from "../reducers/workReducer";
+import {addWork as addWorkToWorkout} from "../reducers/workoutReducer";
+import {addWork as addWorkToTemplate} from "../reducers/newTemplateWorkoutReducer";
 
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
+export const SAVE_WORK_TO = {
+    workout: 'wokout',
+    template: 'template'
+}
 
-const PickExercise = () => {
-    const uiState = useSelector(selectUiState)
+const PickExercise = ({route, navigation}) => {
     const exercises = useSelector(selectExercises)
     const dispatch = useDispatch()
 
     const [expandedSection, setExpandedSection] = useState('')
 
+    const {saveWorkTo} = route.params
+
+    const saveToTemplate = exercise => {
+        const newWork = newWorkForExercise(exercise)
+        dispatch(addWorkToTemplate(newWork.id))
+        dispatch(addWork(newWork))
+        addSetAction(dispatch, newWork.id)
+        addSetAction(dispatch, newWork.id)
+        addSetAction(dispatch, newWork.id)
+        navigation.goBack()
+    }
+
+    const saveToWorkout = exercise => {
+        const newWork = newWorkForExercise(exercise)
+        dispatch(addWorkToWorkout(newWork.id))
+        dispatch(addWork(newWork))
+        addSetAction(dispatch, newWork.id)
+        addSetAction(dispatch, newWork.id)
+        addSetAction(dispatch, newWork.id)
+        navigation.goBack()
+    }
+
     const selectExercise = exercise => () => {
-        if (uiState.redirectTo === PAGE.workout) {
-            pickExerciseForWorkoutAction(exercise)(dispatch)
-        } else if (uiState.redirectTo === PAGE.createTemplateWorkout) {
-            pickExerciseForTemplateWorkoutAction(exercise)(dispatch)
+        if (saveWorkTo === SAVE_WORK_TO.template) {
+            saveToTemplate(exercise)
+        } else {
+            saveToWorkout(exercise)
         }
     }
 
     const goBack = () => {
-        dispatch(followRedirect())
+        navigation.goBack()
     }
 
     const sortedExercises = []
@@ -88,10 +115,9 @@ const PickExercise = () => {
 
 
     return (
-        <BasePage
-            leftHeaderComponent={<Button onPress={goBack} title="back" containerStyle={styles.backButton}/>}
-            headerTitle="Pick an exercise"
-        >
+        <BasePage>
+            <Button onPress={goBack} title="back" containerStyle={styles.backButton}/>
+
             {sortedExercises.map(category => {
                 return <ListItem.Accordion
                     noRotation

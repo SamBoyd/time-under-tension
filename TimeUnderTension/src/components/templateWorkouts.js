@@ -1,13 +1,15 @@
 import React from 'react'
 import {useDispatch, useSelector} from "react-redux";
 
-import {moveToCreateTemplate} from "../reducers/uiStateReducer";
+import {selectNewTemplateWorkout} from "../reducers/newTemplateWorkoutReducer";
+import TemplateWorkoutTile from "./TemplateWorkoutTile";
 import {StyleSheet, View} from "react-native";
 import {TextH1, TextNormal} from "./styled/text";
 import {Button} from "./styled/button";
 import {standardHorizontalPadding, standardVerticalPadding} from "../theme";
 import {selectTemplates} from "../reducers/workoutTemplatesReducer";
 import {FlexColumnView} from "./styled/view";
+import {PAGE} from "../constants";
 
 const styles = StyleSheet.create({
     wrapper: {},
@@ -29,15 +31,21 @@ const styles = StyleSheet.create({
     }
 })
 
-const NoTemplateWorkouts = <View style={styles.noTemplates}><TextNormal>There are no templates</TextNormal></View>
-const TemplateWorkouts = () => {
+const NoTemplateWorkouts = [<View style={styles.noTemplates}><TextNormal>There are no templates</TextNormal></View>]
+
+const TemplateWorkouts = ({navigation}) => {
     const dispatch = useDispatch()
     const templateWorkouts = useSelector(selectTemplates)
 
-    const sortedTemplate = [...templateWorkouts].sort((a, b) => new Date(a.created_at) > new Date(b.created_at))
-    const createTemplate = () => {
-        dispatch(moveToCreateTemplate())
+    const moveToCreateTemplate = () => {
+        navigation.navigate(PAGE.createTemplateWorkout)
     }
+
+    const moveToWorkout =() => {
+        navigation.navigate(PAGE.workout)
+    }
+
+    const sortedTemplates = [...templateWorkouts].sort((a, b) => new Date(a.created_at) > new Date(b.created_at))
 
     return (
         <View style={styles.wrapper}>
@@ -45,18 +53,22 @@ const TemplateWorkouts = () => {
                 <TextH1>Template workouts</TextH1>
             </View>
 
-            {templateWorkouts.length > 0 && (
-                <FlexColumnView viewStyle={styles.templateTile} rowGap={styles.templateTile.rowGap}>
-                    {sortedTemplate.map((template, index) => {
-                        return <TemplateWorkoutTile key={index} template={template}/>
-                    })}
-                </FlexColumnView>
-            ) || (
-                NoTemplateWorkouts
-            )}
+            <FlexColumnView viewStyle={styles.templateTile} rowGap={styles.templateTile.rowGap}>
+                {templateWorkouts.length > 0 && (
+                    sortedTemplates.map((template, index) => {
+                        return <TemplateWorkoutTile key={index}
+                                                    template={template}
+                                                    moveToCreateTemplate={moveToCreateTemplate}
+                                                    moveToWorkout={moveToWorkout}
+                        />
+                    })
+                ) || (
+                    NoTemplateWorkouts
+                )}
+            </FlexColumnView>
 
             <View style={styles.createButton}>
-                <Button style={{}} onPress={createTemplate} title="Create new template"/>
+                <Button style={{}} onPress={moveToCreateTemplate} title="Create new template"/>
             </View>
         </View>
     )

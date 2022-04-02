@@ -2,14 +2,8 @@ import React, {useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
 import {Dimensions, StyleSheet, View} from "react-native";
 
-import {editTemplateName, selectNewTemplateWorkout} from "../reducers/newTemplateWorkoutReducer";
-import {moveToMainPage, moveToPickExerciseForTemplateWorkout} from "../reducers/uiStateReducer";
+import {editTemplateName, resetTemplate, selectNewTemplateWorkout} from "../reducers/newTemplateWorkoutReducer";
 import TemplateWork from "../components/templateWork";
-import {
-    cancelEditTemplate,
-    cancelEditTemplateAndMoveToMainPage,
-    saveTemplateAndMoveToMainPage
-} from "../reducers/actions";
 import {TextH1, TextNormal} from "../components/styled/text";
 import {Button} from "../components/styled/button";
 import {FlexRowView} from "../components/styled/view";
@@ -21,9 +15,13 @@ import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-nativ
 import {loadWorkByIds} from "../utils/stateUtils";
 import {selectWork} from "../reducers/workReducer";
 import {ThemeProvider} from "react-native-elements";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import PickExercise, {SAVE_WORK_TO} from "./pickExercise";
+import {addToTemplates} from "../reducers/workoutTemplatesReducer";
+import {PAGE} from "../constants";
 
 
-const CreateTemplateWorkout = () => {
+const CreateTemplateWorkout = ({navigation}) => {
     const dispatch = useDispatch()
     const newTemplate = useSelector(selectNewTemplateWorkout)
     const workState = useSelector(selectWork)
@@ -31,14 +29,6 @@ const CreateTemplateWorkout = () => {
         editingTitle: false
     })
     const editingExistingTemplate = 'existingTemplate' in newTemplate
-
-    const backToMainPage = () => {
-        if (!(editingExistingTemplate)) {
-            dispatch(moveToMainPage())
-        } else {
-            cancelEditTemplateAndMoveToMainPage(dispatch)
-        }
-    }
 
     const toggleEditTitle = () => {
         setUiState({...uiState, editingTitle: !uiState.editingTitle})
@@ -49,11 +39,15 @@ const CreateTemplateWorkout = () => {
     }
 
     const addNewWork = () => {
-        dispatch(moveToPickExerciseForTemplateWorkout())
+        navigation.push(
+            PAGE.pickExercise,
+            {saveWorkTo: SAVE_WORK_TO.template}
+        )
     }
 
     const saveTemplate = () => {
-        saveTemplateAndMoveToMainPage(dispatch, newTemplate)
+        dispatch(addToTemplates(newTemplate))
+        dispatch(resetTemplate())
     }
 
     const styles = StyleSheet.create({
@@ -66,7 +60,7 @@ const CreateTemplateWorkout = () => {
 
         },
         editTitleText: {
-          color: theme.Text.style.color
+            color: theme.colors.white
         },
         saveTitleContainer: {},
 
@@ -125,11 +119,8 @@ const CreateTemplateWorkout = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <BasePage
-                leftHeaderComponent={<Button onPress={backToMainPage} title="back"/>}
-                headerTitle="Create template workout"
-                rightHeaderComponent={<Button onPress={saveTemplate} title="Save"/>}
-            >
+            <BasePage>
+                <Button onPress={saveTemplate} title="Save"/>
                 <View style={styles.titleWrapper}>
                     {templateTitle}
                 </View>
@@ -147,4 +138,20 @@ const CreateTemplateWorkout = () => {
     )
 }
 
-export default CreateTemplateWorkout
+const TemplateNav = ({navigation}) => {
+    const Stack = createNativeStackNavigator();
+
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: false,
+                animation: "slide_from_bottom",
+            }}
+        >
+            <Stack.Screen name={PAGE.createTemplateWorkout} component={CreateTemplateWorkout}/>
+            <Stack.Screen name={PAGE.pickExercise} component={PickExercise}/>
+        </Stack.Navigator>
+    )
+}
+
+export default TemplateNav

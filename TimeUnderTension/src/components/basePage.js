@@ -45,13 +45,6 @@ const styles = StyleSheet.create({
 const BasePage = props => {
     return(
         <SafeAreaView style={styles.wrapper}>
-            <View style={styles.statusBackgroundView}></View>
-            <StatusBar translucent backgroundColor={styles.statusBar.color} barStyle="dark-content"/>
-            <Header
-                leftComponent={props.leftHeaderComponent}
-                centerComponent={<View><TextH1>{props.headerTitle}</TextH1></View>}
-                rightComponent={props.rightHeaderComponent}
-            />
             <View style={styles.scrollWrapper}>
                 <ScrollView contentContainerStyle={styles.scrollContent}>
                     {props.children}

@@ -1,8 +1,7 @@
-import React from 'react'
+import React, {useCallback} from 'react'
 
 import {useDispatch, useSelector} from "react-redux";
 import {removeExercise, selectExercises} from "../reducers/exercisesReducer";
-import {moveToAddExercise, moveToMainPage} from "../reducers/uiStateReducer";
 import {Dimensions, FlatList, StyleSheet, View} from "react-native";
 import {TextBold, TextH1, TextNormal} from "../components/styled/text";
 import {Button} from "../components/styled/button";
@@ -14,18 +13,23 @@ import {capitalizeFirstLetter} from "../utils/textUtils";
 import BasePage from "../components/basePage";
 
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import {PAGE} from "../constants";
+import PickExercise from "./pickExercise";
+import AddExercise from "./addExercise";
+import {useFocusEffect, useScrollToTop} from '@react-navigation/native';
 
 
-const ManageExercises = () => {
+const ManageExercises = ({navigation}) => {
     const dispatch = useDispatch()
     const exercises = useSelector(selectExercises)
 
     const goBack = () => {
-        dispatch(moveToMainPage())
+        navigation.goBack()
     }
 
     const addExercise = () => {
-        dispatch(moveToAddExercise())
+        navigation.push(PAGE.addExercise)
     }
 
     const removeExerciseId = exerciseId => () => {
@@ -79,10 +83,7 @@ const ManageExercises = () => {
 
     return (
         <ThemeProvider theme={theme}>
-            <BasePage
-                headerTitle="Managing Exercises"
-                leftHeaderComponent={<Button onPress={goBack} title="back"/>}
-            >
+            <BasePage>
                 {sortedExercises.map(({title, data}) => {
                     return (
                         <>
@@ -113,4 +114,21 @@ const ManageExercises = () => {
     )
 }
 
-export default ManageExercises
+
+const ManageExercisesNav = ({navigation}) => {
+    const Stack = createNativeStackNavigator();
+
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: false,
+                animation: "slide_from_bottom",
+            }}
+        >
+            <Stack.Screen name={PAGE.manageExercises} component={ManageExercises}/>
+            <Stack.Screen name={PAGE.addExercise} component={AddExercise}/>
+        </Stack.Navigator>
+    )
+}
+
+export default ManageExercisesNav

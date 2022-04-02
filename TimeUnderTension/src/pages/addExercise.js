@@ -1,8 +1,7 @@
 import React from 'react'
 import {useDispatch, useSelector} from "react-redux";
 
-import {changeNewExerciseField, selectExercises} from "../reducers/exercisesReducer";
-import {resetNewExerciseAndMoveToManageExercises, saveNewExerciseAndMoveToManageExercises} from "../reducers/actions";
+import {changeNewExerciseField, resetNewExercise, saveNewExercise, selectExercises} from "../reducers/exercisesReducer";
 import {StyleSheet} from "react-native";
 import {Dropdown} from 'react-native-element-dropdown';
 import theme, {standardVerticalPadding} from "../theme";
@@ -11,12 +10,13 @@ import {Input, ThemeProvider} from "react-native-elements";
 import BasePage from "../components/basePage";
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
-const AddExercise = () => {
+const AddExercise = ({navigation}) => {
     const dispatch = useDispatch()
     const exercises = useSelector(selectExercises)
 
     const goBack = () => {
-        resetNewExerciseAndMoveToManageExercises(dispatch)
+        dispatch(resetNewExercise())
+        navigation.goBack()
     }
 
     const changeField = fieldName => value => {
@@ -36,7 +36,8 @@ const AddExercise = () => {
 
     const saveExercise = () => {
         if (validate()) {
-            saveNewExerciseAndMoveToManageExercises(dispatch)
+            dispatch(saveNewExercise())
+            navigation.goBack()
         }
     }
 
@@ -91,10 +92,8 @@ const AddExercise = () => {
     })
     return (
         <ThemeProvider theme={theme}>
-            <BasePage
-                leftHeaderComponent={<Button onPress={goBack} title="back"/>}
-                headerTitle="Add exercise"
-            >
+            <BasePage>
+                <Button onPress={goBack} title="back"/>
                 <Dropdown
                     data={exerciseCategories}
                     value={exercises.newExercise.category || ""}

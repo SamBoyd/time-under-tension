@@ -4,17 +4,21 @@ import {StyleSheet, View} from "react-native";
 import {standardHorizontalPadding, standardVerticalPadding} from '../theme'
 
 
-import {selectWorkout} from "../reducers/workoutReducer";
+import {resetToInitialWorkout, selectWorkout} from "../reducers/workoutReducer";
 import Work from '../components/work'
-import {moveToMainPage, moveToPickExerciseForWorkout} from "../reducers/uiStateReducer";
-import {finishWorkoutAndMoveToMainPage} from "../reducers/actions";
 import Timer from "../components/timer";
 import {Button} from "../components/styled/button";
 import BasePage from "../components/basePage";
 import {WorkoutDuration} from "../components/workoutDuration";
 import {selectWork} from "../reducers/workReducer";
+import {NavigationContainer} from "@react-navigation/native";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import PickExercise, {SAVE_WORK_TO} from "./pickExercise";
+import {addWorkoutToHistory} from "../reducers/workoutHistoryReducer";
+import {resetTimer} from "../reducers/timerReducer";
+import {PAGE} from "../constants";
 
-const Workout = () => {
+const Workout = ({navigation}) => {
     const dispatch = useDispatch()
     const workout = useSelector(selectWorkout)
     const workState = useSelector(selectWork)
@@ -24,15 +28,22 @@ const Workout = () => {
     })
 
     const goBack = () => {
-        dispatch(moveToMainPage())
+        navigation.goBack()
     }
 
     const finishWorkout = () => {
-        finishWorkoutAndMoveToMainPage(dispatch, workout)
+        const w = {...workout}
+        w.finished_at = new Date().toISOString()
+        dispatch(addWorkoutToHistory({workout: w}))
+        dispatch(resetToInitialWorkout())
+        dispatch(resetTimer())
     }
 
     const addNewWork = () => {
-        dispatch(moveToPickExerciseForWorkout())
+        navigation.push(
+            PAGE.pickExercise,
+            {saveWorkTo: SAVE_WORK_TO.workout}
+        )
     }
 
     const styles = StyleSheet.create({
@@ -62,11 +73,8 @@ const Workout = () => {
 
     return (
         <>
-            <BasePage
-                headerTitle={workout.name || "Workout"}
-                leftHeaderComponent={<Button onPress={goBack} title="back" containerStyle={styles.backButton}/>}
-                rightHeaderComponent={finishButton}
-            >
+            <BasePage>
+                {finishButton}
                 {workoutStarted && <WorkoutDuration startedAt={workout.started_at}/>}
 
                 {workComponents}
@@ -79,4 +87,20 @@ const Workout = () => {
     )
 }
 
-export default Workout
+const WorkoutNav = ({navigation}) => {
+    const Stack = createNativeStackNavigator();
+
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: false,
+                animation: "slide_from_bottom",
+            }}
+        >
+            <Stack.Screen name={PAGE.workout} component={Workout} />
+            <Stack.Screen name={PAGE.pickExercise} component={PickExercise} />
+        </Stack.Navigator>
+    )
+}
+
+export default WorkoutNav

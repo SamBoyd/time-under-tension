@@ -6,7 +6,6 @@ import {FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE} from "redux-persist/e
 import autoMergeLevel2 from "redux-persist/es/stateReconciler/autoMergeLevel2";
 
 import workoutReducer from './reducers/workoutReducer'
-import uiStateReducer from "./reducers/uiStateReducer";
 import timerReducer from "./reducers/timerReducer";
 import workoutTemplateReducer from "./reducers/workoutTemplatesReducer";
 import workoutHistoryReducer from "./reducers/workoutHistoryReducer";
@@ -18,7 +17,6 @@ import newTemplateWorkoutReducer from "./reducers/newTemplateWorkoutReducer";
 
 const rootReducer = combineReducers({
     workout: workoutReducer,
-    uiState: uiStateReducer,
     timer: timerReducer,
     templates: workoutTemplateReducer,
     newTemplateWorkout: newTemplateWorkoutReducer,

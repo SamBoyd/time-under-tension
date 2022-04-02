@@ -1,3 +1,3 @@
 export const isRealValue = (obj) => {
-    return obj && obj !== 'null' && obj !== 'undefined';
+    return obj && obj !== 'null' && typeof obj !== 'undefined';
 }
