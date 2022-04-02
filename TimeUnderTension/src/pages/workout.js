@@ -17,6 +17,7 @@ import PickExercise, {SAVE_WORK_TO} from "./pickExercise";
 import {addWorkoutToHistory} from "../reducers/workoutHistoryReducer";
 import {resetTimer} from "../reducers/timerReducer";
 import {PAGE} from "../constants";
+import CircleTimer from "../components/circleTimer";
 
 const Workout = ({navigation}) => {
     const dispatch = useDispatch()
@@ -72,18 +73,18 @@ const Workout = ({navigation}) => {
         : <View></View>;
 
     return (
-        <>
-            <BasePage>
-                {finishButton}
-                {workoutStarted && <WorkoutDuration startedAt={workout.started_at}/>}
+        <BasePage>
+            {finishButton}
 
-                {workComponents}
+            <CircleTimer />
 
-                <Button onPress={addNewWork} title="Add work" containerStyle={styles.addWorkButton}/>
+            {workoutStarted && <WorkoutDuration startedAt={workout.started_at}/>}
 
-            </BasePage>
-            <Timer/>
-        </>
+            {workComponents}
+
+            <Button onPress={addNewWork} title="Add work" containerStyle={styles.addWorkButton}/>
+
+        </BasePage>
     )
 }
 
@@ -97,8 +98,8 @@ const WorkoutNav = ({navigation}) => {
                 animation: "slide_from_bottom",
             }}
         >
-            <Stack.Screen name={PAGE.workout} component={Workout} />
-            <Stack.Screen name={PAGE.pickExercise} component={PickExercise} />
+            <Stack.Screen name={PAGE.workout} component={Workout}/>
+            <Stack.Screen name={PAGE.pickExercise} component={PickExercise}/>
         </Stack.Navigator>
     )
 }

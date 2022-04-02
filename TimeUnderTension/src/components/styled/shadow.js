@@ -7,15 +7,15 @@ export const Shadow = props => {
         startColor={theme.colors.shadowDark}
         sides={['bottom', "right"]}
         corners={['bottomRight', 'bottomLeft', 'topRight']}
-        distance={theme.shadowDistance}
-        radius={theme.borderRadius}
+        distance={props.shadowDistance || theme.shadowDistance}
+        radius={props.borderRadius || theme.borderRadius}
     >
         <UnstyledShadow
             startColor={theme.colors.shadowLight}
             sides={['top', "left"]}
             corners={['topLeft', 'topRight', 'bottomLeft']}
-            distance={theme.shadowDistance}
-            radius={theme.borderRadius}
+            distance={props.shadowDistance || theme.shadowDistance}
+            radius={props.borderRadius || theme.borderRadius}
         >
             {props.children && (props.children) || (props.child)}
         </UnstyledShadow>

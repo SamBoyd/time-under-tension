@@ -8,13 +8,13 @@ const theme = createTheme({
     colors: {
         primary: '#CDE6F5',
         secondary: "#5F758E",
-        tertiary: "#141204",
+        tertiary: "#262521",
         white: '#CECABA',
         //     black;
         grey0: "#31302C",
         grey1: "#5D5B54",
 
-        shadowLight: "#5D5B54",
+        shadowLight: "#343230",
         shadowDark: "#141204",
         //     grey2;
         //     grey3;
