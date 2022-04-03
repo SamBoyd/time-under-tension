@@ -70,7 +70,7 @@ const TemplateWorkoutTile = props => {
     }
 
     const startWorkoutFromTemplate = () => {
-        dispatch(createWorkoutFromTemplate(template))
+        dispatch(createWorkoutFromTemplate(props.template))
         props.moveToWorkout()
     }
 
