@@ -101,10 +101,20 @@ export const exercises = [
         name: 'Arnold press',
         category: exerciseCategory.shoulders
     },
+    {
+        id: uuidv4(),
+        name: 'Shrug',
+        category: exerciseCategory.shoulders
+    },
 
     {
         id: uuidv4(),
         name: 'Barbell curl',
+        category: exerciseCategory.arms
+    },
+    {
+        id: uuidv4(),
+        name: 'Hammer curl',
         category: exerciseCategory.arms
     },
     {
