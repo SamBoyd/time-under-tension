@@ -26,6 +26,10 @@
 		227E203127F889CA0001DDD4 /* SFUIDisplay-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 227E202227F889CA0001DDD4 /* SFUIDisplay-Thin.otf */; };
 		227E203227F889CA0001DDD4 /* SFUIDisplay-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 227E202327F889CA0001DDD4 /* SFUIDisplay-Semibold.otf */; };
 		227E203327F889CA0001DDD4 /* SFUIDisplay-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 227E202327F889CA0001DDD4 /* SFUIDisplay-Semibold.otf */; };
+		227E203627F96F060001DDD4 /* buzzer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 227E203427F96F050001DDD4 /* buzzer.mp3 */; };
+		227E203727F96F060001DDD4 /* buzzer.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 227E203427F96F050001DDD4 /* buzzer.mp3 */; };
+		227E203827F96F060001DDD4 /* train_horn.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 227E203527F96F060001DDD4 /* train_horn.mp3 */; };
+		227E203927F96F060001DDD4 /* train_horn.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 227E203527F96F060001DDD4 /* train_horn.mp3 */; };
 		229A45A227ED111D00E47120 /* Fontisto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 229A459127ED111C00E47120 /* Fontisto.ttf */; };
 		229A45A427ED111D00E47120 /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 229A459227ED111C00E47120 /* Octicons.ttf */; };
 		229A45A627ED111D00E47120 /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 229A459327ED111C00E47120 /* Feather.ttf */; };
@@ -80,6 +84,8 @@
 		227E202127F889CA0001DDD4 /* SFUIDisplay-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFUIDisplay-Medium.otf"; sourceTree = "<group>"; };
 		227E202227F889CA0001DDD4 /* SFUIDisplay-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFUIDisplay-Thin.otf"; sourceTree = "<group>"; };
 		227E202327F889CA0001DDD4 /* SFUIDisplay-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SFUIDisplay-Semibold.otf"; sourceTree = "<group>"; };
+		227E203427F96F050001DDD4 /* buzzer.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = buzzer.mp3; path = ../android/app/src/main/res/raw/buzzer.mp3; sourceTree = "<group>"; };
+		227E203527F96F060001DDD4 /* train_horn.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = train_horn.mp3; path = ../android/app/src/main/res/raw/train_horn.mp3; sourceTree = "<group>"; };
 		229A459127ED111C00E47120 /* Fontisto.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Fontisto.ttf; sourceTree = "<group>"; };
 		229A459227ED111C00E47120 /* Octicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Octicons.ttf; sourceTree = "<group>"; };
 		229A459327ED111C00E47120 /* Feather.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Feather.ttf; sourceTree = "<group>"; };
@@ -194,6 +200,8 @@
 		1DCC3471C51B4F0AA93305FB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				227E203427F96F050001DDD4 /* buzzer.mp3 */,
+				227E203527F96F060001DDD4 /* train_horn.mp3 */,
 				E73BD7D1CA444B358BD5DBC1 /* sf-ui-display-black-58646a6b80d5a.otf */,
 				39FBDAC91A5547B79B5EC501 /* sf-ui-display-bold-58646a511e3d9.otf */,
 				C97416120AD045B58BA051A7 /* sf-ui-display-heavy-586470160b9e5.otf */,
@@ -411,6 +419,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				227E203927F96F060001DDD4 /* train_horn.mp3 in Resources */,
 				227E203327F889CA0001DDD4 /* SFUIDisplay-Semibold.otf in Resources */,
 				229A45A427ED111D00E47120 /* Octicons.ttf in Resources */,
 				227E202D27F889CA0001DDD4 /* SFUIDisplay-Black.otf in Resources */,
@@ -432,6 +441,7 @@
 				229A45AA27ED111D00E47120 /* FontAwesome5_Brands.ttf in Resources */,
 				227E202727F889CA0001DDD4 /* SFUIDisplay-Bold.otf in Resources */,
 				229A45B827ED111D00E47120 /* FontAwesome.ttf in Resources */,
+				227E203727F96F060001DDD4 /* buzzer.mp3 in Resources */,
 				227E202F27F889CA0001DDD4 /* SFUIDisplay-Medium.otf in Resources */,
 				227E203127F889CA0001DDD4 /* SFUIDisplay-Thin.otf in Resources */,
 				227E202B27F889CA0001DDD4 /* SFUIDisplay-Heavy.otf in Resources */,
@@ -446,8 +456,10 @@
 				227E202C27F889CA0001DDD4 /* SFUIDisplay-Black.otf in Resources */,
 				227E202627F889CA0001DDD4 /* SFUIDisplay-Bold.otf in Resources */,
 				227E202427F889CA0001DDD4 /* SFUIDisplay-Ultralight.otf in Resources */,
+				227E203827F96F060001DDD4 /* train_horn.mp3 in Resources */,
 				227E203027F889CA0001DDD4 /* SFUIDisplay-Thin.otf in Resources */,
 				227E203227F889CA0001DDD4 /* SFUIDisplay-Semibold.otf in Resources */,
+				227E203627F96F060001DDD4 /* buzzer.mp3 in Resources */,
 				227E202A27F889CA0001DDD4 /* SFUIDisplay-Heavy.otf in Resources */,
 				227E202E27F889CA0001DDD4 /* SFUIDisplay-Medium.otf in Resources */,
 				227E202827F889CA0001DDD4 /* SFUIDisplay-Light.otf in Resources */,
