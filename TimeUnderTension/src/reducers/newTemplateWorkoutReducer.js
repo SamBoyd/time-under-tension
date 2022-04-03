@@ -39,7 +39,7 @@ export const newTemplateWorkoutSlice = createSlice({
         },
         removeWork: (state, action) => {
             const workId = action.payload
-            state.work = state.work.filter(id => workId !== id)
+            state.work = [...state.work.filter(id => workId !== id)]
         },
         moveWorkUp: (state, action) => {
             const indexToMoveUp = state.work.indexOf(action.payload)

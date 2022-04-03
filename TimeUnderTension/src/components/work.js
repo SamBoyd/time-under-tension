@@ -1,6 +1,10 @@
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {moveWorkDown, moveWorkUp, removeWork} from "../reducers/workoutReducer";
+import {
+    moveWorkDown as moveWorkDownInWorkout,
+    moveWorkUp as moveWorkUpInWorkout,
+    removeWork as removeWorkInWorkout
+} from "../reducers/workoutReducer";
 import {DEFAULT_REST_TIME, DEFAULT_WORK_TIME_LOWER, DEFAULT_WORK_TIME_UPPER} from "../constants";
 import {Dimensions} from "react-native";
 import GenericWork from "./genericWork";
@@ -53,16 +57,16 @@ const Work = props => {
         }))
     }
 
-    const removeWorkByIndex = index => () => {
-        dispatch(removeWork(props.id))
+    const removeWork = () => {
+        dispatch(removeWorkInWorkout(props.id))
     }
 
-    const moveWorkDownByIndex = index => () => {
-        dispatch(moveWorkDown(props.id))
+    const moveWorkDown = () => {
+        dispatch(moveWorkDownInWorkout(props.id))
     }
 
-    const moveWorkUpByIndex = index => () => {
-        dispatch(moveWorkUp(props.id))
+    const moveWorkUp = () => {
+        dispatch(moveWorkUpInWorkout(props.id))
     }
 
     const toggleShowWorkActionsOverlay = () => {
@@ -78,9 +82,9 @@ const Work = props => {
             fireChangeRestTime={fireChangeRestTime}
             fireChangeWorkTimeStart={fireChangeWorkTimeStart}
             fireChangeWorkTimeEnd={fireChangeWorkTimeEnd}
-            removeWorkByIndex={removeWorkByIndex}
-            moveWorkUpByIndex={moveWorkUpByIndex}
-            moveWorkDownByIndex={moveWorkDownByIndex}
+            removeWork={removeWork}
+            moveWorkUp={moveWorkUp}
+            moveWorkDown={moveWorkDown}
         />
     )
 }

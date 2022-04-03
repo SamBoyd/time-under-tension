@@ -166,10 +166,19 @@ const GenericWork = props => {
                 >
                     <FlexColumnView rowGap={theme.internalPadding}>
                         <TextH1>{props.exercise.name}</TextH1>
-                        <Button onPress={props.removeWorkByIndex(props.workIndex)}
+                        <Button onPress={() =>{
+                            props.removeWork()
+                            toggleShowWorkActionsOverlay()
+                        }}
                                 title={`Remove`}/>
-                        <Button onPress={props.moveWorkUpByIndex(props.workIndex)} title={`Move up`}/>
-                        <Button onPress={props.moveWorkDownByIndex(props.workIndex)} title={`Move down`}/>
+                        <Button onPress={() => {
+                            props.moveWorkUp()
+                            toggleShowWorkActionsOverlay()
+                        }} title={`Move up`}/>
+                        <Button onPress={() => {
+                            props.moveWorkDown()
+                            toggleShowWorkActionsOverlay()
+                        }} title={`Move down`}/>
                     </FlexColumnView>
                 </Overlay>
             </Card>

@@ -6,9 +6,10 @@ import {
     addSet,
     changeRestTime,
     changeWorkTime,
-    moveWorkDown, moveWorkUp,
+    moveWorkDown as moveWorkDownInTemplate,
+    moveWorkUp as moveWorkUpInTemplate,
     removeSet,
-    removeWork
+    removeWork as removeWorkInTemplate
 } from "../reducers/newTemplateWorkoutReducer";
 import {DEFAULT_REST_TIME, DEFAULT_WORK_TIME_LOWER, DEFAULT_WORK_TIME_UPPER} from "../constants";
 import {View, StyleSheet} from "react-native";
@@ -65,16 +66,16 @@ const Work = props => {
             workTimeEnd: value
         }))
     }
-    const removeWorkByIndex = index => () => {
-        dispatch(removeWork({index: index}))
+    const removeWork = () => {
+        dispatch(removeWorkInTemplate(work.id))
     }
 
-    const moveWorkDownByIndex = index => () => {
-        dispatch(moveWorkDown({index: index}))
+    const moveWorkDown = () => {
+        dispatch(moveWorkDownInTemplate(work.id))
     }
 
-    const moveWorkUpByIndex = index => () => {
-        dispatch(moveWorkUp({index: index}))
+    const moveWorkUp = () => {
+        dispatch(moveWorkUpInTemplate(work.id))
     }
 
     return (
@@ -86,9 +87,9 @@ const Work = props => {
             fireChangeRestTime={fireChangeRestTime}
             fireChangeWorkTimeStart={fireChangeWorkTimeStart}
             fireChangeWorkTimeEnd={fireChangeWorkTimeEnd}
-            removeWorkByIndex={removeWorkByIndex}
-            moveWorkUpByIndex={moveWorkUpByIndex}
-            moveWorkDownByIndex={moveWorkDownByIndex}
+            removeWork={removeWork}
+            moveWorkUp={moveWorkUp}
+            moveWorkDown={moveWorkDown}
         />
     )
 }
