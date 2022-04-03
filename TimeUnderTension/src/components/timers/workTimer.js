@@ -5,6 +5,7 @@ import theme from "../../theme";
 import CountdownCircleTimer from "../CountdownCircleTimer";
 import {TextH1, TextNormal} from "../styled/text";
 import {FlexColumnView} from "../styled/view";
+import {playConfiguredTargetWorkSound, playConfiguredWorkSound} from "../../services/soundService";
 
 const CIRCLE_PADDING = wp(2)
 const SHADOW_DISTANCE = wp(0.8)
@@ -48,8 +49,13 @@ const WorkTimer = props => {
                 </FlexColumnView>
             }}
             onPress={props.onComplete}
-            onUpdate={({}) => {
-
+            onUpdate={(remainingTime) => {
+                if (
+                    (remainingTime === 60 - props.workTimeStart) ||
+                    (remainingTime === 60 - props.workTimeEnd)
+                ) {
+                    playConfiguredTargetWorkSound()
+                }
             }}
             onComplete={() => {
                 setTimeElapsedOffset(timeElapsedOffset + 60)

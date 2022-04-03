@@ -52,6 +52,7 @@ const CountdownCircleTimer = props => {
         strokeWidth: CIRCLE_STROKE_WIDTH,
         children: props.children,
         onComplete:props.onComplete,
+        onUpdate: props.onUpdate
     })
 
     return (
