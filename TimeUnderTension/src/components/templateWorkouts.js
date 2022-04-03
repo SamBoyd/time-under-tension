@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     }
 })
 
-const NoTemplateWorkouts = [<View style={styles.noTemplates}><TextNormal>There are no templates</TextNormal></View>]
+const NoTemplateWorkouts = <View style={styles.noTemplates}><TextNormal>There are no templates</TextNormal></View>
 
 const TemplateWorkouts = ({navigation}) => {
     const dispatch = useDispatch()

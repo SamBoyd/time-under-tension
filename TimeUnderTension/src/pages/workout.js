@@ -1,23 +1,22 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {StyleSheet, View} from "react-native";
-import {standardHorizontalPadding, standardVerticalPadding} from '../theme'
+import {SafeAreaView, ScrollView, StyleSheet, View} from "react-native";
+import theme, {standardHorizontalPadding, standardVerticalPadding} from '../theme'
 
-
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import {resetToInitialWorkout, selectWorkout} from "../reducers/workoutReducer";
 import Work from '../components/work'
-import Timer from "../components/timer";
 import {Button} from "../components/styled/button";
 import BasePage from "../components/basePage";
 import {WorkoutDuration} from "../components/workoutDuration";
 import {selectWork} from "../reducers/workReducer";
-import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import PickExercise, {SAVE_WORK_TO} from "./pickExercise";
 import {addWorkoutToHistory} from "../reducers/workoutHistoryReducer";
 import {resetTimer} from "../reducers/timerReducer";
 import {PAGE} from "../constants";
 import CircleTimer from "../components/circleTimer";
+import {Shadow} from "react-native-shadow-2";
 
 const Workout = ({navigation}) => {
     const dispatch = useDispatch()
@@ -48,6 +47,37 @@ const Workout = ({navigation}) => {
     }
 
     const styles = StyleSheet.create({
+        wrapper: {
+            flex: 1,
+            height: hp(100),
+            backgroundColor: theme.colors.tertiary
+        },
+
+        timerBanner: {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: wp(100),
+            height: hp(40),
+        },
+
+        bottomView: {
+            position: 'absolute',
+            top: hp(40),
+            left: 0,
+            width: wp(100),
+            height: hp(50),
+
+            flex: 1,
+            backgroundColor: theme.colors.tertiary,
+            paddingLeft: wp(5),
+            paddingRight: wp(5),
+        },
+
+        scrollContent: {
+            paddingBottom: 200,
+        },
+
         addWorkButton: {
             marginTop: standardVerticalPadding,
             paddingHorizontal: standardHorizontalPadding,
@@ -73,18 +103,24 @@ const Workout = ({navigation}) => {
         : <View></View>;
 
     return (
-        <BasePage>
-            {finishButton}
+        <SafeAreaView style={styles.wrapper}>
+            <View style={styles.timerBanner}>
+                {finishButton}
 
-            <CircleTimer />
+                <CircleTimer/>
+            </View>
 
-            {workoutStarted && <WorkoutDuration startedAt={workout.started_at}/>}
+            <View style={styles.bottomView}>
+                <ScrollView contentContainerStyle={styles.scrollContent}>
+                    {workoutStarted && <WorkoutDuration startedAt={workout.started_at}/>}
 
-            {workComponents}
+                    {workComponents}
 
-            <Button onPress={addNewWork} title="Add work" containerStyle={styles.addWorkButton}/>
+                    <Button onPress={addNewWork} title="Add work" containerStyle={styles.addWorkButton}/>
+                </ScrollView>
+            </View>
+        </SafeAreaView>
 
-        </BasePage>
     )
 }
 
