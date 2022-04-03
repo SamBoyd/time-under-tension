@@ -9,7 +9,7 @@ import {
 } from "../constants";
 import {moveToRest, moveToSetup, moveToWork} from "../reducers/timerReducer";
 import {finishSet} from "../reducers/setReducer";
-import {selectWork} from "../reducers/workoutReducer";
+import {selectWork, startWorkoutIfNotStarted} from "../reducers/workoutReducer";
 import {playConfiguredWorkSound} from "./soundService";
 
 const NOOP_TIMINGS = {
@@ -48,11 +48,12 @@ export const getCurrentTimings = (
     sets = loadSetsByIds(currentWork.sets, setState)
     currentSet = sets.find(s => !s.finished)
 
-    let shouldFinishSet, shouldIncrementCurrentWork, nextStateAction, shouldPlayNoise
-    shouldFinishSet = shouldIncrementCurrentWork = shouldPlayNoise = false
+    let shouldFinishSet, shouldIncrementCurrentWork, nextStateAction, shouldPlayNoise, startsWorkout
+    shouldFinishSet = shouldIncrementCurrentWork = shouldPlayNoise = startsWorkout = false
 
     switch (timerState.state) {
         case TIMER_STATE.ready:
+            startsWorkout = true
             nextStateAction = moveToSetup
             break;
         case TIMER_STATE.setup:
@@ -79,6 +80,10 @@ export const getCurrentTimings = (
         workTimeEnd: currentWork.workTimeEnd || DEFAULT_WORK_TIME_UPPER,
         onCompleteCB: () => {
             dispatch(nextStateAction())
+
+            if (startsWorkout) {
+                dispatch(startWorkoutIfNotStarted())
+            }
 
             if (shouldFinishSet) {
                 dispatch(finishSet(currentSet.id))

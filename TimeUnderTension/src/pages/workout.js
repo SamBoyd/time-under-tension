@@ -58,15 +58,20 @@ const Workout = ({navigation}) => {
             top: 0,
             left: 0,
             width: wp(100),
-            height: hp(40),
+            height: hp(46),
+        },
+
+        finishButton: {
+            marginVertical: hp(1),
+            paddingHorizontal: standardHorizontalPadding,
         },
 
         bottomView: {
             position: 'absolute',
-            top: hp(40),
+            top: hp(46),
             left: 0,
             width: wp(100),
-            height: hp(50),
+            height: hp(54),
 
             flex: 1,
             backgroundColor: theme.colors.tertiary,

@@ -79,7 +79,10 @@ const CreateTemplateWorkout = ({navigation}) => {
             marginBottom: standardVerticalPadding,
         },
 
-        saveButton: {}
+        saveButton: {
+            marginVertical: hp(1),
+            // paddingHorizontal: standardHorizontalPadding,
+        }
     })
 
     const work = loadWorkByIds(newTemplate.work, workState)
@@ -120,7 +123,7 @@ const CreateTemplateWorkout = ({navigation}) => {
     return (
         <ThemeProvider theme={theme}>
             <BasePage>
-                <Button onPress={saveTemplate} title="Save"/>
+                <Button onPress={saveTemplate} title="Save" containerStyle={styles.saveButton}/>
                 <View style={styles.titleWrapper}>
                     {templateTitle}
                 </View>
