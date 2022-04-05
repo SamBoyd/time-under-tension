@@ -1,5 +1,5 @@
 import React from 'react'
-import {StyleSheet, View} from "react-native";
+import {StyleSheet, View, ScrollView as BaseScrollView} from "react-native";
 import {isRealValue} from "../../utils/utils";
 import {TextNormal} from "./text";
 
@@ -33,3 +33,8 @@ export const FlexColumnView = props => {
         {wrappedChildren}
     </View>
 }
+
+export const ScrollView = props => <BaseScrollView {...props}
+                                                   showsVerticalScrollIndicator={false}
+                                                   overScrollMode='never' // android
+/>

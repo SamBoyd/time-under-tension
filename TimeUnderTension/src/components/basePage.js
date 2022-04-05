@@ -1,11 +1,11 @@
 import React from 'react';
-import {ScrollView, StyleSheet, View, StatusBar} from 'react-native';
+import {StyleSheet, View, StatusBar} from 'react-native';
 import {SafeAreaView} from "react-native-safe-area-context";
 import Header from "./header";
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from "react-native-responsive-screen";
 import theme from "../theme";
 import {TextH1} from "./styled/text";
-
+import {ScrollView} from "./styled/view";
 
 const styles = StyleSheet.create({
     statusBackgroundView: {

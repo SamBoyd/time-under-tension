@@ -1,6 +1,6 @@
 import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {SafeAreaView, ScrollView, StyleSheet, View} from "react-native";
+import {SafeAreaView, StyleSheet, View} from "react-native";
 import theme, {standardHorizontalPadding, standardVerticalPadding} from '../theme'
 
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
@@ -17,6 +17,7 @@ import {resetTimer} from "../reducers/timerReducer";
 import {PAGE} from "../constants";
 import CircleTimer from "../components/circleTimer";
 import {Shadow} from "react-native-shadow-2";
+import {ScrollView} from "../components/styled/view";
 
 const Workout = ({navigation}) => {
     const dispatch = useDispatch()
