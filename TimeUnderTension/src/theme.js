@@ -60,6 +60,7 @@ const theme = createTheme({
 
     Icon: {
         color: '#CECABA',
+        size: 30
     }
 
 });

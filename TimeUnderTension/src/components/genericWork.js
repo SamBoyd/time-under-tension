@@ -16,6 +16,7 @@ import {Dimensions, StyleSheet, View} from "react-native";
 import {FlexColumnView, FlexRowView} from "./styled/view";
 import {Button} from "./styled/button";
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 
 import RestTime from "./restTime";
@@ -25,6 +26,7 @@ import theme from "../theme";
 import {selectSet} from "../reducers/setReducer";
 import {loadSetsByIds} from "../utils/stateUtils";
 import {TextH1} from "./styled/text";
+import {changeActiveWork, resetTimer, selectTimer} from "../reducers/timerReducer";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -32,6 +34,7 @@ const windowHeight = Dimensions.get('window').height;
 const GenericWork = props => {
     const [showActionsOverlay, setShowActionsOverlay] = useState(false)
     const dispatch = useDispatch()
+    const timerState = useSelector(selectTimer)
     const setState = useSelector(selectSet)
     const sets = loadSetsByIds(props.sets, setState)
 
@@ -43,20 +46,34 @@ const GenericWork = props => {
         setShowActionsOverlay(!showActionsOverlay)
     }
 
+    const changeActiveWorkPress = () => {
+        if (timerState.activeWorkId !== props.id) {
+            dispatch(changeActiveWork(props.id))
+            dispatch(resetTimer())
+        }
+    }
+
     const styles = StyleSheet.create({
         card: {
             titleBar: {
                 actionsIcon: {
                     container: {
-                        position: 'absolute',
-                        top: 0,
-                        right: 0,
                     }
                 },
+
+                container: {
+                    flexDirection: 'row',
+                    justifyContent: 'space-between'
+                },
+
                 text: {
                     color: theme.colors.white,
                     fontFamily: theme.fontFamily,
-                }
+                },
+
+                changeActiveWorkButton: {
+                    color: theme.colors.white,
+                },
             },
 
             containerStyle: {
@@ -71,6 +88,7 @@ const GenericWork = props => {
                 // marginTop: 10,
                 width: windowWidth,
             },
+
         },
 
 
@@ -120,13 +138,27 @@ const GenericWork = props => {
     return (
         <ThemeProvider theme={theme}>
             <Card containerStyle={styles.card.containerStyle}>
-                <Card.Title style={styles.card.titleBar.text}>{props.exercise.name}</Card.Title>
+                <View style={styles.card.titleBar.container}>
+                    {props.displayChangeActiveWork && (
+                        <MaterialCommunityIcon
+                            name='target'
+                            onPress={changeActiveWorkPress}
+                            containerStyle={styles.card.titleBar.changeActiveWorkButton}
+                            color={theme.Icon.color}
+                            size={theme.Icon.size}
+                        />
+                    ) || (
+                        <View style={styles.card.titleBar.container}></View>
+                    )}
 
-                <Icon
-                    name='menu'
-                    onPress={toggleShowWorkActionsOverlay}
-                    containerStyle={styles.card.titleBar.actionsIcon.container}
-                />
+                    <Card.Title style={styles.card.titleBar.text}>{props.exercise.name}</Card.Title>
+
+                    <Icon
+                        name='menu'
+                        onPress={toggleShowWorkActionsOverlay}
+                        containerStyle={styles.card.titleBar.actionsIcon.container}
+                    />
+                </View>
                 <Card.Divider/>
 
                 <FlexRowView viewStyle={styles.timingContainer}>
@@ -166,7 +198,7 @@ const GenericWork = props => {
                 >
                     <FlexColumnView rowGap={theme.internalPadding}>
                         <TextH1>{props.exercise.name}</TextH1>
-                        <Button onPress={() =>{
+                        <Button onPress={() => {
                             props.removeWork()
                             toggleShowWorkActionsOverlay()
                         }}
