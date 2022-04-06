@@ -2,18 +2,11 @@ import 'react-native-get-random-values';
 import {v4 as uuidv4} from 'uuid';
 
 import workoutReducer, {
-    addSet,
     addWork,
-    changeRestTime,
-    changeSetReps,
-    changeSetWeight,
-    changeWorkTime, createWorkoutFromTemplate,
-    finishSet,
+    createWorkoutFromTemplate,
     moveWorkDown,
     moveWorkUp,
-    removeSet,
-    removeWork, resetToInitialWorkout,
-    selectWork, setWorkoutFinished, startWorkoutIfNotStarted
+    removeWork, resetToInitialWorkout, setWorkoutFinished, startWorkoutIfNotStarted
 } from "./workoutReducer";
 import {exerciseCategory} from "../constants";
 
@@ -31,7 +24,6 @@ describe('For Workout can', () => {
                 work: [],
                 started_at: null,
                 finished_at: null,
-                currentWork: null
             }
         )
     })
@@ -44,7 +36,6 @@ describe('For Workout can', () => {
             work: [],
             started_at: null,
             finished_at: null,
-            currentWork: null
         }
         const time = new Date(1330688329321);
 
@@ -58,7 +49,6 @@ describe('For Workout can', () => {
                 work: [],
                 started_at: time.toISOString(),
                 finished_at: null,
-                currentWork: null
             }
         )
     })
@@ -77,7 +67,6 @@ describe('For Workout can', () => {
                 work: [],
                 started_at: null,
                 finished_at: null,
-                currentWork: null
             }
         )
     })
@@ -98,7 +87,6 @@ describe('For Workout can', () => {
                 work: [uuidv4(), uuidv4()],
                 finished_at: null,
                 started_at: null,
-                currentWork: null,
             }
 
             const newState = workoutReducer(previousState, createWorkoutFromTemplate(templateWorkout))
@@ -110,7 +98,6 @@ describe('For Workout can', () => {
                 work: [expect.any(String), expect.any(String)],
                 finished_at: null,
                 started_at: null,
-                currentWork: 0
             })
 
             expect(newState.id).not.toEqual(templateWorkout.id)
@@ -142,7 +129,6 @@ describe('For Workout can', () => {
                 created_at: "2022-01-19T17:53:11.336Z",
                 work: ['fa2de79b-85f7-4e85-a238-c9e6265c1111'],
                 finished_at: null,
-                currentWork: 0
             }
         )
 
@@ -155,7 +141,6 @@ describe('For Workout can', () => {
                 created_at: "2022-01-19T17:53:11.336Z",
                 work: ['fa2de79b-85f7-4e85-a238-c9e6265c1111', 'fa2de79b-85f7-4e85-a238-c9e6265c2222'],
                 finished_at: null,
-                currentWork: 0
             }
         )
     })
@@ -225,42 +210,6 @@ describe('For Workout can', () => {
                     'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
                 ],
                 finished_at: null
-            }
-        )
-    })
-
-    test('can select work to do', () => {
-        const previousState = {
-            name: 'New workout',
-            id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
-            created_at: "2022-01-19T17:53:11.336Z",
-            work: [
-                {id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda1e'},
-                {id: 'bbbbbbb-85f7-4e85-a238-c9e6265cda2e'},
-            ],
-            finished_at: null,
-            currentWork: 0
-        }
-
-        const exercise = {
-            id: uuidv4(),
-            name: 'Bench press',
-            category: exerciseCategory.chest
-        }
-
-        const newState = workoutReducer(previousState, selectWork({workIndex: 1}))
-
-        expect(newState).toEqual(
-            {
-                name: 'New workout',
-                id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
-                created_at: "2022-01-19T17:53:11.336Z",
-                work: [
-                    {id: 'aaaaaaa-85f7-4e85-a238-c9e6265cda1e'},
-                    {id: 'bbbbbbb-85f7-4e85-a238-c9e6265cda2e'},
-                ],
-                finished_at: null,
-                currentWork: 1
             }
         )
     })

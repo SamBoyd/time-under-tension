@@ -15,6 +15,7 @@ import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-nativ
 import {addWork, newWorkForExercise} from "../reducers/workReducer";
 import {addWork as addWorkToWorkout} from "../reducers/workoutReducer";
 import {addWork as addWorkToTemplate} from "../reducers/newTemplateWorkoutReducer";
+import {setActiveWorkIfUndefined} from "../reducers/timerReducer";
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -50,6 +51,7 @@ const PickExercise = ({route, navigation}) => {
         addSetAction(dispatch, newWork.id)
         addSetAction(dispatch, newWork.id)
         addSetAction(dispatch, newWork.id)
+        dispatch(setActiveWorkIfUndefined(newWork.id))
         navigation.goBack()
     }
 

@@ -1,11 +1,12 @@
 import timerReducer, {
+    changeActiveWork,
     incrementCount,
     moveToReady,
     moveToRest,
     moveToSetup,
-    moveToWork,
+    moveToWork, NO_ACTIVE_WORK,
     resetCount,
-    resetTimer
+    resetTimer, setActiveWorkIfUndefined
 } from "./timerReducer";
 import {TIMER_STATE} from "../constants";
 
@@ -13,7 +14,8 @@ describe('Timer', () => {
     test('test initial state', () => {
         const initialState = timerReducer(undefined, {})
         expect(initialState).toEqual({
-            state: TIMER_STATE.ready
+            state: TIMER_STATE.ready,
+            activeWorkId: NO_ACTIVE_WORK,
         })
     })
 
@@ -73,11 +75,42 @@ describe('Timer', () => {
     })
 
     test('can reset timer', () => {
-        const previousState = { state: TIMER_STATE.work, count: 42 }
+        const previousState = { state: TIMER_STATE.work, count: 42, activeWorkId: 'work_123'}
         const nextState = timerReducer(previousState, resetTimer())
         expect(nextState).toEqual({
             state:TIMER_STATE.ready,
-            count: 0
+            count: 0,
+            activeWorkId: NO_ACTIVE_WORK,
+        })
+    })
+
+    test('can update the active work', () => {
+        const previousState = { state: TIMER_STATE.work, count: 42 }
+        const nextState = timerReducer(previousState, changeActiveWork('work_123'))
+        expect(nextState).toEqual({
+            state:TIMER_STATE.work,
+            count: 42,
+            activeWorkId: 'work_123'
+        })
+    })
+
+    test('can select update the active work when the active work isnt already set ', () => {
+        const previousState = {
+            state: TIMER_STATE.work,
+            count: 42,
+            activeWorkId: NO_ACTIVE_WORK,
+        }
+        const newState = timerReducer(previousState, setActiveWorkIfUndefined('work_123'))
+        expect(newState).toEqual({
+            state:TIMER_STATE.work,
+            count: 42,
+            activeWorkId: 'work_123'
+        })
+        const newerState = timerReducer(newState, setActiveWorkIfUndefined('work_456'))
+        expect(newerState).toEqual({
+            state:TIMER_STATE.work,
+            count: 42,
+            activeWorkId: 'work_123'
         })
     })
 })

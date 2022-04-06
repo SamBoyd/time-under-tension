@@ -1,4 +1,4 @@
-import {selectWork, startWorkoutIfNotStarted} from "./workoutReducer";
+import {startWorkoutIfNotStarted} from "./workoutReducer";
 import {reset as resetNewTemplate, addWork as addTemplateWork, editTemplate, resetTemplate} from "./newTemplateWorkoutReducer";
 import {moveToRest, moveToSetup, resetTimer} from "./timerReducer";
 import {addSetToWork, addWork, newWorkForExercise} from "./workReducer";
@@ -17,7 +17,6 @@ export const finishSetAction = (dispatch, set) => () => {
 }
 
 export const selectWorkAndResetTimer = (workIndex, dispatch) => {
-    dispatch(selectWork({workIndex: workIndex}))
     dispatch(resetTimer())
 }
 

@@ -13,7 +13,7 @@ import {selectWork} from "../reducers/workReducer";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import PickExercise, {SAVE_WORK_TO} from "./pickExercise";
 import {addWorkoutToHistory} from "../reducers/workoutHistoryReducer";
-import {resetTimer} from "../reducers/timerReducer";
+import {resetTimer, selectTimer} from "../reducers/timerReducer";
 import {PAGE} from "../constants";
 import CircleTimer from "../components/circleTimer";
 import {Shadow} from "react-native-shadow-2";
@@ -23,6 +23,7 @@ const Workout = ({navigation}) => {
     const dispatch = useDispatch()
     const workout = useSelector(selectWorkout)
     const workState = useSelector(selectWork)
+    const timerState = useSelector(selectTimer)
 
     const work = workout.work.map(workId => {
         return workState.find(w => w.id === workId)
@@ -97,7 +98,7 @@ const Workout = ({navigation}) => {
                 {...work}
                 key={i}
                 workIndex={i}
-                active={workout.currentWork === i}
+                active={timerState.activeWorkId === work.id}
             />
         )
     })

@@ -7,10 +7,10 @@ import {
     DEFAULT_WORK_TIME_UPPER,
     TIMER_STATE
 } from "../constants";
-import {moveToRest, moveToSetup, moveToWork} from "../reducers/timerReducer";
+import {changeActiveWork, moveToRest, moveToSetup, moveToWork, NO_ACTIVE_WORK} from "../reducers/timerReducer";
 import {finishSet} from "../reducers/setReducer";
-import {selectWork, startWorkoutIfNotStarted} from "../reducers/workoutReducer";
 import {playConfiguredWorkSound} from "./soundService";
+import {startWorkoutIfNotStarted} from "../reducers/workoutReducer";
 
 const NOOP_TIMINGS = {
     restTime: 10,
@@ -32,65 +32,65 @@ export const getCurrentTimings = (
         setState
     }
 ) => {
-    let currentWork, sets, currentSet
-
-    if (workoutState.currentWork == null && workoutState.currentWork > workoutState.work.length) {
+    const activeWorkId = timerState.activeWorkId
+    const activeWork = loadWorkByIds(workoutState.work, workState)?.find(w => w.id === activeWorkId)
+    if (timerState.activeWorkId === NO_ACTIVE_WORK || workoutState.work.length === 0 || activeWork.sets.length === 0) {
         return NOOP_TIMINGS
     }
 
-    const works = loadWorkByIds(workoutState.work, workState)
-    currentWork = works[workoutState.currentWork]
+    const activeSet = loadSetsByIds(activeWork.sets, setState)?.find(s => !s.finished)
 
-    if (!isRealValue(currentWork) || currentWork.sets.length === 0) {
-        return NOOP_TIMINGS
-    }
-
-    sets = loadSetsByIds(currentWork.sets, setState)
-    currentSet = sets.find(s => !s.finished)
-
-    let shouldFinishSet, shouldIncrementCurrentWork, nextStateAction, shouldPlayNoise, startsWorkout
+    let shouldFinishSet, shouldIncrementCurrentWork, nextTimerStateAction, shouldPlayNoise, startsWorkout
     shouldFinishSet = shouldIncrementCurrentWork = shouldPlayNoise = startsWorkout = false
 
     switch (timerState.state) {
         case TIMER_STATE.ready:
             startsWorkout = true
-            nextStateAction = moveToSetup
+            nextTimerStateAction = moveToSetup
             break;
         case TIMER_STATE.setup:
-            nextStateAction = moveToWork
+            nextTimerStateAction = moveToWork
             shouldPlayNoise = true
             break;
         case TIMER_STATE.work:
-            nextStateAction = moveToRest
+            nextTimerStateAction = moveToRest
             shouldFinishSet = true
-            if (sets.filter(s => !s.finished).length === 1) {
+            if (activeSet.id === activeWork.sets[activeWork.sets.length - 1]) {
                 shouldIncrementCurrentWork = true
             }
             break;
         case TIMER_STATE.rest:
-            nextStateAction = moveToSetup
+            nextTimerStateAction = moveToSetup
             shouldPlayNoise = true
             break;
     }
 
     return {
-        restTime: currentWork.restTime || DEFAULT_REST_TIME,
+        restTime: activeWork.restTime || DEFAULT_REST_TIME,
         setupTime: DEFAULT_SETUP_TIME,
-        workTimeStart: currentWork.workTimeStart || DEFAULT_WORK_TIME_LOWER,
-        workTimeEnd: currentWork.workTimeEnd || DEFAULT_WORK_TIME_UPPER,
+        workTimeStart: activeWork.workTimeStart || DEFAULT_WORK_TIME_LOWER,
+        workTimeEnd: activeWork.workTimeEnd || DEFAULT_WORK_TIME_UPPER,
         onCompleteCB: () => {
-            dispatch(nextStateAction())
+            console.log(`timer state: ${timerState.state}`)
+            console.log(`blah: ${activeWork.sets[activeWork.sets.length - 1]}`)
+            console.log(`activeSetId : ${activeSet.id}`)
+            console.log(`shouldIncrementCurrentWork : ${shouldIncrementCurrentWork}`)
+            dispatch(nextTimerStateAction())
 
             if (startsWorkout) {
                 dispatch(startWorkoutIfNotStarted())
             }
 
             if (shouldFinishSet) {
-                dispatch(finishSet(currentSet.id))
+                dispatch(finishSet(activeSet.id))
             }
 
             if (shouldIncrementCurrentWork) {
-                dispatch(selectWork({workIndex: workoutState.currentWork + 1}))
+                const currentActiveWorkIndex = workoutState.work.indexOf(activeWorkId)
+                const nextActiveWorkId = currentActiveWorkIndex + 1 < workoutState.work.length
+                    ? workoutState.work[currentActiveWorkIndex + 1]
+                    : NO_ACTIVE_WORK
+                dispatch(changeActiveWork(nextActiveWorkId))
             }
 
             if (shouldPlayNoise) {

@@ -5,18 +5,17 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {standardVerticalPadding} from "../theme";
 import ReadyTimer from "./timers/readyTimer";
 import {useDispatch, useSelector} from "react-redux";
-import {resetTimer, selectTimer} from "../reducers/timerReducer";
+import {NO_ACTIVE_WORK, resetTimer, selectTimer} from "../reducers/timerReducer";
 import {TIMER_STATE} from "../constants";
 import SetupTimer from "./timers/setupTimer";
 import {getCurrentTimings} from "../services/workoutStateService";
-import {selectWorkout} from "../reducers/workoutReducer";
 import {selectWork} from "../reducers/workReducer";
 import {selectSet} from "../reducers/setReducer";
 import WorkTimer from "./timers/workTimer";
 import RestTimer from "./timers/restTimer";
-import {def} from "yarn/lib/cli";
 import BlankTimer from "./timers/blankTimer";
 import FinishedTimer from "./timers/finishedTimer";
+import {selectWorkout} from "../reducers/workoutReducer";
 
 const CIRCLE_PADDING = wp(2)
 const SHADOW_DISTANCE = wp(0.8)
@@ -62,7 +61,7 @@ const CircleTimer = props => {
     let timerComponent
     if (workoutState.work.length === 0) {
         timerComponent = <BlankTimer title="Add some exercises"/>
-    } else if (workoutState.currentWork === workoutState.work.length) {
+    } else if (timerState.activeWorkId === NO_ACTIVE_WORK) {
         timerComponent = <FinishedTimer />
     } else {
         switch (timerState.state) {

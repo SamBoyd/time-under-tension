@@ -3,13 +3,13 @@ import {useSelector, useDispatch} from "react-redux";
 import {StyleSheet, View} from "react-native";
 
 import {selectHistory} from "../reducers/workoutHistoryReducer";
-import {selectWork} from "../reducers/workReducer";
 import {loadWorkByIds} from "../utils/stateUtils";
 
 import dateFormat from "dateformat";
 import {TextH1, TextLighter, TextNormal} from "./styled/text";
 import {FlexColumnView, FlexRowView} from "./styled/view";
 import theme, {standardHorizontalPadding, standardVerticalPadding} from "../theme";
+import {selectWork} from "../reducers/workReducer";
 
 const styles = StyleSheet.create({
     wrapper: {

@@ -1,15 +1,19 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {TIMER_STATE} from "../constants";
 
+export const NO_ACTIVE_WORK = "NO_ACTIVE_WORK"
+
 const timerReducer = createSlice({
     name: 'timer',
     initialState: {
-        state: TIMER_STATE.ready
+        state: TIMER_STATE.ready,
+        activeWorkId: NO_ACTIVE_WORK
     },
     reducers: {
         reset: state => {
             state.state = TIMER_STATE.ready
             state.count = 0
+            state.activeWorkId = NO_ACTIVE_WORK
         },
         moveToReady: state => {
             state.state = TIMER_STATE.ready
@@ -36,6 +40,14 @@ const timerReducer = createSlice({
         resetTimer: state => {
             state.state = TIMER_STATE.ready
             state.count = 0
+        },
+        changeActiveWork: (state, action) => {
+            state.activeWorkId = action.payload
+        },
+        setActiveWorkIfUndefined: (state, action) => {
+            if (state.activeWorkId === NO_ACTIVE_WORK) {
+                state.activeWorkId = action.payload
+            }
         }
     }
 })
@@ -44,6 +56,7 @@ export const selectTimer = state => state.timer
 export const {
     reset,
     moveToReady, moveToSetup, moveToWork, moveToRest,
-    incrementCount, resetCount, resetTimer
+    incrementCount, resetCount, resetTimer, changeActiveWork,
+    setActiveWorkIfUndefined
 } = timerReducer.actions
 export default timerReducer.reducer
