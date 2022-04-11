@@ -56,7 +56,7 @@ const CountdownCircleTimer = props => {
     })
 
     return (
-        <Pressable onPressIn={props.onPress}>
+        <Pressable onPressIn={() => props.onPress({totalElapsedTime: Math.floor(elapsedTime)})}>
             <UnstyledShadow
                 startColor={'black'}
                 // finalColor={theme.colors.tertiary}

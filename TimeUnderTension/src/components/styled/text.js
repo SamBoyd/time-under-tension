@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     text: {
         fontSize: theme.textSize,
         color: theme.colors.white,
-        fontFamily: theme.fontFamily,
+        // fontFamily: theme.fontFamily,
     },
     h1Style: {
         fontSize: theme.textSize + 5,

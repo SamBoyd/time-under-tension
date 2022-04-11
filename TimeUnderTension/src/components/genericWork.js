@@ -22,11 +22,13 @@ import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIc
 import RestTime from "./restTime";
 import WorkTime from "./workTime";
 import {Card, Divider, Icon, Overlay, ThemeProvider} from "react-native-elements";
-import theme from "../theme";
+import theme, {standardHorizontalPadding} from "../theme";
 import {selectSet} from "../reducers/setReducer";
 import {loadSetsByIds} from "../utils/stateUtils";
 import {TextH1} from "./styled/text";
 import {changeActiveWork, resetTimer, selectTimer} from "../reducers/timerReducer";
+import EditWorkOverlay from "./editWorkOverlay";
+import {isRealValue} from "../utils/utils";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -38,9 +40,9 @@ const GenericWork = props => {
     const setState = useSelector(selectSet)
     const sets = loadSetsByIds(props.sets, setState)
 
-    const restTime = props.restTime || DEFAULT_REST_TIME;
-    const workTimeStart = props.workTimeStart || DEFAULT_WORK_TIME_LOWER;
-    const workTimeEnd = props.workTimeEnd || DEFAULT_WORK_TIME_UPPER;
+    const restTime = isRealValue(props.restTime) ? props.restTime : DEFAULT_REST_TIME;
+    const workTimeStart = isRealValue(props.workTimeStart) ? props.workTimeStart : DEFAULT_WORK_TIME_LOWER;
+    const workTimeEnd = isRealValue(props.workTimeEnd) ? props.workTimeEnd : DEFAULT_WORK_TIME_UPPER;
 
     const toggleShowWorkActionsOverlay = () => {
         setShowActionsOverlay(!showActionsOverlay)
@@ -57,18 +59,18 @@ const GenericWork = props => {
         card: {
             titleBar: {
                 actionsIcon: {
-                    container: {
-                    }
+                    container: {}
                 },
 
                 container: {
                     flexDirection: 'row',
-                    justifyContent: 'space-between'
+                    justifyContent: 'space-between',
+                    alignItems: 'baseline',
                 },
 
                 text: {
                     color: theme.colors.white,
-                    fontFamily: theme.fontFamily,
+                    // fontFamily: theme.fontFamily,
                 },
 
                 changeActiveWorkButton: {
@@ -77,12 +79,9 @@ const GenericWork = props => {
             },
 
             containerStyle: {
-                backgroundColor: theme.colors.grey0,
+                backgroundColor: theme.colors.tertiary,
                 borderRadius: theme.borderRadius,
                 borderWidth: 0,
-                padding: 10,
-
-                flexDirection: 'column'
             },
             wrapperStyle: {
                 // marginTop: 10,
@@ -91,9 +90,8 @@ const GenericWork = props => {
 
         },
 
-
         setsContainer: {
-            marginTop: 10,
+            marginTop: 0,
         },
 
         title: {
@@ -107,17 +105,6 @@ const GenericWork = props => {
             marginRight: 50,
             flexDirection: "row",
             justifyContent: 'space-between',
-        },
-
-        overlay: {
-            backdrop: {
-                backgroundColor: 'rgba(20, 14, 8, 0.8)',
-            },
-            view: {
-                minWidth: wp(50),
-                backgroundColor: theme.colors.tertiary
-            },
-
         },
 
         addSet: {
@@ -135,53 +122,52 @@ const GenericWork = props => {
         }
     }
 
+    const showChangeActiveButton = props.displayChangeActiveWork && !props.active && sets.some(s => !s.finished)
     return (
         <ThemeProvider theme={theme}>
-            <Card containerStyle={styles.card.containerStyle}>
+            <View style={styles.card.containerStyle}>
                 <View style={styles.card.titleBar.container}>
-                    {props.displayChangeActiveWork && (
-                        <MaterialCommunityIcon
-                            name='target'
-                            onPress={changeActiveWorkPress}
-                            containerStyle={styles.card.titleBar.changeActiveWorkButton}
-                            color={theme.Icon.color}
-                            size={theme.Icon.size}
-                        />
-                    ) || (
-                        <View style={styles.card.titleBar.container}></View>
-                    )}
 
                     <Card.Title style={styles.card.titleBar.text}>{props.exercise.name}</Card.Title>
 
-                    <Icon
-                        name='menu'
-                        onPress={toggleShowWorkActionsOverlay}
-                        containerStyle={styles.card.titleBar.actionsIcon.container}
-                    />
+                    <FlexRowView>
+                        {showChangeActiveButton && (
+                            <MaterialCommunityIcon
+                                name='target'
+                                onPress={changeActiveWorkPress}
+                                containerStyle={styles.card.titleBar.changeActiveWorkButton}
+                                color={theme.Icon.color}
+                                size={theme.Icon.size}
+                            />
+                        )}
+
+                        <Icon
+                            name='menu'
+                            onPress={toggleShowWorkActionsOverlay}
+                            containerStyle={styles.card.titleBar.actionsIcon.container}
+                        />
+                    </FlexRowView>
                 </View>
+
                 <Card.Divider/>
 
-                <FlexRowView viewStyle={styles.timingContainer}>
-                    <RestTime
-                        onChangeText={props.fireChangeRestTime}
-                        value={restTime}
-                    />
+                <WorkTime
+                    workTimeStart={workTimeStart}
+                    workTimeEnd={workTimeEnd}
+                />
 
-                    <WorkTime
-                        workTimeStart={workTimeStart}
-                        workTimeEnd={workTimeEnd}
-                        fireChangeWorkTimeStart={props.fireChangeWorkTimeStart}
-                        fireChangeWorkTimeEnd={props.fireChangeWorkTimeEnd}
-                    />
-                </FlexRowView>
+                <RestTime value={restTime}/>
 
                 <View style={styles.setsContainer}>
                     {sets.map((set, index) => {
                         return <Set
                             key={index}
-                            index={index}
+                            index={index+1}
                             {...set}
                             workId={props.id}
+                            workName={props.exercise.name}
+                            workTimeStart={workTimeStart}
+                            workTimeEnd={workTimeEnd}
                             active={props.active && active === index}
                             fireRemoveSet={props.fireRemoveSet}
                         />
@@ -190,30 +176,21 @@ const GenericWork = props => {
 
                 <Button onPress={props.fireAddSet} title="Add Set" containerStyle={styles.addSet}/>
 
-                <Overlay
-                    isVisible={showActionsOverlay}
-                    onBackdropPress={toggleShowWorkActionsOverlay}
-                    overlayStyle={styles.overlay.view}
-                    backdropStyle={styles.overlay.backdrop}
-                >
-                    <FlexColumnView rowGap={theme.internalPadding}>
-                        <TextH1>{props.exercise.name}</TextH1>
-                        <Button onPress={() => {
-                            props.removeWork()
-                            toggleShowWorkActionsOverlay()
-                        }}
-                                title={`Remove`}/>
-                        <Button onPress={() => {
-                            props.moveWorkUp()
-                            toggleShowWorkActionsOverlay()
-                        }} title={`Move up`}/>
-                        <Button onPress={() => {
-                            props.moveWorkDown()
-                            toggleShowWorkActionsOverlay()
-                        }} title={`Move down`}/>
-                    </FlexColumnView>
-                </Overlay>
-            </Card>
+
+                {showActionsOverlay && (
+                    <EditWorkOverlay
+                        workId={props.id}
+                        workName={props.exercise.name}
+                        workTimeStart={workTimeStart}
+                        workTimeEnd={workTimeEnd}
+                        restTime={restTime}
+                        toggleOverlay={toggleShowWorkActionsOverlay}
+                        removeWork={props.removeWork}
+                        moveWorkUp={props.moveWorkUp}
+                        moveWorkDown={props.moveWorkDown}
+                    />
+                )}
+            </View>
         </ThemeProvider>
     )
 }

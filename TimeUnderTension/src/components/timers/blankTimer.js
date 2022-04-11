@@ -35,6 +35,8 @@ const BlankTimer = props => {
                     return <></>
                 }
             }}
+            onComplete={() => {}}
+            onPress={() => {}}
         />
     )
 }

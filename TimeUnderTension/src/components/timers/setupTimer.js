@@ -46,6 +46,7 @@ const SetupTimer = props => {
                     <TextNormal style={styles.setupTitle}>Get ready!</TextNormal>
                 </FlexColumnView>
             }}
+            onPress={()=>{}}
             onComplete={props.onComplete}
         />
     )

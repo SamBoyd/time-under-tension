@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import {StyleSheet, View} from "react-native";
 import {Button} from "./styled/button";
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
-import {standardVerticalPadding} from "../theme";
+import {standardHorizontalPadding, standardVerticalPadding} from "../theme";
 import ReadyTimer from "./timers/readyTimer";
 import {useDispatch, useSelector} from "react-redux";
 import {NO_ACTIVE_WORK, resetTimer, selectTimer} from "../reducers/timerReducer";
@@ -31,7 +31,10 @@ const styles = StyleSheet.create({
     },
 
     button: {
-        marginTop: standardVerticalPadding
+        marginTop: standardVerticalPadding,
+        position: 'absolute',
+        top: 0,
+        left: standardHorizontalPadding,
     }
 })
 

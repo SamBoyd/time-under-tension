@@ -22,7 +22,7 @@ export const DEFAULT_SOUND_FILE = 'buzzer.mp3'
 export const DEFAULT_SETUP_TIME = 2
 export const DEFAULT_WORK_TIME_LOWER = 5
 export const DEFAULT_WORK_TIME_UPPER = 15
-export const DEFAULT_REST_TIME = 3
+export const DEFAULT_REST_TIME = 90
 
 
 export const exerciseCategory = {

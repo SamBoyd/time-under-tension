@@ -15,7 +15,7 @@ const CIRCLE_STROKE_WIDTH = 10
 
 const styles = StyleSheet.create({
     title: {
-        fontFamily: theme.fontFamily,
+        // fontFamily: theme.fontFamily,
         color: theme.colors.white
     },
 
@@ -49,6 +49,7 @@ const ReadyTimer = props => {
                 </FlexColumnView>
             }}
             onPress={props.onPress}
+            onComplete={()=>{}}
         />
     )
 }

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {
     moveWorkDown as moveWorkDownInWorkout,
     moveWorkUp as moveWorkUpInWorkout,
@@ -75,7 +75,14 @@ const Work = props => {
 
     return (
         <GenericWork
-            {...props}
+            id={props.id}
+            exercise={props.exercise}
+            sets={props.sets}
+            restTime={props.restTime}
+            workTimeStart={props.workTimeStart}
+            workTimeEnd={props.workTimeEnd}
+            finished={props.finished}
+            active={props.active}
             workIndex={props.workIndex}
             fireAddSet={fireAddSet}
             fireRemoveSet={fireRemoveSet}

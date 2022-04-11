@@ -1,24 +1,24 @@
-import React from "react";
+import React, {useState} from "react";
 import {useDispatch} from "react-redux";
-import {changeSetReps, changeSetWeight, finishSet, removeSet} from "../reducers/setReducer";
-import {Text, View, StyleSheet, Dimensions} from "react-native";
-import BouncyCheckbox from "react-native-bouncy-checkbox";
-import InputSpinner from "react-native-input-spinner";
+import {changeSetReps, changeSetWeight} from "../reducers/setReducer";
+import {Dimensions, Pressable, StyleSheet, View} from "react-native";
 import {TextNormal} from "./styled/text";
 import {FlexRowView} from "./styled/view";
-import {Button} from "./styled/button";
-import {CheckBox, Icon} from "react-native-elements";
-import {OverlaySlider} from "./styled/input";
+import {Icon} from "react-native-elements";
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import theme from '../theme'
 
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
-import {updateSetsOnWork} from "../reducers/workReducer";
+import EditSetOverlay from "./editSetOverlay";
+
+const _ = require('lodash');
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const Set = props => {
-
+    const [showEditSet, setShowEditSet] = useState(false)
     const dispatch = useDispatch()
 
     const updateReps = value => {
@@ -35,129 +35,153 @@ const Set = props => {
         }))
     }
 
-    const finish = () => {
-        // console.log(`${props.finished} -> ${!props.finished}`)
-        // dispatch(finishSet({
-        //     setId: props.id
-        // }))
+    const toggleShowEditSet = () => {
+        setShowEditSet(!showEditSet)
+    }
+
+    let allStyles = {
+        container: {
+            marginTop: hp(1),
+            alignItems: 'baseline',
+            // paddingHorizontal: wp(1),
+            // width: wp(90)
+        },
+
+        leftComponent: {
+            flex: 1,
+            alignItems: 'flex-start',
+        },
+        previousSet: {
+            flex: 3,
+            alignItems: 'center',
+        },
+
+        repsAndWeight: {
+            flex: 3,
+            alignItems: 'center',
+        },
+        rightComponent: {
+            flex: 1,
+            alignItems: 'flex-end',
+        },
+
+        finishedCheckbox: {
+            // height: hp(2),
+            // width: hp(2),
+            container: {
+                width: wp(3),
+            },
+            size: 12,
+            uncheckedIcon: {
+                color: theme.colors.white,
+            },
+            checkedIcon: {
+                color: theme.colors.white,
+            }
+        },
+        removeIcon: {
+            size: 15,
+        },
+        dragIcon: {
+            size: 15
+        },
+        text: {
+            color: theme.colors.white
+        },
+    }
+
+    const activeStyles = {
+        container: {
+            borderTopWidth: 1,
+            borderBottomWidth: 1,
+            // borderRadius: theme.borderRadius,
+            borderColor: theme.colors.primary,
+            paddingVertical: hp(0.5),
+        },
+    }
+
+    const unfinishedStyles = {
+        text: {
+            color: theme.colors.grey0
+        }
     }
 
     let styles
-
     if (props.active) {
-        styles = StyleSheet.create({
-            container: {
-                marginTop: hp(1),
-                justifyContent: "space-evenly",
-                alignItems: 'center',
-                backgroundColor: theme.colors.primary,
-                color: 'white',
-            },
-            setIndex: {
-                color: 'white',
-            },
-            repsAndWeight: {
-                width: wp(10),
-                justifyContent: "space-between",
-                textStyle: {
-                    color: 'white',
-                }
-            },
-            checkbox: {
-                height: hp(2),
-                width: wp(2),
-                uncheckedIcon: {
-                    color: 'white',
-                },
-                checkedIcon: {
-                    color: 'white',
-                }
-            },
-            removeIcon: {
-                size: 15,
-                color: 'white',
-            }
-        })
+        styles = StyleSheet.create(_.merge(allStyles, activeStyles))
+    } else if (props.finished) {
+        styles = StyleSheet.create(allStyles)
     } else {
-        styles = StyleSheet.create({
-            container: {
-                marginTop: hp(1),
-                justifyContent: "space-evenly",
-                alignItems: 'center',
-            },
-            repsAndWeight: {
-                width: wp(10),
-                justifyContent: "space-between",
-                textStyle: {}
-            },
-            checkbox: {
-                height: hp(2),
-                width: hp(2),
-                uncheckedIcon: {
-                    color: theme.colors.white,
-                },
-                checkedIcon: {
-                    color: theme.colors.white,
-                }
-            },
-            removeIcon: {
-                size: 15,
-            }
-        })
+        styles = StyleSheet.create(_.merge(allStyles, unfinishedStyles))
+    }
+
+    let leftmostComponent
+    if (props.finished) {
+        leftmostComponent = <Icon
+            name="check-circle"
+            type="feather"
+            color={styles.text.color}
+            size={styles.finishedCheckbox.size}
+        />
+    } else if (props.active) {
+        leftmostComponent = <Icon
+            name="arrow-right"
+            type="feather"
+            color={styles.text.color}
+            size={styles.finishedCheckbox.size}
+        />
+    } else {
+        leftmostComponent = <TextNormal style={styles.setIndex}>#{props.index}</TextNormal>
+    }
+
+    let currentSetText = `${props.numberReps} / ${props.weight} / `
+    if (props.finished) {
+        currentSetText += `${props.workTime}`
+    } else {
+        currentSetText += `${props.workTimeStart}-${props.workTimeEnd}`
     }
 
     return (
-        <FlexRowView viewStyle={styles.container}>
-            <TextNormal style={styles.setIndex}>{props.index}</TextNormal>
-            <FlexRowView viewStyle={styles.repsAndWeight}>
-                <OverlaySlider
-                    overlayTitle="Number of reps"
-                    onChangeText={updateReps}
-                    value={props.numberReps}
-                    minimumValue={0}
-                    maximumValue={20}
-                    textStyle={styles.repsAndWeight.textStyle}
-                />
-                <TextNormal
-                    style={styles.repsAndWeight.textStyle}
-                >
-                    x
-                </TextNormal>
-                <OverlaySlider
-                    overlayTitle="Weight"
-                    onChangeText={updateWeight}
-                    value={props.weight}
-                    minimumValue={0}
-                    maximumValue={100}
-                    textStyle={styles.repsAndWeight.textStyle}
-                />
-            </FlexRowView>
-            <CheckBox
-                center
-                onPress={finish}
-                checked={props.finished}
-                iconProps={styles.checkbox.icon}
-                checkedIcon={
-                    <Icon
-                        name="radio-button-checked"
-                        type="material"
-                        color={styles.checkbox.checkedIcon.color}
-                    />
-                }
-                uncheckedIcon={
-                    <Icon
-                        name="radio-button-unchecked"
-                        type="material"
-                        color={styles.checkbox.uncheckedIcon.color}
-                    />
-                }
+        <>
+            <Pressable onPress={toggleShowEditSet}>
+                <FlexRowView viewStyle={styles.container}>
+                    <View style={styles.leftComponent}>
+                        {leftmostComponent}
+                    </View>
+
+                    <View style={styles.previousSet}>
+                        <TextNormal style={styles.text}>12 / 38 / {40 + Math.floor(Math.random() * 10)}</TextNormal>
+                    </View>
+
+                    <View style={styles.repsAndWeight}>
+                        <TextNormal style={styles.text}>{currentSetText}</TextNormal>
+                    </View>
+
+
+                    <View style={styles.rightComponent}>
+                        <MaterialCommunityIcon
+                            name="drag-vertical"
+                            size={styles.dragIcon.size}
+                            color={styles.text.color}
+                        />
+                    </View>
+                </FlexRowView>
+            </Pressable>
+            <EditSetOverlay
+                toggleShowEditSet={toggleShowEditSet}
+                id={props.id}
+                numberReps={props.numberReps}
+                weight={props.weight}
+                restTime={props.restTime}
+                workTimeStart={props.workTimeStart}
+                workTimeEnd={props.workTimeEnd}
+                workName={props.workName}
+                setIndex={props.index}
+                visible={showEditSet}
+                fireRemoveSet={props.fireRemoveSet}
+                cb={false}
             />
-            <Icon
-                name='delete'
-                onPress={() => props.fireRemoveSet(props.id)}
-                {...styles.removeIcon}
-            />
-        </FlexRowView>
+        </>
     )
 }
 

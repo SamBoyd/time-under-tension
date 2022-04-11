@@ -70,7 +70,7 @@ export const getCurrentTimings = (
         setupTime: DEFAULT_SETUP_TIME,
         workTimeStart: activeWork.workTimeStart || DEFAULT_WORK_TIME_LOWER,
         workTimeEnd: activeWork.workTimeEnd || DEFAULT_WORK_TIME_UPPER,
-        onCompleteCB: () => {
+        onCompleteCB: ({totalElapsedTime}) => {
             console.log(`timer state: ${timerState.state}`)
             console.log(`blah: ${activeWork.sets[activeWork.sets.length - 1]}`)
             console.log(`activeSetId : ${activeSet.id}`)
@@ -82,7 +82,7 @@ export const getCurrentTimings = (
             }
 
             if (shouldFinishSet) {
-                dispatch(finishSet(activeSet.id))
+                dispatch(finishSet({id: activeSet.id, time: totalElapsedTime}))
             }
 
             if (shouldIncrementCurrentWork) {

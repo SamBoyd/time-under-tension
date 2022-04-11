@@ -44,6 +44,7 @@ const RestTimer = props => {
                     <TextH1>{remainingTime}</TextH1>
                 </FlexColumnView>
             }}
+            onPress={()=>{}}
             onComplete={props.onComplete}
         />
     )

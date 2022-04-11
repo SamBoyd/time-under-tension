@@ -13,7 +13,6 @@ target 'TimeUnderTension' do
   )
 
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   target 'TimeUnderTensionTests' do
     inherit! :complete

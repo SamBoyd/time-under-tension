@@ -16,8 +16,9 @@ import {addWorkoutToHistory} from "../reducers/workoutHistoryReducer";
 import {resetTimer, selectTimer} from "../reducers/timerReducer";
 import {PAGE} from "../constants";
 import CircleTimer from "../components/circleTimer";
-import {Shadow} from "react-native-shadow-2";
 import {ScrollView} from "../components/styled/view";
+import {Shadow} from "react-native-shadow-2";
+import {loadWorkByIds} from "../utils/stateUtils";
 
 const Workout = ({navigation}) => {
     const dispatch = useDispatch()
@@ -25,9 +26,7 @@ const Workout = ({navigation}) => {
     const workState = useSelector(selectWork)
     const timerState = useSelector(selectTimer)
 
-    const work = workout.work.map(workId => {
-        return workState.find(w => w.id === workId)
-    })
+    const work = loadWorkByIds(workout.work, workState)
 
     const goBack = () => {
         navigation.goBack()
@@ -60,7 +59,18 @@ const Workout = ({navigation}) => {
             top: 0,
             left: 0,
             width: wp(100),
-            height: hp(46),
+            height: hp(40),
+            borderBottomWidth: 1,
+            borderBottomColor: theme.colors.grey0,
+
+            shadow: {
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: wp(100),
+                height: hp(40),
+                zIndex: 100,
+            }
         },
 
         finishButton: {
@@ -70,7 +80,7 @@ const Workout = ({navigation}) => {
 
         bottomView: {
             position: 'absolute',
-            top: hp(46),
+            top: hp(40),
             left: 0,
             width: wp(100),
             height: hp(54),
@@ -111,12 +121,19 @@ const Workout = ({navigation}) => {
 
     return (
         <SafeAreaView style={styles.wrapper}>
+            <Shadow
+                sides={['bottom']}
+                distance={hp(1)}
+                startColor={theme.colors.white}
+                viewStyle={styles.timerBanner.shadow}
+            >
             <View style={styles.timerBanner}>
+
                 {finishButton}
 
                 <CircleTimer/>
             </View>
-
+            </Shadow>
             <View style={styles.bottomView}>
                 <ScrollView contentContainerStyle={styles.scrollContent}>
                     {workoutStarted && <WorkoutDuration startedAt={workout.started_at}/>}

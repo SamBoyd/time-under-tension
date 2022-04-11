@@ -9,7 +9,7 @@ const updateProp = (state, workId, propName, value) => {
         work[propName] = value
         state.push(work)
     } else {
-        throw `cant find work with id: ${id}`
+        throw `cant find work with id: ${workId}`
     }
 }
 

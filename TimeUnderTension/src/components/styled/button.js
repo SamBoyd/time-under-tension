@@ -24,7 +24,7 @@ export const Button = props => {
             {
                 color: theme.colors.white,
                 fontSize: theme.textSize,
-                fontFamily: theme.fontFamily,
+                // fontFamily: theme.fontFamily,
             }
         ]}
         containerStyle={[

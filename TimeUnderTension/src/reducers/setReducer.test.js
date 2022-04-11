@@ -97,7 +97,7 @@ describe('Test setReducer can', () => {
             }
         ]
 
-        const nextState = setReducer(previousState, finishSet('fa2de79b-85f7-4e85-a238-c9e6265cda2e'))
+        const nextState = setReducer(previousState, finishSet({id:'fa2de79b-85f7-4e85-a238-c9e6265cda2e', time: 23}))
 
         expect(nextState).toEqual(
             [
@@ -112,7 +112,7 @@ describe('Test setReducer can', () => {
                     id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
                     numberReps: 8,
                     weight: 79,
-                    workTime: null,
+                    workTime: 23,
                     finished: true
                 }
             ]

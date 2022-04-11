@@ -48,7 +48,6 @@ const WorkTimer = props => {
                     <TextNormal style={styles.workTitle}>Click when finished</TextNormal>
                 </FlexColumnView>
             }}
-            onPress={props.onComplete}
             onUpdate={(remainingTime) => {
                 if (
                     (remainingTime === 60 - props.workTimeStart) ||
@@ -57,6 +56,7 @@ const WorkTimer = props => {
                     playConfiguredTargetWorkSound()
                 }
             }}
+            onPress={props.onComplete}
             onComplete={() => {
                 setTimeElapsedOffset(timeElapsedOffset + 60)
                 return {shouldRepeat: true}

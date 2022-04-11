@@ -69,12 +69,14 @@ const setSlice = createSlice({
             }
         },
         finishSet: (state, action) => {
-            if (action.payload == null) {
+            if (!('id' in action.payload) || !('time' in action.payload)) {
                 throw `bad removeSet action payload: ${JSON.stringify(action.payload)}`
             }
 
-            const id = action.payload
+            const id = action.payload.id
+            const time = action.payload.time
             updateProp(state, id, 'finished', true)
+            updateProp(state, id, 'workTime', time)
         },
         changeSetReps: (state, action) => {
             if (
