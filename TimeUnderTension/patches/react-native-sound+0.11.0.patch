@@ -1,0 +1,49 @@
+diff --git a/node_modules/react-native-sound/RNSound/RNSound.m b/node_modules/react-native-sound/RNSound/RNSound.m
+index 5950dfe..aa97df6 100644
+--- a/node_modules/react-native-sound/RNSound/RNSound.m
++++ b/node_modules/react-native-sound/RNSound/RNSound.m
+@@ -23,17 +23,20 @@
+     if (audioSessionInterruptionType == AVAudioSessionInterruptionTypeEnded) {
+         if (player && player.isPlaying) {
+             [player play];
++            [self setOnPlay:YES forPlayerKey:self._key];
+         }
+     }
+     if (audioSessionRouteChangeReason ==
+         AVAudioSessionRouteChangeReasonOldDeviceUnavailable) {
+         if (player) {
+             [player pause];
++            [self setOnPlay:NO forPlayerKey:self._key];
+         }
+     }
+     if (audioSessionInterruptionType == AVAudioSessionInterruptionTypeBegan) {
+         if (player) {
+             [player pause];
++            [self setOnPlay:NO forPlayerKey:self._key];
+         }
+     }
+ }
+@@ -194,17 +197,18 @@ RCT_EXPORT_METHOD(prepare
+     NSError *error;
+     NSURL *fileNameUrl;
+     AVAudioPlayer *player;
++    NSString* fileNameEscaped = [fileName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+ 
+-    if ([fileName hasPrefix:@"http"]) {
+-        fileNameUrl = [NSURL URLWithString:fileName];
++    if ([fileNameEscaped hasPrefix:@"http"]) {
++        fileNameUrl = [NSURL URLWithString:fileNameEscaped];
+         NSData *data = [NSData dataWithContentsOfURL:fileNameUrl];
+         player = [[AVAudioPlayer alloc] initWithData:data error:&error];
+-    } else if ([fileName hasPrefix:@"ipod-library://"]) {
+-        fileNameUrl = [NSURL URLWithString:fileName];
++    } else if ([fileNameEscaped hasPrefix:@"ipod-library://"]) {
++        fileNameUrl = [NSURL URLWithString:fileNameEscaped];
+         player = [[AVAudioPlayer alloc] initWithContentsOfURL:fileNameUrl
+                                                         error:&error];
+     } else {
+-        fileNameUrl = [NSURL URLWithString:fileName];
++        fileNameUrl = [NSURL URLWithString:fileNameEscaped];
+         player = [[AVAudioPlayer alloc] initWithContentsOfURL:fileNameUrl
+                                                         error:&error];
+     }

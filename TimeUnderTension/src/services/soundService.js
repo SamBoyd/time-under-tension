@@ -1,5 +1,5 @@
 import Sound from 'react-native-sound';
-Sound.setCategory('Playback');
+Sound.setCategory('Playback', true);
 
 export const playConfiguredWorkSound = () => {
     var whoosh = new Sound('buzzer.mp3', Sound.MAIN_BUNDLE, (error) => {
@@ -17,6 +17,7 @@ export const playConfiguredWorkSound = () => {
             } else {
                 console.log('playback failed due to audio decoding errors');
             }
+            whoosh.reset();
             whoosh.release();
         });
     });
