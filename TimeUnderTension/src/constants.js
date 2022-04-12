@@ -30,7 +30,8 @@ export const exerciseCategory = {
     arms: 'arms',
     shoulders: 'shoulders',
     back: 'back',
-    legs: 'legs'
+    legs: 'legs',
+    abs: 'abs',
 }
 
 export const exercises = [
@@ -142,5 +143,21 @@ export const exercises = [
         id: uuidv4(),
         name: 'Pull up',
         category: exerciseCategory.back
+    },
+
+    {
+        id: uuidv4(),
+        name: 'Hanging leg raises',
+        category: exerciseCategory.abs
+    },
+    {
+        id: uuidv4(),
+        name: 'Side crunches',
+        category: exerciseCategory.abs
+    },
+    {
+        id: uuidv4(),
+        name: 'Landmine twists',
+        category: exerciseCategory.abs
     },
 ]
