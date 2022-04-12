@@ -56,6 +56,7 @@ const TemplateWorkoutTile = props => {
     const work = loadWorkByIds(props.template.work, workState)
 
     const editTemplate = () => {
+        setDisplayActionsOverlay(false)
         dispatch(editTemplateAction(props.template))
         props.moveToCreateTemplate()
     }
