@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
-import {StyleSheet} from "react-native";
+import {StyleSheet, View} from "react-native";
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import theme from "../../theme";
 import CountdownCircleTimer from "../CountdownCircleTimer";
 import {TextH1, TextNormal} from "../styled/text";
-import {FlexColumnView} from "../styled/view";
+import {FlexColumnView, FlexRowView} from "../styled/view";
 import {playConfiguredTargetWorkSound, playConfiguredWorkSound} from "../../services/soundService";
 
 const CIRCLE_PADDING = wp(2)
@@ -21,7 +21,19 @@ const styles = StyleSheet.create({
     },
 
     workTitle: {
-        color: theme.colors.grey1
+        color: theme.colors.grey1,
+
+        timeDisplay: {
+            width: wp(30),
+            time: {
+                flex: 2,
+                alignItems: 'flex-end'
+            },
+            seconds: {
+                flex: 1,
+                justifyContent: 'flex-end'
+            }
+        }
     }
 })
 
@@ -34,7 +46,7 @@ const WorkTimer = props => {
         <CountdownCircleTimer
             key={props.cb}
             isPlaying
-            duration={60}
+            duration={props.workTimeEnd}
             colors={theme.colors.primary}
             trailColor={theme.colors.tertiary}
             colorsTime={[7, 5, 2, 0]}
@@ -44,23 +56,30 @@ const WorkTimer = props => {
             children={({remainingTime, elapsedTime, color}) => {
                 return <FlexColumnView viewStyle={styles.titleContainer} rowGap={styles.titleContainer.rowGap}>
                     <TextNormal style={styles.workTitle}>Work</TextNormal>
-                    <TextH1>{Math.floor(elapsedTime) + timeElapsedOffset}</TextH1>
+                    <FlexRowView viewStyle={styles.workTitle.timeDisplay}>
+                        <View style={styles.workTitle.timeDisplay.time}><TextH1>{Math.floor(elapsedTime) + timeElapsedOffset} / {props.workTimeEnd}</TextH1></View>
+                        <View style={styles.workTitle.timeDisplay.seconds}><TextNormal>sec</TextNormal></View>
+                    </FlexRowView>
                     <TextNormal style={styles.workTitle}>Click when finished</TextNormal>
                 </FlexColumnView>
             }}
             onUpdate={(remainingTime) => {
                 if (
-                    (remainingTime === 60 - props.workTimeStart) ||
-                    (remainingTime === 60 - props.workTimeEnd)
+                    timeElapsedOffset === 0 &&
+                    (
+                        (remainingTime === 0 ) ||
+                        (remainingTime === props.workTimeEnd - props.workTimeStart)
+                    )
                 ) {
                     playConfiguredTargetWorkSound()
                 }
             }}
             onPress={props.onComplete}
             onComplete={() => {
-                setTimeElapsedOffset(timeElapsedOffset + 60)
+                setTimeElapsedOffset(timeElapsedOffset + props.workTimeEnd)
                 return {shouldRepeat: true}
             }}
+            isComplete={timeElapsedOffset >= props.workTimeEnd}
         />
     )
 }

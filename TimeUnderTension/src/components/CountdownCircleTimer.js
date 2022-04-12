@@ -111,7 +111,7 @@ const CountdownCircleTimer = props => {
                                         stroke={stroke}
                                         strokeLinecap="butt"
                                         strokeWidth={strokeWidth}
-                                        strokeDasharray={pathLength}
+                                        strokeDasharray={props.isComplete ? 100000: pathLength}
                                         strokeDashoffset={strokeDashoffset}
                                     />
                                 )}
