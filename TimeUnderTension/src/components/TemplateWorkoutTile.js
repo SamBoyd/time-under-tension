@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
-import {StyleSheet, FlatList, View} from "react-native";
+import {StyleSheet, FlatList, View, Pressable} from "react-native";
 import {TextH1, TextLighter, TextNormal} from "./styled/text";
 import {Button} from "./styled/button";
 import {standardHorizontalPadding, standardVerticalPadding} from "../theme";
@@ -33,6 +33,11 @@ const styles = StyleSheet.create({
             marginLeft: wp(1),
         },
         icon: {}
+    },
+
+    overlayButton: {
+      width: wp(10),
+        height: hp(2.5)
     },
 
     overlay: {
@@ -84,12 +89,13 @@ const TemplateWorkoutTile = props => {
             <View style={styles.wrapper}>
                 <View style={styles.row}>
                     <TextNormal onPress={startWorkoutFromTemplate}>{props.template.name}</TextNormal>
-                    <Icon name='edit'
-                          onPress={toggleOverlay}
-                          size={styles.toggleOverlay.size}
-                          style={styles.toggleOverlay.icon}
-                          containerStyle={styles.toggleOverlay.container}
-                    />
+                    <Pressable style={styles.overlayButton} onPress={toggleOverlay}>
+                        <Icon name='edit'
+                              size={styles.toggleOverlay.size}
+                              style={styles.toggleOverlay.icon}
+                              containerStyle={styles.toggleOverlay.container}
+                        />
+                    </Pressable>
                 </View>
                 <FlatList
                     data={work}
