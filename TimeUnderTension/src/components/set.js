@@ -102,7 +102,7 @@ const Set = props => {
 
     const unfinishedStyles = {
         text: {
-            color: theme.colors.grey0
+            color: theme.colors.grey1
         }
     }
 

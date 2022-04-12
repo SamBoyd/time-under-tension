@@ -15,7 +15,11 @@ export const loadSetsByIds = (setIds, setState) => {
 export const loadPreviousSetsForExercise = (exerciseId, workState, setState) => {
     const work = workState.filter(w => w.exercise.id === exerciseId)
     const sorted = work.sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at))
-    const lastWork = sorted[1] // 1 because 0 will be the in-progress work
+
+    const lastWork = sorted.slice(1).find(w => {
+        const sets = loadSetsByIds(w.sets, setState)
+        return sets.some(s=>s.finished)
+    })
 
     if (isRealValue(lastWork)) {
         return loadSetsByIds(lastWork.sets, setState)
