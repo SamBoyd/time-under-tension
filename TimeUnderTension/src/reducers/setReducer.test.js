@@ -1,5 +1,6 @@
 import setReducer, {addSet, changeSetReps, changeSetWeight, finishSet, removeSet} from "./setReducer";
 import {v4 as uuidv4} from "uuid";
+import tk from "timekeeper";
 
 describe('Test setReducer can', () => {
     test('initialise state', () => {
@@ -97,6 +98,10 @@ describe('Test setReducer can', () => {
             }
         ]
 
+        const time = new Date(1330688329321);
+
+        tk.freeze(time)
+
         const nextState = setReducer(previousState, finishSet({id:'fa2de79b-85f7-4e85-a238-c9e6265cda2e', time: 23}))
 
         expect(nextState).toEqual(
@@ -113,7 +118,8 @@ describe('Test setReducer can', () => {
                     numberReps: 8,
                     weight: 79,
                     workTime: 23,
-                    finished: true
+                    finished: true,
+                    finished_at: time.toISOString(),
                 }
             ]
         )

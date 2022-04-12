@@ -170,6 +170,7 @@ const GenericWork = props => {
                             workTimeEnd={workTimeEnd}
                             active={props.active && active === index}
                             fireRemoveSet={props.fireRemoveSet}
+                            previousSet={props.previousSets[index]}
                         />
                     })}
                 </View>

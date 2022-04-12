@@ -7,6 +7,7 @@ import workReducer, {
 } from "./workReducer";
 import {v4 as uuidv4} from "uuid";
 import {addWork} from "./workReducer";
+import tk from "timekeeper";
 
 describe("Work reducer can", () => {
     test('initialise state', () => {
@@ -16,11 +17,16 @@ describe("Work reducer can", () => {
     })
 
     test('get new work object for exercise', () => {
+        const time = new Date(1330688329321);
+
+        tk.freeze(time)
+
         const newWork = newWorkForExercise('exercise')
 
         expect(newWork).toEqual(
             {
                 id: expect.any(String),
+                created_at: time.toISOString(),
                 exercise: 'exercise',
                 sets: [],
                 restTime: null,

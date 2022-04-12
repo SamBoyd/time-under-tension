@@ -141,6 +141,8 @@ const Set = props => {
         currentSetText += `${props.workTimeStart}-${props.workTimeEnd}`
     }
 
+    const prevSet = props.previousSet
+
     return (
         <>
             <Pressable onPress={toggleShowEditSet}>
@@ -150,7 +152,11 @@ const Set = props => {
                     </View>
 
                     <View style={styles.previousSet}>
-                        <TextNormal style={styles.text}>12 / 38 / {40 + Math.floor(Math.random() * 10)}</TextNormal>
+                        {prevSet && (
+                            <TextNormal style={styles.text}>{prevSet.numberReps} / {prevSet.weight} / {prevSet.workTime}</TextNormal>
+                        ) || (
+                            <TextNormal style={styles.text}>- / - / -</TextNormal>
+                        )}
                     </View>
 
                     <View style={styles.repsAndWeight}>

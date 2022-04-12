@@ -76,6 +76,7 @@ const setSlice = createSlice({
             const id = action.payload.id
             const time = action.payload.time
             updateProp(state, id, 'finished', true)
+            updateProp(state, id, 'finished_at', (new Date()).toISOString())
             updateProp(state, id, 'workTime', time)
         },
         changeSetReps: (state, action) => {

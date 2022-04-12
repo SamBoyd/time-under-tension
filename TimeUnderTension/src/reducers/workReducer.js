@@ -16,6 +16,7 @@ const updateProp = (state, workId, propName, value) => {
 export const newWorkForExercise = exercise => {
     return {
         id: uuidv4(),
+        created_at: (new Date()).toISOString(),
         exercise: exercise,
         sets: [],
         restTime: null,

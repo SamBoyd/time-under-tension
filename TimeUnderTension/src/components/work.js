@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {
     moveWorkDown as moveWorkDownInWorkout,
     moveWorkUp as moveWorkUpInWorkout,
@@ -8,14 +8,18 @@ import {
 import {DEFAULT_REST_TIME, DEFAULT_WORK_TIME_LOWER, DEFAULT_WORK_TIME_UPPER} from "../constants";
 import {Dimensions} from "react-native";
 import GenericWork from "./genericWork";
-import {updateRestOnWork, updateSetsOnWork, updateWorkTimeOnWork} from "../reducers/workReducer";
+import {selectWork, updateRestOnWork, updateSetsOnWork, updateWorkTimeOnWork} from "../reducers/workReducer";
 import {addSetAction} from "../reducers/actions";
+import {loadPreviousSetsForExercise} from "../utils/stateUtils";
+import {selectSet} from "../reducers/setReducer";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 const Work = props => {
     const [showActionsOverlay, setShowActionsOverlay] = useState(false)
+    const workState = useSelector(selectWork)
+    const setState = useSelector(selectSet)
     const dispatch = useDispatch()
 
     const restTime = props.restTime || DEFAULT_REST_TIME;
@@ -73,6 +77,8 @@ const Work = props => {
         setShowActionsOverlay(!showActionsOverlay)
     }
 
+    const previousSets = loadPreviousSetsForExercise(props.exercise.id, workState, setState)
+
     return (
         <GenericWork
             id={props.id}
@@ -93,6 +99,7 @@ const Work = props => {
             moveWorkUp={moveWorkUp}
             moveWorkDown={moveWorkDown}
             displayChangeActiveWork={true}
+            previousSets={previousSets}
         />
     )
 }

@@ -90,6 +90,7 @@ const Work = props => {
             removeWork={removeWork}
             moveWorkUp={moveWorkUp}
             moveWorkDown={moveWorkDown}
+            previousSets={[]}
         />
     )
 }
