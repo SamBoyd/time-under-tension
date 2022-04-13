@@ -16,7 +16,7 @@ import {addWorkoutToHistory} from "../reducers/workoutHistoryReducer";
 import {resetTimer, selectTimer} from "../reducers/timerReducer";
 import {PAGE} from "../constants";
 import CircleTimer from "../components/circleTimer";
-import {ScrollView} from "../components/styled/view";
+import {FlexRowView, ScrollView} from "../components/styled/view";
 import {Shadow} from "react-native-shadow-2";
 import {loadWorkByIds} from "../utils/stateUtils";
 
@@ -38,6 +38,7 @@ const Workout = ({navigation}) => {
         dispatch(addWorkoutToHistory({workout: w}))
         dispatch(resetToInitialWorkout())
         dispatch(resetTimer())
+        goBack()
     }
 
     const addNewWork = () => {
@@ -73,9 +74,10 @@ const Workout = ({navigation}) => {
             }
         },
 
-        finishButton: {
-            marginVertical: hp(1),
+        actionButtonsContainer: {
+            justifyContent: "space-between",
             paddingHorizontal: standardHorizontalPadding,
+            paddingTop: hp(2),
         },
 
         bottomView: {
@@ -116,7 +118,7 @@ const Workout = ({navigation}) => {
     const workoutStarted = workout.started_at !== null
 
     const finishButton = workoutStarted
-        ? <Button onPress={finishWorkout} title="finish" containerStyle={styles.finishButton}/>
+        ? <Button onPress={finishWorkout} title="finish" />
         : <View></View>;
 
     return (
@@ -128,9 +130,10 @@ const Workout = ({navigation}) => {
                 viewStyle={styles.timerBanner.shadow}
             >
             <View style={styles.timerBanner}>
-
-                {finishButton}
-
+                <FlexRowView viewStyle={styles.actionButtonsContainer}>
+                    <Button title="back" onPress={goBack} />
+                    {finishButton}
+                </FlexRowView>
                 <CircleTimer/>
             </View>
             </Shadow>
@@ -148,20 +151,4 @@ const Workout = ({navigation}) => {
     )
 }
 
-const WorkoutNav = ({navigation}) => {
-    const Stack = createNativeStackNavigator();
-
-    return (
-        <Stack.Navigator
-            screenOptions={{
-                headerShown: false,
-                animation: "slide_from_bottom",
-            }}
-        >
-            <Stack.Screen name={PAGE.workout} component={Workout}/>
-            <Stack.Screen name={PAGE.pickExercise} component={PickExercise}/>
-        </Stack.Navigator>
-    )
-}
-
-export default WorkoutNav
+export default Workout

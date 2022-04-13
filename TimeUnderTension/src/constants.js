@@ -7,7 +7,10 @@ export const PAGE = {
     pickExercise: 'pickExercise',
     createTemplateWorkout: 'createTemplateWorkout',
     manageExercises: 'manageExercises',
-    addExercise: 'addExercise'
+    addExercise: 'addExercise',
+    settings: 'settings',
+    analytics: 'analytics',
+    history: 'history',
 }
 
 export const TIMER_STATE = {

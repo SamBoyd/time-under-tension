@@ -1,19 +1,17 @@
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
-import {StyleSheet, FlatList, View, Pressable} from "react-native";
+import {FlatList, Pressable, StyleSheet, View} from "react-native";
 import {TextH1, TextLighter, TextNormal} from "./styled/text";
 import {Button} from "./styled/button";
-import {standardHorizontalPadding, standardVerticalPadding} from "../theme";
+import theme, {standardVerticalPadding} from "../theme";
 import {selectWork} from "../reducers/workReducer";
 import {loadWorkByIds} from "../utils/stateUtils";
 import {Icon, Overlay, ThemeProvider} from "react-native-elements";
 import {FlexColumnView} from "./styled/view";
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from "react-native-responsive-screen";
 import {deleteTemplate as deleteTemplateAction} from "../reducers/workoutTemplatesReducer";
-import theme from '../theme'
 import {editTemplate as editTemplateAction} from "../reducers/newTemplateWorkoutReducer";
 import {createWorkoutFromTemplate} from "../reducers/workoutReducer";
-import {PAGE} from "../constants";
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -36,7 +34,7 @@ const styles = StyleSheet.create({
     },
 
     overlayButton: {
-      width: wp(10),
+        width: wp(10),
         height: hp(2.5)
     },
 

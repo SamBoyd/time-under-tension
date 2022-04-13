@@ -3,15 +3,17 @@ import {useDispatch} from "react-redux";
 import {StyleSheet, View} from "react-native";
 
 import TemplateWorkouts from "../components/templateWorkouts";
-import History from "../components/history";
 import {Button} from "../components/styled/button";
 
-import theme, {standardHorizontalPadding, standardVerticalPadding} from '../theme'
+import {standardHorizontalPadding, standardVerticalPadding} from '../theme'
 
 import BasePage from "../components/basePage";
-import {persistor} from "../store";
 import {resetEntireState} from "../utils/resetState";
 import {PAGE} from "../constants";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import PickExercise from "./pickExercise";
+import Workout from "./workout";
+import CreateTemplateWorkout from "./createTemplateWorkout";
 
 const styles = StyleSheet.create({
     button: {
@@ -31,10 +33,6 @@ const MainPage = ({navigation}) => {
         navigation.navigate(PAGE.workout)
     }
 
-    const clickManageExercises = () => {
-        navigation.navigate(PAGE.manageExercises)
-    }
-
     const purgeStore = () => {
         resetEntireState(dispatch)
     }
@@ -45,13 +43,26 @@ const MainPage = ({navigation}) => {
 
             <TemplateWorkouts navigation={navigation}/>
 
-            <History/>
-
-            <MainPageButton onPress={clickManageExercises} title="Manage Exercises"/>
-
-            <MainPageButton onPress={purgeStore} title="Purge store" />
+            <MainPageButton onPress={purgeStore} title="Purge store"/>
         </BasePage>
     )
 }
 
-export default MainPage;
+const MainPageNav = ({navigation}) => {
+    const Stack = createNativeStackNavigator();
+
+    return (
+        <Stack.Navigator
+            screenOptions={{
+                headerShown: false,
+                animation: "slide_from_bottom",
+            }}
+        >
+            <Stack.Screen name={PAGE.main} component={MainPage}/>
+            <Stack.Screen name={PAGE.workout} component={Workout}/>
+            <Stack.Screen name={PAGE.pickExercise} component={PickExercise}/>
+            <Stack.Screen name={PAGE.createTemplateWorkout} component={CreateTemplateWorkout}/>
+        </Stack.Navigator>
+    )
+}
+export default MainPageNav;

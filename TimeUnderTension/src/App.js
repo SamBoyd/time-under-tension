@@ -1,25 +1,19 @@
 import React from 'react'
-import {useSelector} from "react-redux";
 
 import {PAGE} from './constants';
-import Workout from "./pages/workout";
-import PickExercise from "./pages/pickExercise";
 import MainPage from "./pages/mainPage";
-import CreateTemplateWorkout from "./pages/createTemplateWorkout";
-import ManageExercises from "./pages/manageExercises";
-import AddExercise from "./pages/addExercise";
-import {SafeAreaView, View} from "react-native";
-import {createNativeTabNavigator} from "@react-navigation/native-stack";
-import {createMaterialTopTabNavigator} from "@react-navigation/material-top-tabs";
-import {Icon} from "react-native-elements";
-import {standardVerticalPadding} from "./theme";
 import {StyleSheet} from "react-native";
+import {Icon} from "react-native-elements";
+import theme from "./theme";
 import {createMaterialBottomTabNavigator} from "@react-navigation/material-bottom-tabs";
-import theme from './theme'
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
-import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
+
+import Octicons from "react-native-vector-icons/Octicons";
+import Settings from "./pages/Settings";
+import Analytics from "./pages/analytics";
+import History from './pages/history';
 
 const styles = StyleSheet.create({
     nav: {
@@ -51,14 +45,14 @@ function App() {
                         case 'Home':
                             icon = <Icon name="home" type="feather" color={color} size={size}/>
                             break;
-                        case 'Workout':
-                            icon = <Icon name="stopwatch" type="entypo" color={color} size={size}/>
+                        case 'Settings':
+                            icon = <Ionicons name="ios-settings-outline" color={color} size={size}/>
                             break;
-                        case 'New template':
-                            icon = <Icon name="clipboard-notes" type="foundation" color={color} size={size}/>
+                        case 'Analytics':
+                            icon = <MaterialCommunityIcon name="google-analytics" color={color} size={size}/>
                             break;
-                        case 'Exercises':
-                            icon = <FontAwesome5Icon name="dumbbell" color={color} size={size}/>
+                        case 'History':
+                            icon = <Octicons name="checklist" color={color} size={size}/>
                             break;
                     }
                     return icon
@@ -73,10 +67,10 @@ function App() {
             barStyle={styles.nav.bar}
             screenOptions={{}}
         >
+            {HeaderOption(PAGE.settings, 'Settings', Settings)}
+            {HeaderOption(PAGE.analytics, 'Analytics', Analytics)}
             {HeaderOption(PAGE.main, 'Home', MainPage)}
-            {HeaderOption(PAGE.workout, 'Workout', Workout)}
-            {HeaderOption(PAGE.createTemplateWorkout, 'New template', CreateTemplateWorkout)}
-            {HeaderOption(PAGE.manageExercises, 'Exercises', ManageExercises)}
+            {HeaderOption(PAGE.history, 'History', History)}
         </Tab.Navigator>
     )
 }

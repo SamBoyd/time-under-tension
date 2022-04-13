@@ -48,6 +48,7 @@ const CreateTemplateWorkout = ({navigation}) => {
     const saveTemplate = () => {
         dispatch(addToTemplates(newTemplate))
         dispatch(resetTemplate())
+        navigation.goBack()
     }
 
     const styles = StyleSheet.create({

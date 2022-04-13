@@ -27,7 +27,6 @@ const CIRCLE_STROKE_WIDTH = 10
 const styles = StyleSheet.create({
     container: {
         alignItems: "center",
-        padding: standardVerticalPadding,
     },
 
     button: {
