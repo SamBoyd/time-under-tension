@@ -1,5 +1,5 @@
 import React from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 import TemplateSet from "./templateSet";
 import {
@@ -11,7 +11,7 @@ import {
     removeSet,
     removeWork as removeWorkInTemplate
 } from "../reducers/newTemplateWorkoutReducer";
-import {DEFAULT_REST_TIME, DEFAULT_WORK_TIME_LOWER, DEFAULT_WORK_TIME_UPPER} from "../constants";
+import {DEFAULT_REST_TIME} from "../constants";
 import {View, StyleSheet} from "react-native";
 import InputSpinner from "react-native-input-spinner";
 import {TextBold, TextH1, TextNormal} from "./styled/text";
@@ -21,15 +21,17 @@ import {Button} from "./styled/button";
 import GenericWork from "./genericWork";
 import {addSetAction} from "../reducers/actions";
 import {updateRestOnWork, updateSetsOnWork, updateWorkTimeOnWork} from "../reducers/workReducer";
+import {selectSettings} from "../reducers/settingsReducer";
 
 const Work = props => {
     const dispatch = useDispatch()
+    const settingsState = useSelector(selectSettings)
 
     const work = props.work
 
     const restTime = work.restTime || DEFAULT_REST_TIME;
-    const workTimeStart = work.workTimeStart || DEFAULT_WORK_TIME_LOWER
-    const workTimeEnd = work.workTimeEnd || DEFAULT_WORK_TIME_UPPER
+    const workTimeStart = work.workTimeStart || settingsState.defaultWorkTimeStart
+    const workTimeEnd = work.workTimeEnd || settingsState.defaultWorkTimeEnd
 
 
     const fireAddSet = () => {

@@ -5,13 +5,14 @@ import {
     moveWorkUp as moveWorkUpInWorkout,
     removeWork as removeWorkInWorkout
 } from "../reducers/workoutReducer";
-import {DEFAULT_REST_TIME, DEFAULT_WORK_TIME_LOWER, DEFAULT_WORK_TIME_UPPER} from "../constants";
+import {DEFAULT_REST_TIME} from "../constants";
 import {Dimensions} from "react-native";
 import GenericWork from "./genericWork";
 import {selectWork, updateRestOnWork, updateSetsOnWork, updateWorkTimeOnWork} from "../reducers/workReducer";
 import {addSetAction} from "../reducers/actions";
 import {loadPreviousSetsForExercise} from "../utils/stateUtils";
 import {selectSet} from "../reducers/setReducer";
+import {selectSettings} from "../reducers/settingsReducer";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -20,11 +21,13 @@ const Work = props => {
     const [showActionsOverlay, setShowActionsOverlay] = useState(false)
     const workState = useSelector(selectWork)
     const setState = useSelector(selectSet)
+    const settingsState = useSelector(selectSettings)
+
     const dispatch = useDispatch()
 
     const restTime = props.restTime || DEFAULT_REST_TIME;
-    const workTimeStart = props.workTimeStart || DEFAULT_WORK_TIME_LOWER;
-    const workTimeEnd = props.workTimeEnd || DEFAULT_WORK_TIME_UPPER;
+    const workTimeStart = props.workTimeStart || settingsState.defaultWorkTimeStart
+    const workTimeEnd = props.workTimeEnd || settingsState.defaultWorkTimeEnd
 
     const fireAddSet = () => {
         addSetAction(dispatch, props.id)

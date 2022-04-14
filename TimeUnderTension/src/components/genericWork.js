@@ -2,33 +2,23 @@ import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
 import Set from './set'
-import {
-    addSet,
-    changeRestTime,
-    changeWorkTime,
-    moveWorkDown,
-    moveWorkUp,
-    removeSet,
-    removeWork
-} from "../reducers/workoutReducer";
-import {DEFAULT_REST_TIME, DEFAULT_WORK_TIME_LOWER, DEFAULT_WORK_TIME_UPPER} from "../constants";
+import {DEFAULT_REST_TIME} from "../constants";
 import {Dimensions, StyleSheet, View} from "react-native";
-import {FlexColumnView, FlexRowView} from "./styled/view";
+import {FlexRowView} from "./styled/view";
 import {Button} from "./styled/button";
-import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 
 import RestTime from "./restTime";
 import WorkTime from "./workTime";
-import {Card, Divider, Icon, Overlay, ThemeProvider} from "react-native-elements";
-import theme, {standardHorizontalPadding} from "../theme";
+import {Card, Icon, ThemeProvider} from "react-native-elements";
+import theme from "../theme";
 import {selectSet} from "../reducers/setReducer";
 import {loadSetsByIds} from "../utils/stateUtils";
-import {TextH1} from "./styled/text";
 import {changeActiveWork, resetTimer, selectTimer} from "../reducers/timerReducer";
 import EditWorkOverlay from "./editWorkOverlay";
 import {isRealValue} from "../utils/utils";
+import {selectSettings} from "../reducers/settingsReducer";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -36,13 +26,14 @@ const windowHeight = Dimensions.get('window').height;
 const GenericWork = props => {
     const [showActionsOverlay, setShowActionsOverlay] = useState(false)
     const dispatch = useDispatch()
+    const settingsState = useSelector(selectSettings)
     const timerState = useSelector(selectTimer)
     const setState = useSelector(selectSet)
     const sets = loadSetsByIds(props.sets, setState)
 
     const restTime = isRealValue(props.restTime) ? props.restTime : DEFAULT_REST_TIME;
-    const workTimeStart = isRealValue(props.workTimeStart) ? props.workTimeStart : DEFAULT_WORK_TIME_LOWER;
-    const workTimeEnd = isRealValue(props.workTimeEnd) ? props.workTimeEnd : DEFAULT_WORK_TIME_UPPER;
+    const workTimeStart = isRealValue(props.workTimeStart) ? props.workTimeStart : settingsState.defaultWorkTimeStart;
+    const workTimeEnd = isRealValue(props.workTimeEnd) ? props.workTimeEnd : settingsState.defaultWorkTimeEnd;
 
     const toggleShowWorkActionsOverlay = () => {
         setShowActionsOverlay(!showActionsOverlay)
@@ -162,7 +153,7 @@ const GenericWork = props => {
                     {sets.map((set, index) => {
                         return <Set
                             key={index}
-                            index={index+1}
+                            index={index + 1}
                             {...set}
                             workId={props.id}
                             workName={props.exercise.name}

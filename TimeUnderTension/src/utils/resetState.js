@@ -7,7 +7,7 @@ import {reset as workoutTemplatesReducer} from "../reducers/workoutTemplatesRedu
 import {reset as exercisesReducer} from "../reducers/exercisesReducer";
 import {reset as setReducer} from "../reducers/setReducer";
 import {reset as workReducer} from "../reducers/workReducer";
-
+import {reset as settingsReducer} from '../reducers/settingsReducer'
 
 export const resetEntireState = dispatch => {
     persistor.purge()
@@ -20,4 +20,5 @@ export const resetEntireState = dispatch => {
     dispatch(exercisesReducer())
     dispatch(setReducer())
     dispatch(workReducer())
+    dispatch(settingsReducer())
 }

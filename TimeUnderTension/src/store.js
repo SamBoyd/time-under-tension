@@ -13,9 +13,11 @@ import exercisesReducer from "./reducers/exercisesReducer";
 import setReducer from "./reducers/setReducer";
 import workReducer from "./reducers/workReducer";
 import newTemplateWorkoutReducer from "./reducers/newTemplateWorkoutReducer";
+import settingsReducer from "./reducers/settingsReducer";
 
 
 const rootReducer = combineReducers({
+    settings: settingsReducer,
     workout: workoutReducer,
     timer: timerReducer,
     templates: workoutTemplateReducer,

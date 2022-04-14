@@ -3,8 +3,6 @@ import {loadSetsByIds, loadWorkByIds} from "../utils/stateUtils";
 import {
     DEFAULT_REST_TIME,
     DEFAULT_SETUP_TIME,
-    DEFAULT_WORK_TIME_LOWER,
-    DEFAULT_WORK_TIME_UPPER,
     TIMER_STATE
 } from "../constants";
 import {changeActiveWork, moveToRest, moveToSetup, moveToWork, NO_ACTIVE_WORK} from "../reducers/timerReducer";
@@ -29,7 +27,8 @@ export const getCurrentTimings = (
         timerState,
         workoutState,
         workState,
-        setState
+        setState,
+        settingsState,
     }
 ) => {
     const activeWorkId = timerState.activeWorkId
@@ -68,8 +67,8 @@ export const getCurrentTimings = (
     return {
         restTime: activeWork.restTime || DEFAULT_REST_TIME,
         setupTime: DEFAULT_SETUP_TIME,
-        workTimeStart: activeWork.workTimeStart || DEFAULT_WORK_TIME_LOWER,
-        workTimeEnd: activeWork.workTimeEnd || DEFAULT_WORK_TIME_UPPER,
+        workTimeStart: isRealValue(activeWork.workTimeStart) ? activeWork.workTimeStart : settingsState.defaultWorkTimeStart,
+        workTimeEnd: isRealValue(activeWork.workTimeEnd) ? activeWork.workTimeEnd : settingsState.defaultWorkTimeEnd,
         onCompleteCB: ({totalElapsedTime}) => {
             console.log(`timer state: ${timerState.state}`)
             console.log(`blah: ${activeWork.sets[activeWork.sets.length - 1]}`)

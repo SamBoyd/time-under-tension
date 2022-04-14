@@ -16,6 +16,7 @@ import RestTimer from "./timers/restTimer";
 import BlankTimer from "./timers/blankTimer";
 import FinishedTimer from "./timers/finishedTimer";
 import {selectWorkout} from "../reducers/workoutReducer";
+import {selectSettings} from "../reducers/settingsReducer";
 
 const CIRCLE_PADDING = wp(2)
 const SHADOW_DISTANCE = wp(0.8)
@@ -42,6 +43,7 @@ const CircleTimer = props => {
     const workState = useSelector(selectWork)
     const setState = useSelector(selectSet)
     const timerState = useSelector(selectTimer)
+    const settingsState = useSelector(selectSettings)
     const dispatch = useDispatch()
     const [cb, setCB] = useState(false)
 
@@ -56,7 +58,8 @@ const CircleTimer = props => {
             timerState: timerState,
             workoutState: workoutState,
             workState: workState,
-            setState: setState
+            setState: setState,
+            settingsState: settingsState,
         }
     )
 
