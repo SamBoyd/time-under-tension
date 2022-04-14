@@ -101,6 +101,9 @@ export const workoutSlice = createSlice({
                 state.work = work
             }
         },
+        updateWorkOnWorkout: (state, action) => {
+            state.work = [...action.payload]
+        },
     }
 })
 
@@ -109,7 +112,8 @@ export const {
     reset,
     resetToInitialWorkout, startWorkoutIfNotStarted,
     removeWork, addWork, moveWorkUp, moveWorkDown,
-    createWorkoutFromTemplate, setWorkoutFinished
+    createWorkoutFromTemplate, setWorkoutFinished,
+    updateWorkOnWorkout
 } = workoutSlice.actions
 
 export default workoutSlice.reducer

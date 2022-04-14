@@ -6,7 +6,10 @@ import workoutReducer, {
     createWorkoutFromTemplate,
     moveWorkDown,
     moveWorkUp,
-    removeWork, resetToInitialWorkout, setWorkoutFinished, startWorkoutIfNotStarted
+    removeWork,
+    resetToInitialWorkout,
+    startWorkoutIfNotStarted,
+    updateWorkOnWorkout
 } from "./workoutReducer";
 import {exerciseCategory} from "../constants";
 
@@ -208,6 +211,42 @@ describe('For Workout can', () => {
                     'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
                     'ccccccc-85f7-4e85-a238-c9e6265cda2e',
                     'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
+                ],
+                finished_at: null
+            }
+        )
+    })
+
+    test('test update all workIds on workout', () => {
+        const previousState = {
+            name: 'New workout',
+            id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
+            created_at: "2022-01-19T17:53:11.336Z",
+            work: [
+                'aaaaaaa-85f7-4e85-a238-c9e6265cda2e',
+                'bbbbbbb-85f7-4e85-a238-c9e6265cda2e',
+                'ccccccc-85f7-4e85-a238-c9e6265cda2e'
+            ],
+            finished_at: null
+        }
+
+        const newSets = [
+            'ddddd-85f7-4e85-a238-c9e6265cda2e',
+            'eeeeee-85f7-4e85-a238-c9e6265cda2e',
+            'ffffff-85f7-4e85-a238-c9e6265cda2e'
+        ]
+
+        let newState = workoutReducer(previousState, updateWorkOnWorkout(newSets))
+
+        expect(newState).toEqual(
+            {
+                name: 'New workout',
+                id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
+                created_at: "2022-01-19T17:53:11.336Z",
+                work: [
+                    'ddddd-85f7-4e85-a238-c9e6265cda2e',
+                    'eeeeee-85f7-4e85-a238-c9e6265cda2e',
+                    'ffffff-85f7-4e85-a238-c9e6265cda2e'
                 ],
                 finished_at: null
             }

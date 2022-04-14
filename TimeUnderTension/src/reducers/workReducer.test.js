@@ -1,12 +1,13 @@
 import workReducer, {
-    addSetToWork, newWorkForExercise,
+    addSetToWork,
+    addWork,
+    newWorkForExercise,
     removeWork,
     updateRestOnWork,
     updateSetsOnWork,
     updateWorkTimeOnWork
 } from "./workReducer";
 import {v4 as uuidv4} from "uuid";
-import {addWork} from "./workReducer";
 import tk from "timekeeper";
 
 describe("Work reducer can", () => {

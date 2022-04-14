@@ -12,6 +12,8 @@ import {heightPercentageToDP as hp, widthPercentageToDP as wp} from "react-nativ
 import {deleteTemplate as deleteTemplateAction} from "../reducers/workoutTemplatesReducer";
 import {editTemplate as editTemplateAction} from "../reducers/newTemplateWorkoutReducer";
 import {createWorkoutFromTemplate} from "../reducers/workoutReducer";
+import {createWorkoutFromTemplateAction} from "../reducers/actions";
+import {selectSet} from "../reducers/setReducer";
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -53,7 +55,9 @@ const styles = StyleSheet.create({
 
 const TemplateWorkoutTile = props => {
     const workState = useSelector(selectWork)
+    const setState = useSelector(selectSet)
     const dispatch = useDispatch()
+
     const [displayActionsOverlay, setDisplayActionsOverlay] = useState(false)
 
     const work = loadWorkByIds(props.template.work, workState)
@@ -74,7 +78,7 @@ const TemplateWorkoutTile = props => {
     }
 
     const startWorkoutFromTemplate = () => {
-        dispatch(createWorkoutFromTemplate(props.template))
+        createWorkoutFromTemplateAction(props.template, workState, setState, dispatch)
         props.moveToWorkout()
     }
 
