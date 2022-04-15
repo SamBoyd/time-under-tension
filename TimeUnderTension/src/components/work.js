@@ -5,7 +5,6 @@ import {
     moveWorkUp as moveWorkUpInWorkout,
     removeWork as removeWorkInWorkout
 } from "../reducers/workoutReducer";
-import {DEFAULT_REST_TIME} from "../constants";
 import {Dimensions} from "react-native";
 import GenericWork from "./genericWork";
 import {selectWork, updateRestOnWork, updateSetsOnWork, updateWorkTimeOnWork} from "../reducers/workReducer";
@@ -25,7 +24,6 @@ const Work = props => {
 
     const dispatch = useDispatch()
 
-    const restTime = props.restTime || DEFAULT_REST_TIME;
     const workTimeStart = props.workTimeStart || settingsState.defaultWorkTimeStart
     const workTimeEnd = props.workTimeEnd || settingsState.defaultWorkTimeEnd
 

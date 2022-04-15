@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 
 import Set from './set'
-import {DEFAULT_REST_TIME} from "../constants";
 import {Dimensions, StyleSheet, View} from "react-native";
 import {FlexRowView} from "./styled/view";
 import {Button} from "./styled/button";
@@ -31,7 +30,7 @@ const GenericWork = props => {
     const setState = useSelector(selectSet)
     const sets = loadSetsByIds(props.sets, setState)
 
-    const restTime = isRealValue(props.restTime) ? props.restTime : DEFAULT_REST_TIME;
+    const restTime = isRealValue(props.restTime) ? props.restTime : settingsState.defaultRestTime;
     const workTimeStart = isRealValue(props.workTimeStart) ? props.workTimeStart : settingsState.defaultWorkTimeStart;
     const workTimeEnd = isRealValue(props.workTimeEnd) ? props.workTimeEnd : settingsState.defaultWorkTimeEnd;
 

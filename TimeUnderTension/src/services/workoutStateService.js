@@ -1,10 +1,6 @@
 import {isRealValue} from "../utils/utils";
 import {loadSetsByIds, loadWorkByIds} from "../utils/stateUtils";
-import {
-    DEFAULT_REST_TIME,
-    DEFAULT_SETUP_TIME,
-    TIMER_STATE
-} from "../constants";
+import {TIMER_STATE} from "../constants";
 import {changeActiveWork, moveToRest, moveToSetup, moveToWork, NO_ACTIVE_WORK} from "../reducers/timerReducer";
 import {finishSet} from "../reducers/setReducer";
 import {playConfiguredWorkSound} from "./soundService";
@@ -65,8 +61,8 @@ export const getCurrentTimings = (
     }
 
     return {
-        restTime: activeWork.restTime || DEFAULT_REST_TIME,
-        setupTime: DEFAULT_SETUP_TIME,
+        restTime: activeWork.restTime || settingsState.defaultRestTime,
+        setupTime: settingsState.defaultSetupTime,
         workTimeStart: isRealValue(activeWork.workTimeStart) ? activeWork.workTimeStart : settingsState.defaultWorkTimeStart,
         workTimeEnd: isRealValue(activeWork.workTimeEnd) ? activeWork.workTimeEnd : settingsState.defaultWorkTimeEnd,
         onCompleteCB: ({totalElapsedTime}) => {

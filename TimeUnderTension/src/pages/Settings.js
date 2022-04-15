@@ -2,7 +2,7 @@ import React, {useState} from 'react'
 import BasePage from "../components/basePage";
 import {FlexColumnView, FlexRowView} from "../components/styled/view";
 import {TextH1, TextNormal} from "../components/styled/text";
-import {selectSettings, setDefaultWorkTime} from "../reducers/settingsReducer";
+import {selectSettings, setDefaultRestTime, setDefaultSetupTime, setDefaultWorkTime} from "../reducers/settingsReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {StyleSheet, View} from "react-native";
 import theme, {standardHorizontalPadding, standardVerticalPadding} from "../theme";
@@ -15,6 +15,8 @@ const Settings = props => {
 
     const [workTimeStart, setWorkTimeStart] = useState(settingsState.defaultWorkTimeStart)
     const [workTimeEnd, setWorkTimeEnd] = useState(settingsState.defaultWorkTimeEnd)
+    const [restTime, setRestTime] = useState(settingsState.defaultRestTime)
+    const [setupTime, setSetupTime] = useState(settingsState.defaultSetupTime)
 
     const setWorkTimeStartAction = () => {
         let end = settingsState.defaultWorkTimeEnd
@@ -37,6 +39,14 @@ const Settings = props => {
             setWorkTimeStart(start)
         }
         dispatch(setDefaultWorkTime({start: start, end: workTimeEnd}))
+    }
+
+    const setRestTimeAction = () => {
+        dispatch(setDefaultRestTime(restTime))
+    }
+
+    const setSetupTimeAction = () => {
+        dispatch(setDefaultSetupTime(setupTime))
     }
 
     const styles = StyleSheet.create({
@@ -88,7 +98,6 @@ const Settings = props => {
                         inputStyle={styles.input}
                         containerStyle={styles.input.container}
                         inputContainerStyle={styles.input.inputContainer}
-                        placeholder={'Exercise name'}
                         placeholderTextColor={styles.input.placeholderColor}
                         label={<TextNormal>Default target start</TextNormal>}
                         labelStyle={styles.input.label}
@@ -103,9 +112,34 @@ const Settings = props => {
                         inputStyle={styles.input}
                         containerStyle={styles.input.container}
                         inputContainerStyle={styles.input.inputContainer}
-                        placeholder={'Exercise name'}
                         placeholderTextColor={styles.input.placeholderColor}
                         label={<TextNormal>Default target end</TextNormal>}
+                    />
+
+                    <Input
+                        keyboardAppearance="default"
+                        keyboardType='number-pad'
+                        onChangeText={value => setRestTime(parseInt(value) || 0)}
+                        onBlur={setRestTimeAction}
+                        value={(restTime || 0).toString()}
+                        inputStyle={styles.input}
+                        containerStyle={styles.input.container}
+                        inputContainerStyle={styles.input.inputContainer}
+                        placeholderTextColor={styles.input.placeholderColor}
+                        label={<TextNormal>Default rest time</TextNormal>}
+                    />
+
+                    <Input
+                        keyboardAppearance="default"
+                        keyboardType='number-pad'
+                        onChangeText={value => setSetupTime(parseInt(value) || 0)}
+                        onBlur={setSetupTimeAction}
+                        value={(setupTime || 0).toString()}
+                        inputStyle={styles.input}
+                        containerStyle={styles.input.container}
+                        inputContainerStyle={styles.input.inputContainer}
+                        placeholderTextColor={styles.input.placeholderColor}
+                        label={<TextNormal>Default setup time</TextNormal>}
                     />
                 </FlexColumnView>
             </View>

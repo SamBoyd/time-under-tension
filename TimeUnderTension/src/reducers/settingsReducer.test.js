@@ -1,4 +1,4 @@
-import settingsReducer, {setDefaultWorkTime} from "./settingsReducer";
+import settingsReducer, {setDefaultRestTime, setDefaultSetupTime, setDefaultWorkTime} from "./settingsReducer";
 
 describe('settingsReducer', () => {
     it('has a correct initial state', () => {
@@ -7,7 +7,9 @@ describe('settingsReducer', () => {
         expect(initialState).toEqual(
             {
                 defaultWorkTimeStart: 5,
-                defaultWorkTimeEnd: 15
+                defaultWorkTimeEnd: 15,
+                defaultRestTime: 90,
+                defaultSetupTime: 2,
             }
         )
     })
@@ -26,5 +28,29 @@ describe('settingsReducer', () => {
                 defaultWorkTimeEnd: 70
             }
         )
+    })
+
+    it('can set the default rest time', () => {
+        const previousState = {
+            defaultRestTime: 10
+        }
+
+        const nextState = settingsReducer(previousState, setDefaultRestTime(20))
+
+        expect(nextState).toEqual({
+            defaultRestTime: 20
+        })
+    })
+
+    it('can set the default setup time', () => {
+        const previousState = {
+            defaultSetupTime: 10
+        }
+
+        const nextState = settingsReducer(previousState, setDefaultSetupTime(20))
+
+        expect(nextState).toEqual({
+            defaultSetupTime: 20
+        })
     })
 })

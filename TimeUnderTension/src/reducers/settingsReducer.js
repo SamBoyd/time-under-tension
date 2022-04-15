@@ -1,17 +1,20 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {DEFAULT_WORK_TIME_LOWER, DEFAULT_WORK_TIME_UPPER} from "../constants";
+import {DEFAULT_REST_TIME, DEFAULT_SETUP_TIME, DEFAULT_WORK_TIME_LOWER, DEFAULT_WORK_TIME_UPPER} from "../constants";
+import {isRealValue} from "../utils/utils";
 
 const getInitialState = () => {
     return {
         defaultWorkTimeStart: DEFAULT_WORK_TIME_LOWER,
         defaultWorkTimeEnd: DEFAULT_WORK_TIME_UPPER,
+        defaultRestTime: DEFAULT_REST_TIME,
+        defaultSetupTime: DEFAULT_SETUP_TIME,
     }
 }
 const settingsSlice = createSlice({
     name: 'settings',
     initialState: getInitialState(),
     reducers: {
-        reset: (state) =>{
+        reset: (state) => {
             const initialState = getInitialState()
             Object.keys(initialState).forEach(key => state[key] = initialState[key])
         },
@@ -26,13 +29,27 @@ const settingsSlice = createSlice({
             state.defaultWorkTimeStart = action.payload.start
             state.defaultWorkTimeEnd = action.payload.end
         },
+        setDefaultRestTime: (state, action) => {
+            if  (!isRealValue(action.payload)) {
+                throw `bad setDefaultRestTime action payload: ${JSON.stringify(action.payload)}`
+            }
+
+            state.defaultRestTime = action.payload
+        },
+        setDefaultSetupTime: (state, action) => {
+            if  (!isRealValue(action.payload)) {
+                throw `bad setDefaultSetupTime action payload: ${JSON.stringify(action.payload)}`
+            }
+
+            state.defaultSetupTime = action.payload
+        }
     }
 })
 
 export const selectSettings = state => state.settings
 
 export const {
-    reset, setDefaultWorkTime
+    reset, setDefaultWorkTime, setDefaultRestTime,setDefaultSetupTime
 } = settingsSlice.actions
 
 export default settingsSlice.reducer

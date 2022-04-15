@@ -1,23 +1,10 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-
-import TemplateSet from "./templateSet";
 import {
-    addSet,
-    changeRestTime,
-    changeWorkTime,
     moveWorkDown as moveWorkDownInTemplate,
     moveWorkUp as moveWorkUpInTemplate,
-    removeSet,
     removeWork as removeWorkInTemplate
 } from "../reducers/newTemplateWorkoutReducer";
-import {DEFAULT_REST_TIME} from "../constants";
-import {View, StyleSheet} from "react-native";
-import InputSpinner from "react-native-input-spinner";
-import {TextBold, TextH1, TextNormal} from "./styled/text";
-import {FlexRowView} from "./styled/view";
-import {Icon} from "react-native-elements";
-import {Button} from "./styled/button";
 import GenericWork from "./genericWork";
 import {addSetAction} from "../reducers/actions";
 import {updateRestOnWork, updateSetsOnWork, updateWorkTimeOnWork} from "../reducers/workReducer";
@@ -29,7 +16,6 @@ const Work = props => {
 
     const work = props.work
 
-    const restTime = work.restTime || DEFAULT_REST_TIME;
     const workTimeStart = work.workTimeStart || settingsState.defaultWorkTimeStart
     const workTimeEnd = work.workTimeEnd || settingsState.defaultWorkTimeEnd
 
