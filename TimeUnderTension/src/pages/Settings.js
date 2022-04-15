@@ -2,12 +2,22 @@ import React, {useState} from 'react'
 import BasePage from "../components/basePage";
 import {FlexColumnView, FlexRowView} from "../components/styled/view";
 import {TextH1, TextNormal} from "../components/styled/text";
-import {selectSettings, setDefaultRestTime, setDefaultSetupTime, setDefaultWorkTime} from "../reducers/settingsReducer";
+import {
+    selectSettings,
+    setDefaultRestTime,
+    setDefaultSetupTime,
+    setDefaultWorkTime,
+    setSoundTargetWorkEnd,
+    setSoundTargetWorkStart,
+    setStartWorkSound
+} from "../reducers/settingsReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {StyleSheet, View} from "react-native";
 import theme, {standardHorizontalPadding, standardVerticalPadding} from "../theme";
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
-import {Input} from "react-native-elements";
+import {Divider, Input} from "react-native-elements";
+import {Select} from "@mobile-reality/react-native-select-pro";
+import {AVAILABLE_SOUNDS} from "../constants";
 
 const Settings = props => {
     const settingsState = useSelector(selectSettings)
@@ -49,6 +59,18 @@ const Settings = props => {
         dispatch(setDefaultSetupTime(setupTime))
     }
 
+    const changeSoundStartWork = ({value}) => {
+        dispatch(setStartWorkSound(value))
+    }
+
+    const changeSoundTargetWorkStart = ({value}) => {
+        dispatch(setSoundTargetWorkStart(value))
+    }
+
+    const changeSoundTargetWorkEnd = ({value}) => {
+        dispatch(setSoundTargetWorkEnd(value))
+    }
+
     const styles = StyleSheet.create({
         wrapping: {
             paddingVertical: standardVerticalPadding,
@@ -82,6 +104,43 @@ const Settings = props => {
             color: theme.colors.white,
             textAlign: 'center',
         },
+
+        select: {
+            selectContainerStyle: {
+                width: wp(40)
+            },
+
+            selectControlStyle: {
+                backgroundColor: theme.colors.grey0,
+                borderWidth: 0,
+            },
+
+            selectControlTextStyle: {
+                color: theme.colors.white
+            },
+
+            selectControlArrowImageStyle: {
+                tintColor: theme.colors.white
+            },
+
+            optionStyle: {
+                backgroundColor: theme.colors.grey0,
+                borderTopWidth: 1,
+            },
+
+            optionSelectedStyle: {
+                backgroundColor: theme.colors.grey1,
+                borderWidth: 0,
+            },
+
+            optionTextStyle: {
+                color: theme.colors.white
+            },
+
+            optionsListStyle: {
+                borderWidth: 0
+            }
+        }
     })
 
     return (
@@ -92,7 +151,7 @@ const Settings = props => {
                     <Input
                         keyboardAppearance="default"
                         keyboardType='number-pad'
-                        onChangeText={value => setWorkTimeStart(parseInt( value) || 0)}
+                        onChangeText={value => setWorkTimeStart(parseInt(value) || 0)}
                         onBlur={setWorkTimeStartAction}
                         value={(workTimeStart || 0).toString()}
                         inputStyle={styles.input}
@@ -141,6 +200,74 @@ const Settings = props => {
                         placeholderTextColor={styles.input.placeholderColor}
                         label={<TextNormal>Default setup time</TextNormal>}
                     />
+
+
+                    <Divider/>
+
+                    <TextH1>Sounds</TextH1>
+
+                    <FlexRowView viewStyle={styles.input.container}>
+                        <TextNormal>End of rest sound</TextNormal>
+                        <Select
+                            defaultOption={
+                                AVAILABLE_SOUNDS
+                                    .map(({name, filename}) => {
+                                        return {value: filename, label: name}
+                                    })
+                                    .find(({value, label}) => value === settingsState.soundStartWork)
+                            }
+                            onSelect={changeSoundStartWork}
+                            options={AVAILABLE_SOUNDS.map(sound => {
+                                return {value: sound.filename, label: sound.name}
+                            })}
+                            multiSelection={false}
+                            clearable={false}
+                            {...styles.select}
+                        />
+                    </FlexRowView>
+
+                    <FlexRowView viewStyle={styles.input.container}>
+                        <TextNormal>Target work time start</TextNormal>
+                        <Select
+                            defaultOption={
+                                AVAILABLE_SOUNDS
+                                    .map(({name, filename}) => {
+                                        return {value: filename, label: name}
+                                    })
+                                    .find(({value, label}) => value === settingsState.soundTargetWorkStart)
+                            }
+                            onSelect={changeSoundTargetWorkStart}
+                            options={AVAILABLE_SOUNDS.map(sound => {
+                                return {value: sound.filename, label: sound.name}
+                            })}
+                            multiSelection={false}
+                            clearable={false}
+                            {...styles.select}
+                        />
+                    </FlexRowView>
+
+                    <FlexRowView viewStyle={styles.input.container}>
+                        <TextNormal>Target work time end</TextNormal>
+                        <Select
+                            defaultOption={
+                                AVAILABLE_SOUNDS
+                                    .map(({name, filename}) => {
+                                        return {value: filename, label: name}
+                                    })
+                                    .find(({value, label}) => value === settingsState.soundTargetWorkEnd)
+                            }
+                            onSelect={changeSoundTargetWorkEnd}
+                            options={AVAILABLE_SOUNDS.map(sound => {
+                                return {value: sound.filename, label: sound.name}
+                            })}
+                            multiSelection={false}
+                            clearable={false}
+                            {...styles.select}
+                        />
+                    </FlexRowView>
+
+                    <Divider/>
+
                 </FlexColumnView>
             </View>
         </BasePage>

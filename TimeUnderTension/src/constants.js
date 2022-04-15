@@ -20,13 +20,18 @@ export const TIMER_STATE = {
     rest: 'rest'
 }
 
-export const DEFAULT_SOUND_FILE = 'buzzer.mp3'
-
 export const DEFAULT_SETUP_TIME = 2
 export const DEFAULT_WORK_TIME_LOWER = 5
 export const DEFAULT_WORK_TIME_UPPER = 15
 export const DEFAULT_REST_TIME = 90
 
+export const AVAILABLE_SOUNDS = [
+    {name: 'Buzzer', filename: 'buzzer.mp3'},
+    {name: 'Train horn', filename: 'train_horn.mp3'},
+]
+export const DEFAULT_SOUND_START_WORK = 'buzzer.mp3'
+export const DEFAULT_SOUND_TARGET_WORK_START = 'train_horn.mp3'
+export const DEFAULT_SOUND_TARGET_WORK_END = 'train_horn.mp3'
 
 export const exerciseCategory = {
     chest: 'chest',

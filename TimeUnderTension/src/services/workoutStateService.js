@@ -3,7 +3,7 @@ import {loadSetsByIds, loadWorkByIds} from "../utils/stateUtils";
 import {TIMER_STATE} from "../constants";
 import {changeActiveWork, moveToRest, moveToSetup, moveToWork, NO_ACTIVE_WORK} from "../reducers/timerReducer";
 import {finishSet} from "../reducers/setReducer";
-import {playConfiguredWorkSound} from "./soundService";
+import {playSound} from "./soundService";
 import {startWorkoutIfNotStarted} from "../reducers/workoutReducer";
 
 const NOOP_TIMINGS = {
@@ -89,7 +89,7 @@ export const getCurrentTimings = (
             }
 
             if (shouldPlayNoise) {
-                playConfiguredWorkSound()
+                playSound(settingsState.soundStartWork)
             }
         }
     }
