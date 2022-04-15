@@ -13,7 +13,7 @@ import {selectWork} from "../reducers/workReducer";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import PickExercise, {SAVE_WORK_TO} from "./pickExercise";
 import {addWorkoutToHistory} from "../reducers/workoutHistoryReducer";
-import {resetTimer, selectTimer} from "../reducers/timerReducer";
+import {reset as resetTimer, selectTimer} from "../reducers/timerReducer";
 import {PAGE} from "../constants";
 import CircleTimer from "../components/circleTimer";
 import {FlexRowView, ScrollView} from "../components/styled/view";

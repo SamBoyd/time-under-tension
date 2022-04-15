@@ -2,7 +2,7 @@ import {v4 as uuidv4} from 'uuid';
 
 import {createWorkoutFromTemplate, startWorkoutIfNotStarted, updateWorkOnWorkout} from "./workoutReducer";
 import {reset as resetNewTemplate, addWork as addTemplateWork, editTemplate, resetTemplate} from "./newTemplateWorkoutReducer";
-import {changeActiveWork, moveToRest, moveToSetup, resetTimer} from "./timerReducer";
+import {changeActiveWork, moveToRest, moveToSetup, resetTimerCount} from "./timerReducer";
 import {addSetToWork, addWork, createWorkFromTemplate, newWorkForExercise, updateSetsOnWork} from "./workReducer";
 import {addSet, createSetFromTemplate, finishSet, getNewSet} from "./setReducer";
 import {loadSetsByIds, loadWorkByIds} from "../utils/stateUtils";
@@ -20,7 +20,7 @@ export const finishSetAction = (dispatch, set) => () => {
 }
 
 export const selectWorkAndResetTimer = (workIndex, dispatch) => {
-    dispatch(resetTimer())
+    dispatch(resetTimerCount())
 }
 
 export const moveToSetupAndStartWorkout = dispatch => {

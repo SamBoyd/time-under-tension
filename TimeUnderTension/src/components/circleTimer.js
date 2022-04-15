@@ -5,7 +5,7 @@ import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {standardHorizontalPadding, standardVerticalPadding} from "../theme";
 import ReadyTimer from "./timers/readyTimer";
 import {useDispatch, useSelector} from "react-redux";
-import {NO_ACTIVE_WORK, resetTimer, selectTimer} from "../reducers/timerReducer";
+import {NO_ACTIVE_WORK, resetTimerCount, selectTimer} from "../reducers/timerReducer";
 import {TIMER_STATE} from "../constants";
 import SetupTimer from "./timers/setupTimer";
 import {getCurrentTimings} from "../services/workoutStateService";
@@ -48,7 +48,7 @@ const CircleTimer = props => {
     const [cb, setCB] = useState(false)
 
     const reset = () => {
-        dispatch(resetTimer())
+        dispatch(resetTimerCount())
         setCB(!cb)
     }
 

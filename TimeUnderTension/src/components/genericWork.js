@@ -14,7 +14,7 @@ import {Card, Icon, ThemeProvider} from "react-native-elements";
 import theme from "../theme";
 import {selectSet} from "../reducers/setReducer";
 import {loadSetsByIds} from "../utils/stateUtils";
-import {changeActiveWork, resetTimer, selectTimer} from "../reducers/timerReducer";
+import {changeActiveWork, resetTimerCount, selectTimer} from "../reducers/timerReducer";
 import EditWorkOverlay from "./editWorkOverlay";
 import {isRealValue} from "../utils/utils";
 import {selectSettings} from "../reducers/settingsReducer";
@@ -41,7 +41,7 @@ const GenericWork = props => {
     const changeActiveWorkPress = () => {
         if (timerState.activeWorkId !== props.id) {
             dispatch(changeActiveWork(props.id))
-            dispatch(resetTimer())
+            dispatch(resetTimerCount())
         }
     }
 
