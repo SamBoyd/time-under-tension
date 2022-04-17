@@ -8,7 +8,7 @@ import {TextNormal} from "./styled/text";
 
 const RestTime = props => {
     return <FlexRowView>
-        <TextNormal>Rest time for {props.value}</TextNormal>
+        <TextNormal testId={`restTime_${props.workId}`}>Rest time for {props.value}</TextNormal>
     </FlexRowView>
 }
 

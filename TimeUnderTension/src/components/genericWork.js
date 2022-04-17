@@ -30,9 +30,9 @@ const GenericWork = props => {
     const setState = useSelector(selectSet)
     const sets = loadSetsByIds(props.sets, setState)
 
-    const restTime = isRealValue(props.restTime) ? props.restTime : settingsState.defaultRestTime;
-    const workTimeStart = isRealValue(props.workTimeStart) ? props.workTimeStart : settingsState.defaultWorkTimeStart;
-    const workTimeEnd = isRealValue(props.workTimeEnd) ? props.workTimeEnd : settingsState.defaultWorkTimeEnd;
+    const restTime = props.restTime !== null ? props.restTime : settingsState.defaultRestTime;
+    const workTimeStart = props.restTime !== null ? props.workTimeStart : settingsState.defaultWorkTimeStart;
+    const workTimeEnd = props.restTime !== null ? props.workTimeEnd : settingsState.defaultWorkTimeEnd;
 
     const toggleShowWorkActionsOverlay = () => {
         setShowActionsOverlay(!showActionsOverlay)
@@ -113,6 +113,7 @@ const GenericWork = props => {
     }
 
     const showChangeActiveButton = props.displayChangeActiveWork && !props.active && sets.some(s => !s.finished)
+
     return (
         <ThemeProvider theme={theme}>
             <View style={styles.card.containerStyle}>
@@ -135,6 +136,7 @@ const GenericWork = props => {
                             name='menu'
                             onPress={toggleShowWorkActionsOverlay}
                             containerStyle={styles.card.titleBar.actionsIcon.container}
+                            testId='toggleEditWork'
                         />
                     </FlexRowView>
                 </View>
@@ -142,11 +144,12 @@ const GenericWork = props => {
                 <Card.Divider/>
 
                 <WorkTime
+                    workId={props.id}
                     workTimeStart={workTimeStart}
                     workTimeEnd={workTimeEnd}
                 />
 
-                <RestTime value={restTime}/>
+                <RestTime workId={props.id} value={restTime}/>
 
                 <View style={styles.setsContainer}>
                     {sets.map((set, index) => {

@@ -121,7 +121,7 @@ const EditSetOverlay = props => {
                     itemStyle={styles.picker.item}
 
                 >
-                    {_.range(0, 100, 1).map(i => <Picker.Item label={`${i}`} value={i}/>)}
+                    {_.range(0, 100, 1).map(i => <Picker.Item key={i} label={`${i}`} value={i} testId={`optionNumReps_${i}`}/>)}
                 </Picker>
             </View>
         </FlexRowView>
@@ -137,7 +137,7 @@ const EditSetOverlay = props => {
                     }
                     itemStyle={styles.picker.item}
                 >
-                    {_.range(0, 100, 1).map(i => <Picker.Item label={`${i}`} value={i}/>)}
+                    {_.range(0, 100, 1).map(i => <Picker.Item key={i} label={`${i}`} value={i}/>)}
                 </Picker>
             </View>
             <TextBold>.</TextBold>
@@ -150,7 +150,7 @@ const EditSetOverlay = props => {
                     // style={styles.picker.weightDecimal}
                     itemStyle={styles.picker.item}
                 >
-                    {_.range(0, 1, 0.125).map(i => <Picker.Item label={`${i}`} value={i}/>)}
+                    {_.range(0, 1, 0.125).map(i => <Picker.Item key={i} label={`${i}`} value={i}/>)}
                 </Picker>
             </View>
             <TextNormal>kg</TextNormal>

@@ -116,6 +116,7 @@ const EditWorkOverlay = props => {
                         onPress={backdropPress}
                         title="Save"
                         containerStyle={styles.saveButton}
+                        testId='saveEditWork'
                     />
                 </FlexRowView>
             </View>
@@ -131,7 +132,7 @@ const EditWorkOverlay = props => {
                         itemStyle={styles.picker.item}
 
                     >
-                        {_.range(0, 100, 1).map(i => <Picker.Item label={`${i}`} value={i}/>)}
+                        {_.range(0, 100, 1).map(i => <Picker.Item testId={`optionRestTime_${i}`} key={i} label={`${i}`} value={i}/>)}
                     </Picker>
                 </View>
                 <TextNormal>sec</TextNormal>
@@ -151,7 +152,7 @@ const EditWorkOverlay = props => {
                         itemStyle={styles.picker.item}
 
                     >
-                        {_.range(0, 100, 1).map(i => <Picker.Item label={`${i}`} value={i}/>)}
+                        {_.range(0, 100, 1).map(i => <Picker.Item key={i} label={`${i}`} value={i}/>)}
                     </Picker>
                 </View>
                 <TextNormal>to</TextNormal>
@@ -167,7 +168,7 @@ const EditWorkOverlay = props => {
                         itemStyle={styles.picker.item}
 
                     >
-                        {_.range(0, 100, 1).map(i => <Picker.Item label={`${i}`} value={i}/>)}
+                        {_.range(0, 100, 1).map(i => <Picker.Item key={i} label={`${i}`} value={i}/>)}
                     </Picker>
                 </View>
                 <TextNormal>sec</TextNormal>

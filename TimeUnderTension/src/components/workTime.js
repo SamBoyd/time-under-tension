@@ -18,7 +18,7 @@ const WorkTime = props => {
             ...props.styles,
         }}
     >
-        <TextNormal>Target tension for {props.workTimeStart} to {props.workTimeEnd} sec </TextNormal>
+        <TextNormal testId={`workTime_${props.workId}`}>Target tension for {props.workTimeStart} to {props.workTimeEnd} sec </TextNormal>
     </FlexRowView>
 }
 

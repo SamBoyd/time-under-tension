@@ -1,0 +1,428 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GenericWork component should render with given state from Redux store 1`] = `
+<View
+  style={
+    Object {
+      "backgroundColor": "#262521",
+      "borderRadius": 8,
+      "borderWidth": 0,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "alignItems": "baseline",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#CECABA",
+          "fontSize": 18,
+          "fontWeight": "bold",
+          "marginBottom": 15,
+          "textAlign": "center",
+        }
+      }
+      testID="cardTitle"
+    >
+      ex1
+    </Text>
+    <View
+      style={
+        Object {
+          "flexDirection": "row",
+          "textAlignVertical": "center",
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "overflow": "hidden",
+          }
+        }
+      >
+        <View
+          accessibilityState={
+            Object {
+              "disabled": false,
+            }
+          }
+          accessible={true}
+          focusable={true}
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "transparent",
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text
+              allowFontScaling={false}
+              selectable={false}
+              style={
+                Array [
+                  Object {
+                    "color": "#CECABA",
+                    "fontSize": 30,
+                  },
+                  Object {
+                    "backgroundColor": "transparent",
+                  },
+                  Object {
+                    "fontFamily": "Material Icons",
+                    "fontStyle": "normal",
+                    "fontWeight": "normal",
+                  },
+                  Object {},
+                ]
+              }
+              testID="iconIcon"
+            >
+              
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    replaceTheme={[Function]}
+    style={
+      Object {
+        "borderBottomColor": "#bcbbc1",
+        "borderBottomWidth": 0.5,
+        "marginBottom": 15,
+      }
+    }
+    updateTheme={[Function]}
+  />
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "textAlign": "center",
+        "textAlignVertical": "center",
+      }
+    }
+    viewStyle={
+      Object {
+        "textAlign": "center",
+        "textAlignVertical": "center",
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#CECABA",
+          "fontSize": 12,
+        }
+      }
+      testId="workTime_work1"
+    >
+      Target tension for 
+      20
+       to 
+      30
+       sec 
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "textAlignVertical": "center",
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#CECABA",
+          "fontSize": 12,
+        }
+      }
+      testId="restTime_work1"
+    >
+      Rest time for 
+      10
+    </Text>
+  </View>
+  <View
+    style={
+      Object {
+        "marginTop": 0,
+      }
+    }
+  >
+    <View
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "baseline",
+            "borderBottomWidth": 1,
+            "borderColor": "#CDE6F5",
+            "borderTopWidth": 1,
+            "flexDirection": "row",
+            "marginTop": 13.5,
+            "paddingVertical": 6.5,
+            "textAlignVertical": "center",
+          }
+        }
+        viewStyle={
+          Object {
+            "alignItems": "baseline",
+            "borderBottomWidth": 1,
+            "borderColor": "#CDE6F5",
+            "borderTopWidth": 1,
+            "marginTop": 13.5,
+            "paddingVertical": 6.5,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "flex-start",
+              "flex": 1,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "overflow": "hidden",
+              }
+            }
+          >
+            <View
+              replaceTheme={[Function]}
+              updateTheme={[Function]}
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "backgroundColor": "transparent",
+                    "justifyContent": "center",
+                  }
+                }
+              >
+                <Text
+                  allowFontScaling={false}
+                  selectable={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#CECABA",
+                        "fontSize": 12,
+                      },
+                      Object {
+                        "backgroundColor": "transparent",
+                      },
+                      Object {
+                        "fontFamily": "Feather",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                  testID="iconIcon"
+                >
+                  
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flex": 3,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#CECABA",
+                "fontSize": 12,
+              }
+            }
+          >
+            - / - / -
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flex": 3,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#CECABA",
+                "fontSize": 12,
+              }
+            }
+          >
+            12 / 40 / 20-30
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "alignItems": "flex-end",
+              "flex": 1,
+            }
+          }
+        >
+          <Text
+            allowFontScaling={false}
+            selectable={false}
+            style={
+              Array [
+                Object {
+                  "color": "#CECABA",
+                  "fontSize": 15,
+                },
+                undefined,
+                Object {
+                  "fontFamily": "Material Design Icons",
+                  "fontStyle": "normal",
+                  "fontWeight": "normal",
+                },
+                Object {},
+              ]
+            }
+          >
+            󰇝
+          </Text>
+        </View>
+      </View>
+    </View>
+    <Modal
+      hardwareAccelerated={false}
+      onRequestClose={[Function]}
+      transparent={true}
+      visible={false}
+    />
+  </View>
+  <View
+    style={
+      Array [
+        Object {
+          "borderRadius": 3,
+          "overflow": "hidden",
+        },
+        Object {
+          "borderRadius": 3,
+        },
+        Array [
+          Object {
+            "alignSelf": "center",
+            "marginTop": 10,
+            "width": "60%",
+          },
+          Object {
+            "height": 53.5,
+            "padding": 0,
+          },
+        ],
+        false,
+      ]
+    }
+  >
+    <View
+      accessibilityRole="button"
+      accessibilityState={
+        Object {
+          "busy": false,
+          "disabled": false,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "opacity": 1,
+        }
+      }
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "center",
+            "backgroundColor": "#31302C",
+            "borderColor": "#5F758E",
+            "borderRadius": 8,
+            "borderWidth": 0,
+            "flexDirection": "row",
+            "height": 53.5,
+            "justifyContent": "center",
+            "padding": 8,
+            "paddingBottom": 0,
+            "paddingTop": 0,
+          }
+        }
+      >
+        <Text
+          style={
+            Object {
+              "color": "#CECABA",
+              "fontSize": 12,
+              "paddingVertical": 1,
+              "textAlign": "center",
+            }
+          }
+        >
+          Add Set
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
