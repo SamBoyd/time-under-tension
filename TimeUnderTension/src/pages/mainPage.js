@@ -22,6 +22,7 @@ import {TextNormal} from "../components/styled/text";
 import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
 
 import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
+import AddExercise from "./addExercise";
 
 
 const styles = StyleSheet.create({
@@ -99,6 +100,7 @@ const MainPageNav = ({navigation}) => {
             <Stack.Screen name={PAGE.workout} component={Workout}/>
             <Stack.Screen name={PAGE.pickExercise} component={PickExercise}/>
             <Stack.Screen name={PAGE.createTemplateWorkout} component={CreateTemplateWorkout}/>
+            <Stack.Screen name={PAGE.addExercise} component={AddExercise} />
         </Stack.Navigator>
     )
 }

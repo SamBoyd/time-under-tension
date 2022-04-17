@@ -16,6 +16,7 @@ import {addWork, newWorkForExercise} from "../reducers/workReducer";
 import {addWork as addWorkToWorkout} from "../reducers/workoutReducer";
 import {addWork as addWorkToTemplate} from "../reducers/newTemplateWorkoutReducer";
 import {setActiveWorkIfUndefined} from "../reducers/timerReducer";
+import {FlexRowView} from "../components/styled/view";
 
 
 const windowWidth = Dimensions.get('window').width;
@@ -65,6 +66,10 @@ const PickExercise = ({route, navigation}) => {
 
     const goBack = () => {
         navigation.goBack()
+    }
+
+    const goNewExercise = () => {
+        navigation.navigate(PAGE.addExercise)
     }
 
     const sortedExercises = []
@@ -118,10 +123,14 @@ const PickExercise = ({route, navigation}) => {
 
     return (
         <BasePage>
-            <Button onPress={goBack} title="back" containerStyle={styles.backButton}/>
+            <FlexRowView>
+                <Button onPress={goBack} title="back" containerStyle={styles.backButton}/>
+                <Button onPress={goNewExercise} title="New" containerStyle={styles.backButton} testId='newExerciseButton'/>
+            </FlexRowView>
 
-            {sortedExercises.map(category => {
+            {sortedExercises.map((category, ii) => {
                 return <ListItem.Accordion
+                    key={ii}
                     noRotation
                     content={
                         <ListItem.Content>
