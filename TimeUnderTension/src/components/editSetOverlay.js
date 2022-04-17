@@ -8,16 +8,18 @@ import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-nativ
 import theme, {standardHorizontalPadding, standardVerticalPadding} from '../theme';
 import {FlexRowView} from "./styled/view";
 import {useDispatch} from "react-redux";
-import {changeSetReps, changeSetWeight, removeSet} from "../reducers/setReducer";
+import {changeSetReps, changeSetWeight} from "../reducers/setReducer";
 import {Button} from "./styled/button";
-import {updateRestOnWork} from "../reducers/workReducer";
 
 
 const _ = require('lodash')
 
 
 const EditSetOverlay = props => {
-    const [numReps, setNumReps] = useState(19)
+    const [updateReps, setUpdateReps] = useState(false)
+    const [updateWeight, setUpdateWeight] = useState(false)
+
+    const [numReps, setNumReps] = useState(props.numberReps)
     const [weight, setWeight] = useState(Math.floor(props.weight))
     const [weightDecimal, setWeightDecimal] = useState(props.weight - Math.floor(props.weight))
 
@@ -81,8 +83,15 @@ const EditSetOverlay = props => {
     })
 
     const backdropPress = () => {
-        dispatch(changeSetReps({setId: props.id, reps: numReps}))
-        dispatch(changeSetWeight({setId: props.id, weight: weight + weightDecimal}))
+        if (updateReps) {
+            dispatch(changeSetReps({setId: props.id, reps: numReps}))
+        }
+        if (updateWeight) {
+            dispatch(changeSetWeight({setId: props.id, weight: weight + weightDecimal}))
+        }
+
+        setUpdateReps(false)
+        setUpdateWeight(false)
         props.toggleShowEditSet()
     }
 
@@ -115,13 +124,14 @@ const EditSetOverlay = props => {
             <View style={styles.reps.pickerWrapper}>
                 <Picker
                     selectedValue={numReps}
-                    onValueChange={(itemValue, itemIndex) =>
+                    onValueChange={(itemValue, itemIndex) => {
+                        setUpdateReps(true)
                         setNumReps(itemValue)
-                    }
+                    }}
                     itemStyle={styles.picker.item}
-
                 >
-                    {_.range(0, 100, 1).map(i => <Picker.Item key={i} label={`${i}`} value={i} testId={`optionNumReps_${i}`}/>)}
+                    {_.range(0, 100, 1).map(i => <Picker.Item key={i} label={`${i}`} value={i}
+                                                              testId={`optionNumReps_${i}`}/>)}
                 </Picker>
             </View>
         </FlexRowView>
@@ -132,9 +142,10 @@ const EditSetOverlay = props => {
 
                 <Picker
                     selectedValue={weight}
-                    onValueChange={(itemValue, itemIndex) =>
+                    onValueChange={(itemValue, itemIndex) => {
+                        setUpdateWeight(true)
                         setWeight(itemValue)
-                    }
+                    }}
                     itemStyle={styles.picker.item}
                 >
                     {_.range(0, 100, 1).map(i => <Picker.Item key={i} label={`${i}`} value={i}/>)}
@@ -144,9 +155,10 @@ const EditSetOverlay = props => {
             <View style={styles.reps.pickerWrapper}>
                 <Picker
                     selectedValue={weightDecimal}
-                    onValueChange={(itemValue, itemIndex) =>
+                    onValueChange={(itemValue, itemIndex) => {
+                        setUpdateWeight(true)
                         setWeightDecimal(itemValue)
-                    }
+                    }}
                     // style={styles.picker.weightDecimal}
                     itemStyle={styles.picker.item}
                 >

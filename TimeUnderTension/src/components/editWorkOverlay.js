@@ -19,6 +19,9 @@ const EditWorkOverlay = props => {
     const workoutState = useSelector(selectWorkout)
     const timerState = useSelector(selectTimer)
 
+    const [updateRest, setUpdateRest] = useState(false)
+    const [updateWork, setUpdateWork] = useState(false)
+
     const [restTime, setRestTime] = useState(props.restTime)
     const [workTimeStart, setWorkTimeStart] = useState(props.workTimeStart)
     const [workTimeEnd, setWorkTimeEnd] = useState(props.workTimeEnd)
@@ -26,20 +29,27 @@ const EditWorkOverlay = props => {
     const dispatch = useDispatch()
 
     const backdropPress = () => {
-        dispatch(
-            updateWorkTimeOnWork({
-                workId: props.workId,
-                workTimeStart: workTimeStart,
-                workTimeEnd: workTimeEnd,
-            })
-        )
+        if (updateWork) {
+            dispatch(
+                updateWorkTimeOnWork({
+                    workId: props.workId,
+                    workTimeStart: workTimeStart,
+                    workTimeEnd: workTimeEnd,
+                })
+            )
+        }
 
-        dispatch(
-            updateRestOnWork({
-                workId: props.workId,
-                restTime: restTime
-            })
-        )
+        if (updateRest) {
+            dispatch(
+                updateRestOnWork({
+                    workId: props.workId,
+                    restTime: restTime
+                })
+            )
+        }
+
+        setUpdateWork(false)
+        setUpdateRest(false)
         props.toggleOverlay()
     }
 
@@ -126,9 +136,10 @@ const EditWorkOverlay = props => {
                 <View style={styles.rest.pickerWrapper}>
                     <Picker
                         selectedValue={restTime}
-                        onValueChange={(itemValue, itemIndex) =>
+                        onValueChange={(itemValue, itemIndex) => {
+                            setUpdateRest(true)
                             setRestTime(itemValue)
-                        }
+                        }}
                         itemStyle={styles.picker.item}
 
                     >
@@ -144,6 +155,7 @@ const EditWorkOverlay = props => {
                     <Picker
                         selectedValue={workTimeStart}
                         onValueChange={(itemValue, itemIndex) => {
+                            setUpdateWork(true)
                             setWorkTimeStart(itemValue)
                             if (itemValue > workTimeEnd) {
                                 setWorkTimeEnd(itemValue + 10)
@@ -160,6 +172,7 @@ const EditWorkOverlay = props => {
                     <Picker
                         selectedValue={workTimeEnd}
                         onValueChange={(itemValue, itemIndex) => {
+                            setUpdateWork(true)
                             setWorkTimeEnd(itemValue)
                             if (itemValue < workTimeStart) {
                                 setWorkTimeStart(itemValue - 10)
