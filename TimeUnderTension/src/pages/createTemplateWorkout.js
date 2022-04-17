@@ -45,6 +45,10 @@ const CreateTemplateWorkout = ({navigation}) => {
         )
     }
 
+    const goBack = () => {
+        dispatch(resetTemplate())
+        navigation.goBack()
+    }
     const saveTemplate = () => {
         dispatch(addToTemplates(newTemplate))
         dispatch(resetTemplate())
@@ -52,6 +56,15 @@ const CreateTemplateWorkout = ({navigation}) => {
     }
 
     const styles = StyleSheet.create({
+        topButtonContainer: {
+            justifyContent: 'space-between',
+        },
+
+        saveButton: {
+            marginVertical: hp(1),
+            width: wp(20),
+        },
+
         editTitleWrapper: {
             alignItems: "center"
         },
@@ -79,11 +92,6 @@ const CreateTemplateWorkout = ({navigation}) => {
             marginTop: 0,
             marginBottom: standardVerticalPadding,
         },
-
-        saveButton: {
-            marginVertical: hp(1),
-            // paddingHorizontal: standardHorizontalPadding,
-        }
     })
 
     const work = loadWorkByIds(newTemplate.work, workState)
@@ -124,7 +132,10 @@ const CreateTemplateWorkout = ({navigation}) => {
     return (
         <ThemeProvider theme={theme}>
             <BasePage>
-                <Button onPress={saveTemplate} title="Save" containerStyle={styles.saveButton}/>
+                <FlexRowView viewStyle={styles.topButtonContainer}>
+                    <Button onPress={goBack} title="Cancel" containerStyle={styles.saveButton}/>
+                    <Button onPress={saveTemplate} title="Save" containerStyle={styles.saveButton}/>
+                </FlexRowView>
                 <View style={styles.titleWrapper}>
                     {templateTitle}
                 </View>
