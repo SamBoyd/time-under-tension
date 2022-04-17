@@ -1,7 +1,10 @@
 import settingsReducer, {
     setDefaultRestTime,
     setDefaultSetupTime,
-    setDefaultWorkTime, setSoundTargetWorkEnd, setSoundTargetWorkStart,
+    setDefaultWorkTime,
+    setSoundSetup,
+    setSoundTargetWorkEnd,
+    setSoundTargetWorkStart,
     setStartWorkSound
 } from "./settingsReducer";
 
@@ -15,6 +18,7 @@ describe('settingsReducer', () => {
                 defaultWorkTimeEnd: 15,
                 defaultRestTime: 90,
                 defaultSetupTime: 2,
+                soundSetup: 'buzzer.mp3',
                 soundStartWork: 'buzzer.mp3',
                 soundTargetWorkStart: 'train_horn.mp3',
                 soundTargetWorkEnd: 'train_horn.mp3',
@@ -95,6 +99,18 @@ describe('settingsReducer', () => {
 
         expect(nextState).toEqual({
             soundTargetWorkEnd: 'secondSound.mp3'
+        })
+    })
+
+    it('can set the sound for setup', () => {
+        const previousState = {
+            soundSetup: 'firstSound.mp3'
+        }
+
+        const nextState = settingsReducer(previousState, setSoundSetup('secondSound.mp3'))
+
+        expect(nextState).toEqual({
+            soundSetup: 'secondSound.mp3'
         })
     })
 })

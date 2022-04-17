@@ -2,6 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 import {
     DEFAULT_REST_TIME,
     DEFAULT_SETUP_TIME,
+    DEFAULT_SOUND_SETUP,
     DEFAULT_SOUND_START_WORK,
     DEFAULT_SOUND_TARGET_WORK_END,
     DEFAULT_SOUND_TARGET_WORK_START,
@@ -16,6 +17,7 @@ const getInitialState = () => {
         defaultWorkTimeEnd: DEFAULT_WORK_TIME_UPPER,
         defaultRestTime: DEFAULT_REST_TIME,
         defaultSetupTime: DEFAULT_SETUP_TIME,
+        soundSetup: DEFAULT_SOUND_SETUP,
         soundStartWork: DEFAULT_SOUND_START_WORK,
         soundTargetWorkStart: DEFAULT_SOUND_TARGET_WORK_START,
         soundTargetWorkEnd: DEFAULT_SOUND_TARGET_WORK_END,
@@ -74,6 +76,13 @@ const settingsSlice = createSlice({
             }
 
             state.soundTargetWorkEnd = action.payload
+        },
+        setSoundSetup: (state, action) => {
+            if (!isRealValue(action.payload)) {
+                throw `bad setSoundSetup action payload: ${JSON.stringify(action.payload)}`
+            }
+
+            state.soundSetup = action.payload
         }
     }
 })
@@ -82,7 +91,8 @@ export const selectSettings = state => state.settings
 
 export const {
     reset, setDefaultWorkTime, setDefaultRestTime, setDefaultSetupTime,
-    setStartWorkSound, setSoundTargetWorkStart, setSoundTargetWorkEnd
+    setStartWorkSound, setSoundTargetWorkStart, setSoundTargetWorkEnd,
+    setSoundSetup
 } = settingsSlice.actions
 
 export default settingsSlice.reducer

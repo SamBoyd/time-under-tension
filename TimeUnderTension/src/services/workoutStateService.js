@@ -38,6 +38,7 @@ export const getCurrentTimings = (
     let shouldFinishSet, shouldIncrementCurrentWork, nextTimerStateAction, shouldPlayNoise, startsWorkout
     shouldFinishSet = shouldIncrementCurrentWork = shouldPlayNoise = startsWorkout = false
 
+    let soundToPlay
     switch (timerState.state) {
         case TIMER_STATE.ready:
             startsWorkout = true
@@ -46,6 +47,7 @@ export const getCurrentTimings = (
         case TIMER_STATE.setup:
             nextTimerStateAction = moveToWork
             shouldPlayNoise = true
+            soundToPlay = settingsState.soundStartWork
             break;
         case TIMER_STATE.work:
             nextTimerStateAction = moveToRest
@@ -57,6 +59,7 @@ export const getCurrentTimings = (
         case TIMER_STATE.rest:
             nextTimerStateAction = moveToSetup
             shouldPlayNoise = true
+            soundToPlay = settingsState.soundSetup
             break;
     }
 
@@ -66,12 +69,6 @@ export const getCurrentTimings = (
         workTimeStart: isRealValue(activeWork.workTimeStart) ? activeWork.workTimeStart : settingsState.defaultWorkTimeStart,
         workTimeEnd: isRealValue(activeWork.workTimeEnd) ? activeWork.workTimeEnd : settingsState.defaultWorkTimeEnd,
         onCompleteCB: ({totalElapsedTime}) => {
-            console.log(`timer state: ${timerState.state}`)
-            console.log(`blah: ${activeWork.sets[activeWork.sets.length - 1]}`)
-            console.log(`activeSetId : ${activeSet.id}`)
-            console.log(`shouldIncrementCurrentWork : ${shouldIncrementCurrentWork}`)
-            dispatch(nextTimerStateAction())
-
             if (startsWorkout) {
                 dispatch(startWorkoutIfNotStarted())
             }
@@ -89,8 +86,10 @@ export const getCurrentTimings = (
             }
 
             if (shouldPlayNoise) {
-                playSound(settingsState.soundStartWork)
+                playSound(soundToPlay)
             }
+
+            dispatch(nextTimerStateAction())
         }
     }
 

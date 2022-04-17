@@ -29,6 +29,7 @@ export const AVAILABLE_SOUNDS = [
     {name: 'Buzzer', filename: 'buzzer.mp3'},
     {name: 'Train horn', filename: 'train_horn.mp3'},
 ]
+export const DEFAULT_SOUND_SETUP = 'buzzer.mp3'
 export const DEFAULT_SOUND_START_WORK = 'buzzer.mp3'
 export const DEFAULT_SOUND_TARGET_WORK_START = 'train_horn.mp3'
 export const DEFAULT_SOUND_TARGET_WORK_END = 'train_horn.mp3'

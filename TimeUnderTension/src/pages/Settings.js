@@ -7,6 +7,7 @@ import {
     setDefaultRestTime,
     setDefaultSetupTime,
     setDefaultWorkTime,
+    setSoundSetup,
     setSoundTargetWorkEnd,
     setSoundTargetWorkStart,
     setStartWorkSound
@@ -57,6 +58,10 @@ const Settings = props => {
 
     const setSetupTimeAction = () => {
         dispatch(setDefaultSetupTime(setupTime))
+    }
+
+    const changeSoundSetup = ({value}) => {
+        dispatch(setSoundSetup(value))
     }
 
     const changeSoundStartWork = ({value}) => {
@@ -205,6 +210,26 @@ const Settings = props => {
                     <Divider/>
 
                     <TextH1>Sounds</TextH1>
+
+                    <FlexRowView viewStyle={styles.input.container}>
+                        <TextNormal>Setup sound</TextNormal>
+                        <Select
+                            defaultOption={
+                                AVAILABLE_SOUNDS
+                                    .map(({name, filename}) => {
+                                        return {value: filename, label: name}
+                                    })
+                                    .find(({value, label}) => value === settingsState.soundSetup)
+                            }
+                            onSelect={changeSoundSetup}
+                            options={AVAILABLE_SOUNDS.map(sound => {
+                                return {value: sound.filename, label: sound.name}
+                            })}
+                            multiSelection={false}
+                            clearable={false}
+                            {...styles.select}
+                        />
+                    </FlexRowView>
 
                     <FlexRowView viewStyle={styles.input.container}>
                         <TextNormal>End of rest sound</TextNormal>
