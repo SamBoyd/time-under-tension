@@ -14,7 +14,7 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import PickExercise from "./pickExercise";
 import Workout from "./workout";
 import CreateTemplateWorkout from "./createTemplateWorkout";
-import {selectWorkout} from "../reducers/workoutReducer";
+import {selectWorkout, startWorkoutIfNotStarted} from "../reducers/workoutReducer";
 import {isRealValue} from "../utils/utils";
 import {FlexRowView} from "../components/styled/view";
 import {WorkoutDuration} from "../components/workoutDuration";
@@ -58,6 +58,7 @@ const MainPage = ({navigation}) => {
     const dispatch = useDispatch()
 
     const moveToWorkout = () => {
+        dispatch(startWorkoutIfNotStarted())
         navigation.navigate(PAGE.workout)
     }
 
@@ -100,7 +101,7 @@ const MainPageNav = ({navigation}) => {
             <Stack.Screen name={PAGE.workout} component={Workout}/>
             <Stack.Screen name={PAGE.pickExercise} component={PickExercise}/>
             <Stack.Screen name={PAGE.createTemplateWorkout} component={CreateTemplateWorkout}/>
-            <Stack.Screen name={PAGE.addExercise} component={AddExercise} />
+            <Stack.Screen name={PAGE.addExercise} component={AddExercise}/>
         </Stack.Navigator>
     )
 }

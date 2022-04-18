@@ -1,7 +1,7 @@
 import {v4 as uuidv4} from 'uuid';
 
-import {createWorkoutFromTemplate, resetToInitialWorkout, startWorkoutIfNotStarted} from "./workoutReducer";
-import {changeActiveWork, moveToRest, moveToSetup, reset as resetTimer, resetTimerCount} from "./timerReducer";
+import {createWorkoutFromTemplate, resetToInitialWorkout} from "./workoutReducer";
+import {changeActiveWork, moveToRest, reset as resetTimer, resetTimerCount} from "./timerReducer";
 import {addSetToWork, addWork} from "./workReducer";
 import {addSet, finishSet, getNewSet} from "./setReducer";
 import {loadSetsByIds, loadWorkByIds} from "../utils/stateUtils";
@@ -31,11 +31,6 @@ export const selectWorkAndResetTimer = (workIndex, dispatch) => {
     dispatch(resetTimerCount())
 }
 
-export const moveToSetupAndStartWorkout = dispatch => {
-    dispatch(moveToSetup())
-    dispatch(startWorkoutIfNotStarted())
-}
-
 
 export const createWorkoutFromTemplateAction = (template, workState, setState, dispatch) => {
     _createWorkoutFromTemplateAction(
@@ -51,7 +46,6 @@ export const createWorkoutFromTemplateAction = (template, workState, setState, d
 }
 
 
-
 export const _createWorkoutFromTemplateAction = (
     template,
     workState,
@@ -65,11 +59,15 @@ export const _createWorkoutFromTemplateAction = (
     const templateWorkout = {...template}
 
     const templateWork = loadWorkByIds(templateWorkout.work, workState)
-    const newWork = templateWork.map(w => { return {...w}})
+    const newWork = templateWork.map(w => {
+        return {...w}
+    })
     const newWorkIds = newWork.map(() => uuidv4())
 
     const templateSets = templateWork.map(w => loadSetsByIds(w.sets, setState))
-    const newSets = templateSets.map(sets => sets.map(s => {return {...s}}))
+    const newSets = templateSets.map(sets => sets.map(s => {
+        return {...s}
+    }))
     const newSetIds = templateSets.map(sets => sets.map(() => uuidv4()))
 
 

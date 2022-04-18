@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import {Icon} from "react-native-elements";
 import {TextNormal} from "./styled/text";
 import humanizeDuration from "humanize-duration";
@@ -9,14 +9,17 @@ import {widthPercentageToDP as wp} from "react-native-responsive-screen";
 export const WorkoutDuration = props => {
     const [duration, setDuration] = useState(0)
 
+    const intervalId = useRef(null)
+
     useEffect(() => {
+        if (intervalId.current !== null) {
+            clearInterval(intervalId.current);
+        }
         const tick = () => {
             setDuration(Date.now() - Date.parse(props.startedAt))
         }
-        const interval = setInterval(tick, 1000);
-        return () => clearInterval(interval);
-    }, []);
-
+        intervalId.current = setInterval(tick, 1000);
+    }, [props.startedAt]);
 
     const styles = {
         container: {

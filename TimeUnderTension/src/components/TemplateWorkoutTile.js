@@ -13,7 +13,7 @@ import {deleteTemplate as deleteTemplateAction} from "../reducers/workoutTemplat
 import {editTemplate as editTemplateAction} from "../reducers/newTemplateWorkoutReducer";
 import {createWorkoutFromTemplateAction, finishWorkoutAndCreateHistoryAction} from "../reducers/actions";
 import {selectSet} from "../reducers/setReducer";
-import {selectWorkout} from "../reducers/workoutReducer";
+import {selectWorkout, startWorkoutIfNotStarted} from "../reducers/workoutReducer";
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -118,6 +118,7 @@ const TemplateWorkoutTile = props => {
             setDisplayExistingWorkoutOverlay(true)
         } else {
             createWorkoutFromTemplateAction(props.template, workState, setState, dispatch)
+            dispatch(startWorkoutIfNotStarted())
             props.moveToWorkout()
         }
     }
@@ -125,6 +126,7 @@ const TemplateWorkoutTile = props => {
     const finishWorkoutAndCreateNewFromTemplate = () => {
         finishWorkoutAndCreateHistoryAction(dispatch, workoutState)
         createWorkoutFromTemplateAction(props.template, workState, setState, dispatch)
+        dispatch(startWorkoutIfNotStarted())
         setDisplayExistingWorkoutOverlay(false)
         props.moveToWorkout()
     }
