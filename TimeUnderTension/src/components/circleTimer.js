@@ -63,25 +63,43 @@ const CircleTimer = props => {
         }
     )
 
-    let timerComponent
+    let timerComponent, startOn
     if (workoutState.work.length === 0) {
         timerComponent = <BlankTimer title="Add some exercises"/>
     } else if (timerState.activeWorkId === NO_ACTIVE_WORK) {
-        timerComponent = <FinishedTimer />
+        timerComponent = <FinishedTimer/>
     } else {
         switch (timerState.state) {
             case TIMER_STATE.ready:
-                timerComponent = <ReadyTimer cb={cb} onPress={timings.onCompleteCB}/>
+                timerComponent = <ReadyTimer cb={cb}
+                                             onPress={timings.onCompleteCB}
+                />
                 break;
             case TIMER_STATE.setup:
-                timerComponent = <SetupTimer duration={timings.setupTime} cb={cb} onComplete={timings.onCompleteCB}/>
+                startOn = Math.floor((new Date() - Date.parse(timerState.enteredStateAt)) / 1000)
+
+                timerComponent = <SetupTimer duration={timings.setupTime}
+                                             cb={cb}
+                                             onComplete={timings.onCompleteCB}
+                                             startOnCount={startOn}
+                />
                 break;
             case TIMER_STATE.work:
-                timerComponent = <WorkTimer workTimeStart={timings.workTimeStart} workTimeEnd={timings.workTimeEnd} cb={cb}
-                                            onComplete={timings.onCompleteCB}/>
+                startOn = Math.floor((new Date() - Date.parse(timerState.enteredStateAt)) / 1000)
+                timerComponent = <WorkTimer workTimeStart={timings.workTimeStart}
+                                            workTimeEnd={timings.workTimeEnd}
+                                            cb={cb}
+                                            onComplete={timings.onCompleteCB}
+                                            startOnCount={startOn}
+                />
                 break;
             case TIMER_STATE.rest:
-                timerComponent = <RestTimer duration={timings.restTime} cb={cb} onComplete={timings.onCompleteCB}/>
+                startOn = Math.floor((new Date() - Date.parse(timerState.enteredStateAt)) / 1000)
+                timerComponent = <RestTimer duration={timings.restTime}
+                                            cb={cb}
+                                            onComplete={timings.onCompleteCB}
+                                            startOnCount={startOn}
+                />
                 break;
         }
     }

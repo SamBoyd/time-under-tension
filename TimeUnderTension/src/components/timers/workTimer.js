@@ -41,15 +41,16 @@ const styles = StyleSheet.create({
 
 const WorkTimer = props => {
     const settingsState = useSelector(selectSettings)
-    const [timeElapsedOffset, setTimeElapsedOffset] = useState(0)
-    const restDuration = props.duration
 
+    const quotient = Math.floor(props.startOnCount / props.workTimeEnd)
+    const [timeElapsedOffset, setTimeElapsedOffset] = useState(quotient * props.workTimeEnd)
 
     return (
         <CountdownCircleTimer
             key={props.cb}
             isPlaying
             duration={props.workTimeEnd}
+            startOnCount={props.startOnCount - timeElapsedOffset}
             colors={theme.colors.primary}
             trailColor={theme.colors.tertiary}
             colorsTime={[7, 5, 2, 0]}

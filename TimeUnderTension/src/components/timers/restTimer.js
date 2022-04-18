@@ -1,6 +1,6 @@
 import React from 'react'
 import {StyleSheet} from "react-native";
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import theme from "../../theme";
 import CountdownCircleTimer from "../CountdownCircleTimer";
 import {TextH1, TextNormal} from "../styled/text";
@@ -25,13 +25,16 @@ const styles = StyleSheet.create({
 })
 
 const RestTimer = props => {
-    const restDuration = props.duration
-
+    let startOnCount = props.startOnCount
+    if (props.startOnCount > props.duration) {
+        startOnCount = props.duration -  1
+    }
     return (
         <CountdownCircleTimer
             key={props.cb}
             isPlaying
             duration={props.duration}
+            startOnCount={startOnCount}
             colors={theme.colors.primary}
             trailColor={theme.colors.tertiary}
             colorsTime={[7, 5, 2, 0]}

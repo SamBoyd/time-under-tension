@@ -36,6 +36,8 @@ const CountdownCircleTimer = props => {
         }
     });
 
+    const initialTimeRemaining = 'startOnCount' in props ? props.duration - props.startOnCount : props.duration
+
     const {
         path,
         pathLength,
@@ -48,6 +50,7 @@ const CountdownCircleTimer = props => {
     } = useCountdown({
         isPlaying: props.isPlaying,
         duration: props.duration,
+        initialRemainingTime: initialTimeRemaining,
         colors: 'url(#your-unique-id)',
         strokeWidth: CIRCLE_STROKE_WIDTH,
         children: props.children,
