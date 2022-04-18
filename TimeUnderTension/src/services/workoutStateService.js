@@ -71,7 +71,7 @@ export const getCurrentTimings = (
     }
 
     return {
-        restTime: activeWork.restTime || settingsState.defaultRestTime,
+        restTime: (activeWork.restTime || settingsState.defaultRestTime) - settingsState.defaultSetupTime,
         setupTime: settingsState.defaultSetupTime,
         workTimeStart: isRealValue(activeWork.workTimeStart) ? activeWork.workTimeStart : settingsState.defaultWorkTimeStart,
         workTimeEnd: isRealValue(activeWork.workTimeEnd) ? activeWork.workTimeEnd : settingsState.defaultWorkTimeEnd,
