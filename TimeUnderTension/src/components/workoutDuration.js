@@ -38,10 +38,11 @@ export const WorkoutDuration = props => {
 
     const styles = {
         container: {
-            marginRight: wp(4),
+            marginHorizontal: wp(4),
 
             flexDirection: 'row',
             alignItems: 'center',
+            flex: 1,
         },
 
         icon: {
@@ -53,7 +54,7 @@ export const WorkoutDuration = props => {
         },
 
         textContainer: {
-            textAlign: 'center'
+            textAlign: 'flex-start'
         }
     }
 

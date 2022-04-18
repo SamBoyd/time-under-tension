@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
 
     activeWorkout: {
         container: {
-            justifyContent: 'space-between',
+            // justifyContent: 'space-between',
             alignItems: 'center',
             backgroundColor: theme.colors.grey1,
             marginVertical: standardVerticalPadding,
