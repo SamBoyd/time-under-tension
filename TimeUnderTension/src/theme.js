@@ -46,7 +46,7 @@ const theme = createTheme({
     },
 
     // fontFamily: 'SFUIDisplay-Medium',
-    textSize: 12,
+    textSize: 16,
 
     borderRadius: 8,
     internalPadding: wp(2),
@@ -54,7 +54,7 @@ const theme = createTheme({
 
     Input: {
         textStyle: {
-            fontSize: 12
+            fontSize: 14
         }
     },
 
