@@ -162,7 +162,7 @@ const EditSetOverlay = props => {
                     // style={styles.picker.weightDecimal}
                     itemStyle={styles.picker.item}
                 >
-                    {_.range(0, 1, 0.125).map(i => <Picker.Item key={i} label={`${i}`} value={i}/>)}
+                    {_.range(0, 1, 0.125).map(i => <Picker.Item key={i} label={i.toString().slice(2) || '0'} value={i}/>)}
                 </Picker>
             </View>
             <TextNormal>kg</TextNormal>
