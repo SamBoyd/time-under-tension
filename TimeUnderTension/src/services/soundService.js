@@ -1,6 +1,10 @@
 import Sound from 'react-native-sound';
-Sound.setCategory('Playback', true);
-
+// Make sure to use Playback and set Mixwithothers to true
+Sound.setCategory('Playback', true)
+// You only need to call the setActive(true) line *once in your code*, and you never set it to false,
+// EVER unless you no longer want audio to be played in background.
+// You do not need to try calling setActive(false) at any point in the onCompletion methods
+Sound.setActive(true)
 
 export const playSound = (filename) => {
     var whoosh = new Sound(filename, Sound.MAIN_BUNDLE, (error) => {
@@ -18,8 +22,8 @@ export const playSound = (filename) => {
             } else {
                 console.log('playback failed due to audio decoding errors');
             }
-            whoosh.reset();
-            whoosh.release();
+            // whoosh.reset();
+            // whoosh.release();
         });
     });
 }
