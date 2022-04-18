@@ -77,7 +77,7 @@ const EditSetOverlay = props => {
 
         },
 
-        removeButton: {
+        bottomButton: {
             marginVertical: standardVerticalPadding,
         }
     })
@@ -170,8 +170,14 @@ const EditSetOverlay = props => {
 
         <Button
             title="Remove set"
-            containerStyle={styles.removeButton}
+            containerStyle={styles.bottomButton}
             onPress={removeSetPress}
+        />
+
+        <Button
+            onPress={backdropPress}
+            title="Save"
+            containerStyle={styles.bottomButton}
         />
     </Overlay>
 }
