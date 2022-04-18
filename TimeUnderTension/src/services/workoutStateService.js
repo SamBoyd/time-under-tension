@@ -1,7 +1,14 @@
 import {isRealValue} from "../utils/utils";
 import {loadSetsByIds, loadWorkByIds} from "../utils/stateUtils";
 import {TIMER_STATE} from "../constants";
-import {changeActiveWork, moveToRest, moveToSetup, moveToWork, NO_ACTIVE_WORK} from "../reducers/timerReducer";
+import {
+    changeActiveWork,
+    moveToReady,
+    moveToRest,
+    moveToSetup,
+    moveToWork,
+    NO_ACTIVE_WORK
+} from "../reducers/timerReducer";
 import {finishSet} from "../reducers/setReducer";
 import {playSound} from "./soundService";
 
@@ -48,10 +55,12 @@ export const getCurrentTimings = (
             soundToPlay = settingsState.soundStartWork
             break;
         case TIMER_STATE.work:
-            nextTimerStateAction = moveToRest
             shouldFinishSet = true
             if (activeSet.id === activeWork.sets[activeWork.sets.length - 1]) {
                 shouldIncrementCurrentWork = true
+                nextTimerStateAction = moveToReady
+            } else {
+                nextTimerStateAction = moveToRest
             }
             break;
         case TIMER_STATE.rest:
