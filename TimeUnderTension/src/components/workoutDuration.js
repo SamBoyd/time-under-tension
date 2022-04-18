@@ -6,6 +6,21 @@ import {View} from "react-native";
 import theme from "../theme";
 import {widthPercentageToDP as wp} from "react-native-responsive-screen";
 
+
+const shortEnglishHumanizer = humanizeDuration.humanizer({
+    language: "shortEn",
+    languages: {
+        shortEn: {
+            y: () => "year",
+            mo: () => "month",
+            w: () => "week",
+            d: () => "day",
+            h: () => "hour",
+            m: () => "min",
+            s: () => "sec",
+        },
+    },
+});
 export const WorkoutDuration = props => {
     const [duration, setDuration] = useState(0)
 
@@ -48,7 +63,7 @@ export const WorkoutDuration = props => {
                 <Icon name='clock' type='foundation' color={styles.icon.color}/>
             </View>
             <View style={styles.textContainer}>
-                <TextNormal>{humanizeDuration(duration, {largest: 2, round: true})}</TextNormal>
+                <TextNormal>{shortEnglishHumanizer(duration, {largest: 2, round: true})}</TextNormal>
             </View>
         </View>
     )
