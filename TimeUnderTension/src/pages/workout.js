@@ -3,22 +3,20 @@ import {useDispatch, useSelector} from "react-redux";
 import {SafeAreaView, StyleSheet, View} from "react-native";
 import theme, {standardHorizontalPadding, standardVerticalPadding} from '../theme'
 
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import {resetToInitialWorkout, selectWorkout} from "../reducers/workoutReducer";
+import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {selectWorkout} from "../reducers/workoutReducer";
 import Work from '../components/work'
 import {Button} from "../components/styled/button";
-import BasePage from "../components/basePage";
 import {WorkoutDuration} from "../components/workoutDuration";
 import {selectWork} from "../reducers/workReducer";
-import {createNativeStackNavigator} from "@react-navigation/native-stack";
-import PickExercise, {SAVE_WORK_TO} from "./pickExercise";
-import {addWorkoutToHistory} from "../reducers/workoutHistoryReducer";
-import {reset as resetTimer, selectTimer} from "../reducers/timerReducer";
+import {SAVE_WORK_TO} from "./pickExercise";
+import {selectTimer} from "../reducers/timerReducer";
 import {PAGE} from "../constants";
 import CircleTimer from "../components/circleTimer";
 import {FlexRowView, ScrollView} from "../components/styled/view";
 import {Shadow} from "react-native-shadow-2";
 import {loadWorkByIds} from "../utils/stateUtils";
+import {finishWorkoutAndCreateHistoryAction} from "../reducers/actions";
 
 const Workout = ({navigation}) => {
     const dispatch = useDispatch()
@@ -33,11 +31,7 @@ const Workout = ({navigation}) => {
     }
 
     const finishWorkout = () => {
-        const w = {...workout}
-        w.finished_at = new Date().toISOString()
-        dispatch(addWorkoutToHistory({workout: w}))
-        dispatch(resetToInitialWorkout())
-        dispatch(resetTimer())
+        finishWorkoutAndCreateHistoryAction(dispatch, workout)
         goBack()
     }
 
@@ -118,7 +112,7 @@ const Workout = ({navigation}) => {
     const workoutStarted = workout.started_at !== null
 
     const finishButton = workoutStarted
-        ? <Button onPress={finishWorkout} title="finish" />
+        ? <Button onPress={finishWorkout} title="finish"/>
         : <View></View>;
 
     return (
@@ -129,13 +123,13 @@ const Workout = ({navigation}) => {
                 startColor={theme.colors.white}
                 viewStyle={styles.timerBanner.shadow}
             >
-            <View style={styles.timerBanner}>
-                <FlexRowView viewStyle={styles.actionButtonsContainer}>
-                    <Button title="back" onPress={goBack} />
-                    {finishButton}
-                </FlexRowView>
-                <CircleTimer/>
-            </View>
+                <View style={styles.timerBanner}>
+                    <FlexRowView viewStyle={styles.actionButtonsContainer}>
+                        <Button title="back" onPress={goBack}/>
+                        {finishButton}
+                    </FlexRowView>
+                    <CircleTimer/>
+                </View>
             </Shadow>
             <View style={styles.bottomView}>
                 <ScrollView contentContainerStyle={styles.scrollContent}>

@@ -7,13 +7,13 @@ import theme, {standardVerticalPadding} from "../theme";
 import {selectWork} from "../reducers/workReducer";
 import {loadWorkByIds} from "../utils/stateUtils";
 import {Icon, Overlay, ThemeProvider} from "react-native-elements";
-import {FlexColumnView} from "./styled/view";
+import {FlexColumnView, FlexRowView} from "./styled/view";
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from "react-native-responsive-screen";
 import {deleteTemplate as deleteTemplateAction} from "../reducers/workoutTemplatesReducer";
 import {editTemplate as editTemplateAction} from "../reducers/newTemplateWorkoutReducer";
-import {createWorkoutFromTemplate} from "../reducers/workoutReducer";
-import {createWorkoutFromTemplateAction} from "../reducers/actions";
+import {createWorkoutFromTemplateAction, finishWorkoutAndCreateHistoryAction} from "../reducers/actions";
 import {selectSet} from "../reducers/setReducer";
+import {selectWorkout} from "../reducers/workoutReducer";
 
 const styles = StyleSheet.create({
     wrapper: {
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         height: hp(2.5)
     },
 
-    overlay: {
+    actionsOverlay: {
         rowGap: standardVerticalPadding,
         container: {
             width: wp(75),
@@ -50,15 +50,51 @@ const styles = StyleSheet.create({
         backdropStyle: {
             backgroundColor: 'rgba(20, 14, 8, 0.8)',
         },
+    },
+
+    confirmOverlay: {
+        container: {
+            width: wp(75),
+            backgroundColor: theme.colors.tertiary,
+            alignItems: 'center',
+            paddingVertical: standardVerticalPadding,
+        },
+        rowGap: standardVerticalPadding,
+
+        actionsContainer: {
+            justifyContent: 'space-around',
+        },
+
+        actionButtonPrimary: {
+            container: {
+                width: wp(20),
+            },
+
+            button: {
+                backgroundColor: theme.colors.grey1,
+            }
+        },
+
+        actionButtonSecondary: {
+            container: {
+                width: wp(20),
+            },
+
+            button: {
+                backgroundColor: theme.colors.grey0,
+            }
+        }
     }
 });
 
 const TemplateWorkoutTile = props => {
+    const workoutState = useSelector(selectWorkout)
     const workState = useSelector(selectWork)
     const setState = useSelector(selectSet)
     const dispatch = useDispatch()
 
     const [displayActionsOverlay, setDisplayActionsOverlay] = useState(false)
+    const [displayExistingWorkoutOverlay, setDisplayExistingWorkoutOverlay] = useState(false)
 
     const work = loadWorkByIds(props.template.work, workState)
 
@@ -78,7 +114,18 @@ const TemplateWorkoutTile = props => {
     }
 
     const startWorkoutFromTemplate = () => {
+        if (workoutState.started_at !== null) {
+            setDisplayExistingWorkoutOverlay(true)
+        } else {
+            createWorkoutFromTemplateAction(props.template, workState, setState, dispatch)
+            props.moveToWorkout()
+        }
+    }
+
+    const finishWorkoutAndCreateNewFromTemplate = () => {
+        finishWorkoutAndCreateHistoryAction(dispatch, workoutState)
         createWorkoutFromTemplateAction(props.template, workState, setState, dispatch)
+        setDisplayExistingWorkoutOverlay(false)
         props.moveToWorkout()
     }
 
@@ -106,16 +153,40 @@ const TemplateWorkoutTile = props => {
                 />
             </View>
             <Overlay isVisible={displayActionsOverlay}
-                     overlayStyle={styles.overlay.container}
-                     backdropStyle={styles.overlay.backdropStyle}
+                     overlayStyle={styles.actionsOverlay.container}
+                     backdropStyle={styles.actionsOverlay.backdropStyle}
                      onBackdropPress={toggleOverlay}
             >
-                <FlexColumnView viewStyles={styles.overlay.wrapper} rowGap={styles.overlay.rowGap}>
+                <FlexColumnView viewStyles={styles.actionsOverlay.wrapper} rowGap={styles.actionsOverlay.rowGap}>
                     <TextH1>{props.template.name}</TextH1>
                     <Button onPress={editTemplate} title="Edit"/>
                     <Button onPress={deleteTemplate} title="Delete"/>
                 </FlexColumnView>
             </Overlay>
+            <Overlay isVisible={displayExistingWorkoutOverlay}
+                     overlayStyle={styles.confirmOverlay.container}
+                     backdropStyle={styles.confirmOverlay.backdropStyle}
+                     onBackdropPress={() => {
+                     }}
+            >
+                <FlexColumnView viewStyles={styles.confirmOverlay.wrapper} rowGap={styles.confirmOverlay.rowGap}>
+                    <TextNormal>There is already an active workout. </TextNormal>
+                    <TextNormal>Finish this workout and create a new workout from this template?</TextNormal>
+                    <FlexRowView viewStyle={styles.confirmOverlay.actionsContainer}>
+                        <Button title='Cancel'
+                                onPress={() => setDisplayExistingWorkoutOverlay(false)}
+                                containerStyle={styles.confirmOverlay.actionButtonSecondary.container}
+                                buttonStyle={styles.confirmOverlay.actionButtonSecondary.button}
+                        />
+                        <Button title='Yes'
+                                onPress={finishWorkoutAndCreateNewFromTemplate}
+                                containerStyle={styles.confirmOverlay.actionButtonPrimary.container}
+                                buttonStyle={styles.confirmOverlay.actionButtonPrimary.button}
+                        />
+                    </FlexRowView>
+                </FlexColumnView>
+            </Overlay>
+
         </ThemeProvider>
     )
 }

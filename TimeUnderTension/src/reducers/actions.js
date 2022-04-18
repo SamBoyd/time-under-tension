@@ -1,12 +1,20 @@
 import {v4 as uuidv4} from 'uuid';
 
-import {createWorkoutFromTemplate, startWorkoutIfNotStarted, updateWorkOnWorkout} from "./workoutReducer";
-import {reset as resetNewTemplate, addWork as addTemplateWork, editTemplate, resetTemplate} from "./newTemplateWorkoutReducer";
-import {changeActiveWork, moveToRest, moveToSetup, resetTimerCount} from "./timerReducer";
-import {addSetToWork, addWork, createWorkFromTemplate, newWorkForExercise, updateSetsOnWork} from "./workReducer";
-import {addSet, createSetFromTemplate, finishSet, getNewSet} from "./setReducer";
+import {createWorkoutFromTemplate, resetToInitialWorkout, startWorkoutIfNotStarted} from "./workoutReducer";
+import {changeActiveWork, moveToRest, moveToSetup, reset as resetTimer, resetTimerCount} from "./timerReducer";
+import {addSetToWork, addWork} from "./workReducer";
+import {addSet, finishSet, getNewSet} from "./setReducer";
 import {loadSetsByIds, loadWorkByIds} from "../utils/stateUtils";
+import {addWorkoutToHistory} from "./workoutHistoryReducer";
 
+
+export const finishWorkoutAndCreateHistoryAction = (dispatch, workout) => {
+    const w = {...workout}
+    w.finished_at = new Date().toISOString()
+    dispatch(addWorkoutToHistory({workout: w}))
+    dispatch(resetToInitialWorkout())
+    dispatch(resetTimer())
+}
 
 export const addSetAction = (dispatch, workId) => {
     const newSet = getNewSet()

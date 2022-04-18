@@ -1,9 +1,9 @@
 import React from 'react'
 
-import {Button as UnStyledButton, withTheme} from "react-native-elements";
+import {Button as UnStyledButton} from "react-native-elements";
 
 import theme from '../../theme'
-import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
+import {heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export const Button = props => {
     return <UnStyledButton
@@ -18,7 +18,7 @@ export const Button = props => {
                 paddingBottom: 0,
                 height: hp(4),
             },
-            {}
+            props.buttonStyle,
         ]}
         titleStyle={[
             {
@@ -28,11 +28,11 @@ export const Button = props => {
             }
         ]}
         containerStyle={[
-            props.containerStyle,
             {
                 padding: 0,
                 height: hp(4),
             },
+            props.containerStyle,
         ]}
     />
 }
