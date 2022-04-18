@@ -75,9 +75,9 @@ export const getCurrentTimings = (
         setupTime: settingsState.defaultSetupTime,
         workTimeStart: isRealValue(activeWork.workTimeStart) ? activeWork.workTimeStart : settingsState.defaultWorkTimeStart,
         workTimeEnd: isRealValue(activeWork.workTimeEnd) ? activeWork.workTimeEnd : settingsState.defaultWorkTimeEnd,
-        onCompleteCB: ({totalElapsedTime}) => {
+        onCompleteCB: (timeOffset) => ({totalElapsedTime}) => {
             if (shouldFinishSet) {
-                dispatch(finishSet({id: activeSet.id, time: totalElapsedTime}))
+                dispatch(finishSet({id: activeSet.id, time: totalElapsedTime + timeOffset}))
             }
 
             if (shouldIncrementCurrentWork) {

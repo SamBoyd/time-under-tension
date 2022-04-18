@@ -45,6 +45,7 @@ const WorkTimer = props => {
     const quotient = Math.floor(props.startOnCount / props.workTimeEnd)
     const [timeElapsedOffset, setTimeElapsedOffset] = useState(quotient * props.workTimeEnd)
 
+
     return (
         <CountdownCircleTimer
             key={props.cb}
@@ -80,7 +81,7 @@ const WorkTimer = props => {
                     }
                 }
             }}
-            onPress={props.onComplete}
+            onPress={props.onComplete(timeElapsedOffset)}
             onComplete={() => {
                 setTimeElapsedOffset(timeElapsedOffset + props.workTimeEnd)
                 return {shouldRepeat: true}

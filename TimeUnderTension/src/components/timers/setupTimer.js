@@ -49,7 +49,7 @@ const SetupTimer = props => {
                 </FlexColumnView>
             }}
             onPress={()=>{}}
-            onComplete={props.onComplete}
+            onComplete={props.onComplete()}
         />
     )
 }
