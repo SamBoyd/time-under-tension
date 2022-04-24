@@ -101,7 +101,7 @@ export const updateRepsOnAllSets = (workId, reps) => {
     if (work === null) {
         throw `cant find work with id ${workId}`
     }
-    const sets = state.set.filter(s => work.sets.includes(s.id))
+    const sets = state.set.filter(s => work.sets.includes(s.id) && s.finished !== true)
     if (sets.length === 0) {
         throw `cant find sets for work with id ${workId}`
     }
@@ -114,7 +114,7 @@ export const updateWeightOnAllSets = (workId, weight) => {
     if (work === null) {
         throw `cant find work with id ${workId}`
     }
-    const sets = state.set.filter(s => work.sets.includes(s.id))
+    const sets = state.set.filter(s => work.sets.includes(s.id) && s.finished !== true)
     if (sets.length === 0) {
         throw `cant find sets for work with id ${workId}`
     }
