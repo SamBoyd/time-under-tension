@@ -23,7 +23,7 @@ export const TIMER_STATE = {
 export const DEFAULT_SETUP_TIME = 2
 export const DEFAULT_WORK_TIME_LOWER = 5
 export const DEFAULT_WORK_TIME_UPPER = 15
-export const DEFAULT_REST_TIME = 90
+export const DEFAULT_REST_TIME = 45
 
 export const AVAILABLE_SOUNDS = [
     {name: 'Buzzer', filename: 'buzzer.mp3'},
