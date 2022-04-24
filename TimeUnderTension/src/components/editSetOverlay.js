@@ -10,6 +10,7 @@ import {FlexRowView} from "./styled/view";
 import {useDispatch} from "react-redux";
 import {changeSetReps, changeSetWeight} from "../reducers/setReducer";
 import {Button} from "./styled/button";
+import {updateRepsOnAllSets, updateWeightOnAllSets} from "../reducers/actions";
 
 
 const _ = require('lodash')
@@ -95,6 +96,16 @@ const EditSetOverlay = props => {
         props.toggleShowEditSet()
     }
 
+    const changeAllSets = () => {
+        updateRepsOnAllSets(props.workId, numReps)
+        updateWeightOnAllSets(props.workId, weight)
+
+        setUpdateWeight(false)
+        setUpdateReps(false)
+
+        props.toggleShowEditSet()
+    }
+
     const removeSetPress = () => {
         props.fireRemoveSet(props.id)
         props.toggleShowEditSet()
@@ -172,6 +183,12 @@ const EditSetOverlay = props => {
             title="Remove set"
             containerStyle={styles.bottomButton}
             onPress={removeSetPress}
+        />
+
+        <Button
+            onPress={changeAllSets}
+            title="Save to all sets"
+            containerStyle={styles.bottomButton}
         />
 
         <Button

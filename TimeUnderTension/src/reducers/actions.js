@@ -3,10 +3,10 @@ import {v4 as uuidv4} from 'uuid';
 import {createWorkoutFromTemplate, resetToInitialWorkout} from "./workoutReducer";
 import {changeActiveWork, moveToRest, reset as resetTimer, resetTimerCount} from "./timerReducer";
 import {addSetToWork, addWork} from "./workReducer";
-import {addSet, finishSet, getNewSet} from "./setReducer";
+import {addSet, changeSetReps, changeSetWeight, finishSet, getNewSet} from "./setReducer";
 import {loadSetsByIds, loadWorkByIds} from "../utils/stateUtils";
 import {addWorkoutToHistory} from "./workoutHistoryReducer";
-
+import store from '../store'
 
 export const finishWorkoutAndCreateHistoryAction = (dispatch, workout) => {
     const w = {...workout}
@@ -92,4 +92,31 @@ export const _createWorkoutFromTemplateAction = (
     })
 
     dispatch(setActiveWorkIDAction(newWork[0].id))
+}
+
+
+export const updateRepsOnAllSets = (workId, reps) => {
+    const state = store.getState()
+    const work = state.work.find(w => w.id === workId)
+    if (work === null) {
+        throw `cant find work with id ${workId}`
+    }
+    const sets = state.set.filter(s => work.sets.includes(s.id))
+    if (sets.length === 0) {
+        throw `cant find sets for work with id ${workId}`
+    }
+    sets.forEach(set => store.dispatch(changeSetReps({setId: set.id, reps: reps})))
+}
+
+export const updateWeightOnAllSets = (workId, weight) => {
+    const state = store.getState()
+    const work = state.work.find(w => w.id === workId)
+    if (work === null) {
+        throw `cant find work with id ${workId}`
+    }
+    const sets = state.set.filter(s => work.sets.includes(s.id))
+    if (sets.length === 0) {
+        throw `cant find sets for work with id ${workId}`
+    }
+    sets.forEach(set => store.dispatch(changeSetWeight({setId: set.id, weight: weight})))
 }

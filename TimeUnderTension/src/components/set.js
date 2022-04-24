@@ -175,6 +175,7 @@ const Set = props => {
             </Pressable>
             <EditSetOverlay
                 toggleShowEditSet={toggleShowEditSet}
+                workId={props.workId}
                 id={props.id}
                 numberReps={props.numberReps}
                 weight={props.weight}
