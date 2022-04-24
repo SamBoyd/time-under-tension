@@ -17,7 +17,20 @@ export const finishWorkoutAndCreateHistoryAction = (dispatch, workout) => {
 }
 
 export const addSetAction = (dispatch, workId) => {
-    const newSet = getNewSet()
+    const state = store.getState()
+    const work = state.work.find(w => w.id === workId)
+
+    let newSet
+    if (work.sets.length === 0) {
+        newSet = getNewSet()
+    } else {
+        const lastSetId = work.sets[work.sets.length - 1]
+        newSet = {...state.set.find(s => s.id === lastSetId)}
+        newSet.id = uuidv4()
+        newSet.workTime = null
+        newSet.finished = false
+    }
+
     dispatch(addSet(newSet))
     dispatch(addSetToWork({workId: workId, setId: newSet.id}))
 }
