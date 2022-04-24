@@ -1,26 +1,12 @@
 import React, {useEffect, useRef, useState} from 'react'
 import {Icon} from "react-native-elements";
 import {TextNormal} from "./styled/text";
-import humanizeDuration from "humanize-duration";
 import {View} from "react-native";
 import theme from "../theme";
 import {widthPercentageToDP as wp} from "react-native-responsive-screen";
+import {shortEnglishHumanizer} from "../utils/utils";
 
 
-const shortEnglishHumanizer = humanizeDuration.humanizer({
-    language: "shortEn",
-    languages: {
-        shortEn: {
-            y: () => "year",
-            mo: () => "month",
-            w: () => "week",
-            d: () => "day",
-            h: () => "hour",
-            m: () => "min",
-            s: () => "sec",
-        },
-    },
-});
 export const WorkoutDuration = props => {
     const [duration, setDuration] = useState(0)
 

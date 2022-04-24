@@ -1,11 +1,11 @@
 import React from 'react'
 import {useDispatch, useSelector} from "react-redux";
-import {Pressable, StyleSheet, View} from "react-native";
+import {StyleSheet, View} from "react-native";
 
 import TemplateWorkouts from "../components/templateWorkouts";
 import {Button} from "../components/styled/button";
 
-import theme, {standardHorizontalPadding, standardVerticalPadding} from '../theme'
+import {standardHorizontalPadding, standardVerticalPadding} from '../theme'
 
 import BasePage from "../components/basePage";
 import {resetEntireState} from "../utils/resetState";
@@ -16,13 +16,9 @@ import Workout from "./workout";
 import CreateTemplateWorkout from "./createTemplateWorkout";
 import {selectWorkout, startWorkoutIfNotStarted} from "../reducers/workoutReducer";
 import {isRealValue} from "../utils/utils";
-import {FlexRowView} from "../components/styled/view";
-import {WorkoutDuration} from "../components/workoutDuration";
-import {TextNormal} from "../components/styled/text";
-import {widthPercentageToDP as wp} from 'react-native-responsive-screen';
-
-import FontAwesome5Icon from "react-native-vector-icons/FontAwesome5";
 import AddExercise from "./addExercise";
+import InProgressBanner from "../components/InProgressBanner";
+import {selectTimer} from "../reducers/timerReducer";
 
 
 const styles = StyleSheet.create({
@@ -30,23 +26,6 @@ const styles = StyleSheet.create({
         marginVertical: standardVerticalPadding,
         marginHorizontal: standardHorizontalPadding,
     },
-
-    activeWorkout: {
-        container: {
-            // justifyContent: 'space-between',
-            alignItems: 'center',
-            backgroundColor: theme.colors.grey1,
-            marginVertical: standardVerticalPadding,
-            paddingHorizontal: wp(3),
-            paddingVertical: standardVerticalPadding,
-
-            borderRadius: theme.borderRadius
-        },
-
-        arrow: {
-            color: theme.colors.white
-        }
-    }
 })
 
 const MainPageButton = props => <View style={styles.button}>
@@ -55,6 +34,7 @@ const MainPageButton = props => <View style={styles.button}>
 
 const MainPage = ({navigation}) => {
     const workoutState = useSelector(selectWorkout)
+    const timerState = useSelector(selectTimer)
     const dispatch = useDispatch()
 
     const moveToWorkout = () => {
@@ -71,13 +51,11 @@ const MainPage = ({navigation}) => {
             {!isRealValue(workoutState.started_at) && (
                 <MainPageButton onPress={moveToWorkout} title="New blank workout"/>
             ) || (
-                <Pressable onPressIn={moveToWorkout}>
-                    <FlexRowView viewStyle={styles.activeWorkout.container}>
-                        <TextNormal>Workout in progress</TextNormal>
-                        <WorkoutDuration startedAt={workoutState.started_at}/>
-                        <FontAwesome5Icon name="chevron-right" style={styles.activeWorkout.arrow}/>
-                    </FlexRowView>
-                </Pressable>
+                <InProgressBanner
+                    phase={timerState.state}
+                    enteredStateAt={timerState.enteredStateAt}
+                    navigation={navigation}
+                />
             )}
 
             <TemplateWorkouts navigation={navigation}/>

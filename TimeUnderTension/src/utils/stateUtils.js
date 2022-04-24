@@ -1,4 +1,5 @@
 import {isRealValue} from "./utils";
+import store from '../store'
 
 export const loadWorkByIds = (workIds, workState) => {
     return workIds.map(workId => {
@@ -26,4 +27,28 @@ export const loadPreviousSetsForExercise = (exerciseId, workState, setState) => 
     } else {
         return []
     }
+}
+
+export const getWorkTimeOfActiveWork = () => {
+    const state = store.getState()
+    const activeWorkId = state.timer.activeWorkId
+    const work = state.work.find(w => w.id === activeWorkId)
+
+    const defaultWorkTimeStart = state.settings.defaultWorkTimeStart
+    const defaultWorkTimeEnd = state.settings.defaultWorkTimeEnd
+
+    return {
+        start: work.workTimeStart || defaultWorkTimeStart,
+        end: work.workTimeEnd || defaultWorkTimeEnd
+    }
+}
+
+export const getRestTimeOfActiveWork = () => {
+    const state = store.getState()
+    const activeWorkId = state.timer.activeWorkId
+    const work = state.work.find(w => w.id === activeWorkId)
+
+    const defaultRestTime = state.settings.defaultRestTime
+
+    return work.restTime || defaultRestTime
 }
