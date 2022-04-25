@@ -98,7 +98,7 @@ const EditSetOverlay = props => {
 
     const changeAllSets = () => {
         updateRepsOnAllSets(props.workId, numReps)
-        updateWeightOnAllSets(props.workId, weight)
+        updateWeightOnAllSets(props.workId, weight + weightDecimal)
 
         setUpdateWeight(false)
         setUpdateReps(false)
