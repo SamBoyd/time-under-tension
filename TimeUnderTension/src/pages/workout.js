@@ -76,7 +76,7 @@ const Workout = ({navigation}) => {
 
         bottomView: {
             position: 'absolute',
-            top: hp(40),
+            top: hp(30),
             left: 0,
             width: wp(100),
             height: hp(54),
