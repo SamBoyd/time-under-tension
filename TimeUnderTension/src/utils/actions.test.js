@@ -137,7 +137,5 @@ describe('createWorkoutFromTemplateAction', () => {
         // check ids in workout match those in work
         expect(createWorkoutAction.mock.calls[0][0].work[0]).toBe(createWorkAction.mock.calls[0][0].id)
         expect(createWorkoutAction.mock.calls[0][0].work[1]).toBe(createWorkAction.mock.calls[1][0].id)
-
-
     })
 })

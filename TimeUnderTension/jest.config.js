@@ -3,7 +3,7 @@ module.exports = async () => {
         verbose: true,
         rootDir: './',
         transformIgnorePatterns: [
-            "/node_modules/(?!@react-native|react-native|react-dom|@rneui|@miblanchard)"
+            "/node_modules/(?!@react-native|react-native|react-dom|redux-persist|@rneui|@miblanchard)"
         ],
         preset: "react-native",
         // "jest": {

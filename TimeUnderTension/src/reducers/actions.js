@@ -1,6 +1,6 @@
 import {v4 as uuidv4} from 'uuid';
 
-import {createWorkoutFromTemplate, resetToInitialWorkout} from "./workoutReducer";
+import {createWorkoutFromTemplate, moveWorkDown, resetToInitialWorkout} from "./workoutReducer";
 import {changeActiveWork, moveToRest, reset as resetTimer, resetTimerCount} from "./timerReducer";
 import {addSetToWork, addWork} from "./workReducer";
 import {addSet, changeSetReps, changeSetWeight, finishSet, getNewSet} from "./setReducer";
@@ -133,3 +133,30 @@ export const updateWeightOnAllSets = (workId, weight) => {
     }
     sets.forEach(set => store.dispatch(changeSetWeight({setId: set.id, weight: weight})))
 }
+
+
+export const moveWorkDownAction = (workId) => {
+    const state = store.getState()
+    const workout = state.workout
+    const workState = state.work
+    const dispatch = store.dispatch
+
+
+    if (state.timer.activeWorkId === workId) {
+        const workIndex = workout.work.findIndex(w => w.id === workId)
+
+        const work = loadWorkByIds(workout.work, workState)
+        const firstUnfinishedWorkIndex = work.findIndex(w => !w.finished)
+        if (firstUnfinishedWorkIndex < workIndex) {
+            dispatch(changeActiveWork(workout.work[firstUnfinishedWorkIndex]))
+        } else {
+            if (workout.work.length >= workIndex+1) {
+                dispatch(changeActiveWork(workout.work[workIndex + 1]))
+            }
+        }
+    }
+
+    dispatch(moveWorkDown(workId))
+}
+
+

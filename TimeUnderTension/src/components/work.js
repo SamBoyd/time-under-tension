@@ -1,14 +1,10 @@
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {
-    moveWorkDown as moveWorkDownInWorkout,
-    moveWorkUp as moveWorkUpInWorkout,
-    removeWork as removeWorkInWorkout
-} from "../reducers/workoutReducer";
+import {moveWorkUp as moveWorkUpInWorkout, removeWork as removeWorkInWorkout} from "../reducers/workoutReducer";
 import {Dimensions} from "react-native";
 import GenericWork from "./genericWork";
 import {selectWork, updateRestOnWork, updateSetsOnWork, updateWorkTimeOnWork} from "../reducers/workReducer";
-import {addSetAction} from "../reducers/actions";
+import {addSetAction, moveWorkDownAction} from "../reducers/actions";
 import {loadPreviousSetsForExercise} from "../utils/stateUtils";
 import {selectSet} from "../reducers/setReducer";
 import {selectSettings} from "../reducers/settingsReducer";
@@ -67,7 +63,7 @@ const Work = props => {
     }
 
     const moveWorkDown = () => {
-        dispatch(moveWorkDownInWorkout(props.id))
+        moveWorkDownAction(props.id)
     }
 
     const moveWorkUp = () => {
