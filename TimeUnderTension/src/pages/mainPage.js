@@ -15,7 +15,6 @@ import PickExercise from "./pickExercise";
 import Workout from "./workout";
 import CreateTemplateWorkout from "./createTemplateWorkout";
 import {selectWorkout, startWorkoutIfNotStarted} from "../reducers/workoutReducer";
-import {isRealValue} from "../utils/utils";
 import AddExercise from "./addExercise";
 import InProgressBanner from "../components/InProgressBanner";
 import {selectTimer} from "../reducers/timerReducer";
@@ -48,7 +47,7 @@ const MainPage = ({navigation}) => {
 
     return (
         <BasePage>
-            {!isRealValue(workoutState.started_at) && (
+            {workoutState.started_at === null && (
                 <MainPageButton onPress={moveToWorkout} title="New blank workout"/>
             ) || (
                 <InProgressBanner

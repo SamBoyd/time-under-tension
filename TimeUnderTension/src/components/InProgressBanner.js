@@ -31,25 +31,27 @@ const InProgressBanner = ({navigation, phase, enteredStateAt}) => {
 
     const intervalId = useRef(null)
 
-    const workTimeOfActiveWork = getWorkTimeOfActiveWork()
-    const restTimeOfActiveWork = getRestTimeOfActiveWork()
+    if (workoutState.work.length > 0) {
+        const workTimeOfActiveWork = getWorkTimeOfActiveWork()
+        const restTimeOfActiveWork = getRestTimeOfActiveWork()
 
-    const {
-        restTime,
-        setupTime,
-        workTimeStart,
-        workTimeEnd,
-        onCompleteCB
-    } = getCurrentTimings(
-        dispatch,
-        {
-            timerState: timerState,
-            workoutState: workoutState,
-            workState: workState,
-            setState: setState,
-            settingsState: settingsState,
-        }
-    )
+        const {
+            restTime,
+            setupTime,
+            workTimeStart,
+            workTimeEnd,
+            onCompleteCB
+        } = getCurrentTimings(
+            dispatch,
+            {
+                timerState: timerState,
+                workoutState: workoutState,
+                workState: workState,
+                setState: setState,
+                settingsState: settingsState,
+            }
+        )
+    }
 
     useEffect(() => {
         if (intervalId.current !== null) {
