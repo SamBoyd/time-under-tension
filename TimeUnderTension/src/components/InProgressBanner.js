@@ -31,6 +31,13 @@ const InProgressBanner = ({navigation, phase, enteredStateAt}) => {
 
     const intervalId = useRef(null)
 
+
+    const restTime = 0
+    const setupTime = 0
+    const workTimeStart = 0
+    const workTimeEnd = 0
+    const onCompleteCB = () => () => {}
+
     if (workoutState.work.length > 0) {
         const workTimeOfActiveWork = getWorkTimeOfActiveWork()
         const restTimeOfActiveWork = getRestTimeOfActiveWork()
