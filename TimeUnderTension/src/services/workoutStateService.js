@@ -11,6 +11,7 @@ import {
 } from "../reducers/timerReducer";
 import {finishSet} from "../reducers/setReducer";
 import {playSound} from "./soundService";
+import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
 const NOOP_TIMINGS = {
     restTime: 10,
@@ -76,6 +77,10 @@ export const getCurrentTimings = (
         workTimeStart: isRealValue(activeWork.workTimeStart) ? activeWork.workTimeStart : settingsState.defaultWorkTimeStart,
         workTimeEnd: isRealValue(activeWork.workTimeEnd) ? activeWork.workTimeEnd : settingsState.defaultWorkTimeEnd,
         onCompleteCB: (timeOffset) => ({totalElapsedTime}) => {
+            ReactNativeHapticFeedback.trigger("impactMedium", {
+                enableVibrateFeedback: true
+            })
+
             if (shouldFinishSet) {
                 dispatch(finishSet({id: activeSet.id, time: totalElapsedTime + timeOffset}))
             }
