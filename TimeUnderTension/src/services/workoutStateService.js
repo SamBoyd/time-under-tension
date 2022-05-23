@@ -13,11 +13,11 @@ import {finishSet} from "../reducers/setReducer";
 import {playSound} from "./soundService";
 import ReactNativeHapticFeedback from "react-native-haptic-feedback";
 
-const NOOP_TIMINGS = {
-    restTime: 10,
-    setupTime: 3,
-    workTimeStart: 10,
-    workTimeEnd: 15,
+export const NOOP_TIMINGS = {
+    restTime: 0,
+    setupTime: 0,
+    workTimeStart: 0,
+    workTimeEnd: 0,
     onCompleteCB: () => {
         console.log('noop timings callback called')
     }
@@ -35,12 +35,24 @@ export const getCurrentTimings = (
     }
 ) => {
     const activeWorkId = timerState.activeWorkId
-    const activeWork = loadWorkByIds(workoutState.work, workState)?.find(w => w.id === activeWorkId)
-    if (timerState.activeWorkId === NO_ACTIVE_WORK || workoutState.work.length === 0 || activeWork.sets.length === 0) {
+
+    if (activeWorkId === NO_ACTIVE_WORK || workoutState.work.length === 0) {
         return NOOP_TIMINGS
     }
 
-    const activeSet = loadSetsByIds(activeWork.sets, setState)?.find(s => !s.finished)
+    const activeWork = loadWorkByIds(workoutState.work, workState)?.find(w => w.id === activeWorkId)
+
+    if (activeWork.sets.length === 0) {
+        return NOOP_TIMINGS
+    }
+
+    const sets = loadSetsByIds(activeWork.sets, setState)
+
+    if (sets.filter(s => !s.finished).length === 0) {
+        return NOOP_TIMINGS
+    }
+
+    const activeSet = sets?.find(s => !s.finished)
 
     let shouldFinishSet, shouldIncrementCurrentWork, nextTimerStateAction, shouldPlayNoise
     shouldFinishSet = shouldIncrementCurrentWork = shouldPlayNoise = false

@@ -13,7 +13,6 @@ import {selectTimer} from "../reducers/timerReducer";
 import {shortEnglishHumanizer} from "../utils/utils";
 import ProgressBar from "./ProgressBar";
 import {selectSettings} from "../reducers/settingsReducer";
-import {getRestTimeOfActiveWork, getWorkTimeOfActiveWork} from "../utils/stateUtils";
 import {selectSet} from "../reducers/setReducer";
 import {selectWork} from "../reducers/workReducer";
 import {getCurrentTimings} from "../services/workoutStateService";
@@ -31,34 +30,22 @@ const InProgressBanner = ({navigation, phase, enteredStateAt}) => {
 
     const intervalId = useRef(null)
 
-
-    const restTime = 0
-    const setupTime = 0
-    const workTimeStart = 0
-    const workTimeEnd = 0
-    const onCompleteCB = () => () => {}
-
-    if (workoutState.work.length > 0) {
-        const workTimeOfActiveWork = getWorkTimeOfActiveWork()
-        const restTimeOfActiveWork = getRestTimeOfActiveWork()
-
-        const {
-            restTime,
-            setupTime,
-            workTimeStart,
-            workTimeEnd,
-            onCompleteCB
-        } = getCurrentTimings(
-            dispatch,
-            {
-                timerState: timerState,
-                workoutState: workoutState,
-                workState: workState,
-                setState: setState,
-                settingsState: settingsState,
-            }
-        )
-    }
+    const {
+        restTime,
+        setupTime,
+        workTimeStart,
+        workTimeEnd,
+        onCompleteCB
+    } = getCurrentTimings(
+        dispatch,
+        {
+            timerState: timerState,
+            workoutState: workoutState,
+            workState: workState,
+            setState: setState,
+            settingsState: settingsState,
+        }
+    )
 
     useEffect(() => {
         if (intervalId.current !== null) {
@@ -87,13 +74,11 @@ const InProgressBanner = ({navigation, phase, enteredStateAt}) => {
                 break;
         }
 
-        if (0 <= percent && percent <= 100) {
-            setPercent(percent)
-        } else {
-            if (phase !== TIMER_STATE.work) {
-                onCompleteCB(0)(duration * 1000)
-            }
+        if (percent > 100) {
+            percent = 100
         }
+        setPercent(percent)
+
     }, [duration])
 
     const moveToWorkout = () => {
@@ -149,7 +134,9 @@ const InProgressBanner = ({navigation, phase, enteredStateAt}) => {
                         <WorkoutDuration startedAt={workoutState.started_at}/>
                         <FontAwesome5Icon name="chevron-right" style={styles.arrow}/>
                     </FlexRowView>
-                    <View><TextNormal>{shortEnglishHumanizer(duration * 1000, {round: true})}</TextNormal></View>
+                    {phase !== TIMER_STATE.ready && (
+                        <View><TextNormal>{shortEnglishHumanizer(duration * 1000, {round: true})}</TextNormal></View>
+                    )}
                 </FlexColumnView>
             </FlexRowView>
         </Pressable>
