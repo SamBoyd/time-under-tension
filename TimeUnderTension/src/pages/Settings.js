@@ -89,6 +89,12 @@ const Settings = props => {
         },
 
         input: {
+            input: {
+                // placeholderColor: theme.colors.grey0,
+                color: theme.colors.white,
+                textAlign: 'center',
+            },
+            
             container: {
                 flexDirection: 'row',
                 justifyContent: 'space-between',
@@ -104,10 +110,6 @@ const Settings = props => {
             label: {
                 width: wp(50)
             },
-
-            placeholderColor: theme.colors.grey0,
-            color: theme.colors.white,
-            textAlign: 'center',
         },
 
         select: {
@@ -159,7 +161,7 @@ const Settings = props => {
                         onChangeText={value => setWorkTimeStart(parseInt(value) || 0)}
                         onBlur={setWorkTimeStartAction}
                         value={(workTimeStart || 0).toString()}
-                        inputStyle={styles.input}
+                        inputStyle={styles.input.input}
                         containerStyle={styles.input.container}
                         inputContainerStyle={styles.input.inputContainer}
                         placeholderTextColor={styles.input.placeholderColor}
@@ -173,7 +175,7 @@ const Settings = props => {
                         onChangeText={value => setWorkTimeEnd(parseInt(value) || 0)}
                         onBlur={setWorkTimeEndAction}
                         value={(workTimeEnd || 0).toString()}
-                        inputStyle={styles.input}
+                        inputStyle={styles.input.input}
                         containerStyle={styles.input.container}
                         inputContainerStyle={styles.input.inputContainer}
                         placeholderTextColor={styles.input.placeholderColor}
@@ -186,7 +188,7 @@ const Settings = props => {
                         onChangeText={value => setRestTime(parseInt(value) || 0)}
                         onBlur={setRestTimeAction}
                         value={(restTime || 0).toString()}
-                        inputStyle={styles.input}
+                        inputStyle={styles.input.input}
                         containerStyle={styles.input.container}
                         inputContainerStyle={styles.input.inputContainer}
                         placeholderTextColor={styles.input.placeholderColor}
@@ -199,7 +201,7 @@ const Settings = props => {
                         onChangeText={value => setSetupTime(parseInt(value) || 0)}
                         onBlur={setSetupTimeAction}
                         value={(setupTime || 0).toString()}
-                        inputStyle={styles.input}
+                        inputStyle={styles.input.input}
                         containerStyle={styles.input.container}
                         inputContainerStyle={styles.input.inputContainer}
                         placeholderTextColor={styles.input.placeholderColor}
