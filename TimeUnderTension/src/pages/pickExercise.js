@@ -195,8 +195,8 @@ const PickExercise = ({route, navigation}) => {
             {exercisesToSave.length > 0 && (
                 <>
                     <FlexColumnView viewStyle={styles.selected.container} rowGap={styles.selected.container.rowGap}>
-                        {exercisesToSave.map(ex =>
-                            <FlexRowView viewStyle={styles.selected.row}>
+                        {exercisesToSave.map((ex, i) =>
+                            <FlexRowView key={i} viewStyle={styles.selected.row}>
                                 <Pressable onPress={deselectExercise(ex)}>
                                     <View style={styles.selected.iconWrapper}>
                                         <MaterialIcons name="highlight-remove" {...styles.selected.removeIcon}/>
