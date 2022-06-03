@@ -3,6 +3,7 @@ import {v4 as uuidv4} from 'uuid';
 
 export const PAGE = {
     main: 'main',
+    main_nav: 'main_nav',
     workout: 'workout',
     pickExercise: 'pickExercise',
     createTemplateWorkout: 'createTemplateWorkout',

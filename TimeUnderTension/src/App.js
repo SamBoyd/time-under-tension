@@ -69,7 +69,7 @@ function App() {
         >
             {HeaderOption(PAGE.settings, 'Settings', Settings)}
             {HeaderOption(PAGE.analytics, 'Analytics', Analytics)}
-            {HeaderOption(PAGE.main, 'Home', MainPage)}
+            {HeaderOption(PAGE.main_nav, 'Home', MainPage)}
             {HeaderOption(PAGE.history, 'History', History)}
         </Tab.Navigator>
     )
