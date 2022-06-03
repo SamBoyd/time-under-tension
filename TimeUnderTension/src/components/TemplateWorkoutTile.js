@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
-import {FlatList, Pressable, StyleSheet, View} from "react-native";
+import {Pressable, StyleSheet, View} from "react-native";
 import {TextH1, TextLighter, TextNormal} from "./styled/text";
 import {Button} from "./styled/button";
 import theme, {standardVerticalPadding} from "../theme";
@@ -148,11 +148,10 @@ const TemplateWorkoutTile = props => {
                         />
                     </Pressable>
                 </View>
-                <FlatList
-                    data={work}
-                    renderItem={({item}) => <Work exercise={item.exercise} sets={item.sets}/>}
-                    keyExtractor={work => work.id}
-                />
+
+                {work.map((work, i) => {
+                    return <Work key={i} exercise={work.exercise} sets={work.sets}/>
+                })}
             </View>
             <Overlay isVisible={displayActionsOverlay}
                      overlayStyle={styles.actionsOverlay.container}
