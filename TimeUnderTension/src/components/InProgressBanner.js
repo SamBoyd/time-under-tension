@@ -55,6 +55,11 @@ const InProgressBanner = ({navigation, phase, enteredStateAt}) => {
             setDuration((Date.now() - Date.parse(enteredStateAt)) / 1000)
         }
         intervalId.current = setInterval(tick, 100);
+
+        return () => {
+            // clean up function when the component unmounts
+            clearInterval(intervalId.current)
+        }
     }, [phase]);
 
     useEffect(() => {

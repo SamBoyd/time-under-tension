@@ -20,6 +20,11 @@ export const WorkoutDuration = props => {
             setDuration(Date.now() - Date.parse(props.startedAt))
         }
         intervalId.current = setInterval(tick, 1000);
+
+        return () => {
+            // clean up function when the component unmounts
+            clearInterval(intervalId.current)
+        }
     }, [props.startedAt]);
 
     const styles = {
