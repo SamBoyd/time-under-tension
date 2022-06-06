@@ -2,13 +2,20 @@ import 'react-native-get-random-values';
 import {v4 as uuidv4} from 'uuid';
 import exerciseReducer, {
     addCategory,
-    addExercise, changeNewExerciseField,
+    addExercise,
+    changeNewExerciseField,
     removeCategory,
     removeExercise,
-    resetNewExercise, saveNewExercise
+    resetNewExercise,
+    saveNewExercise
 } from "./exercisesReducer";
 
 describe('Exercise reducer can', () => {
+    test('has initial state', () => {
+        const initialState = exerciseReducer(undefined, {})
+        expect(initialState.exercises.length).toBeGreaterThan(0)
+    })
+
     test('add new exercise', () => {
         const previousState = {
             exercises: [],

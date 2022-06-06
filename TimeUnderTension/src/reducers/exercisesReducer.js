@@ -1,9 +1,40 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {exercises as baseExercises, exerciseCategory as baseCategories, exerciseCategory} from '../constants'
+import {v4 as uuidv4} from "uuid";
+
+import {exerciseCategory as baseCategories} from '../constants'
+import {chest} from "../../resources/exercises/chest";
+import {arms} from "../../resources/exercises/arms";
+import {shoulders} from "../../resources/exercises/shoulders";
+import {legs} from "../../resources/exercises/legs";
+import {abs} from "../../resources/exercises/abs";
+import {back} from "../../resources/exercises/back";
+
+const loadExercises = () => {
+    const exercises = {}
+
+    const load = (cat, arr) => {
+        for (let i=0; i < arr.length; i++) {
+            let ex = arr[i]
+            if (!(ex in exercises)) {
+                exercises[ex] = {id: uuidv4(), name: ex, category: cat}
+            }
+        }
+    }
+
+    load('chest', chest)
+    load('arms', arms)
+    load('shoulders', shoulders)
+    load('back', back)
+    load('legs', legs)
+    load('abs', abs)
+
+    return Object.keys(exercises).map(key => exercises[key])
+}
+
 
 const getInitialState = () => {
     return {
-        exercises: baseExercises,
+        exercises: loadExercises(),
         categories: Object.keys(baseCategories),
         newExercise: {
             'name': '',

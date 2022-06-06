@@ -1,0 +1,40 @@
+export const legs = [
+  "Front squat",
+  "Back squat",
+
+  "Barbell Hip Thrust",
+  "Barbell Walking Lunge",
+  "Cable Pull-Through",
+  "Deadlift",
+  "Deficit 25’s Deadlift",
+  "Deficit Deadlift",
+  "Dumbbell Walking Lunge",
+  "Machine Glute Kickback",
+  "Machine Hip Thrust",
+  "Reverse Lunge",
+  "Single Leg Hip Thrust",
+  "Split Squat",
+  "Sumo Deadlift",
+  "Sumo Deficit Deadlift",
+  "Sumo Squat",
+  "Trap Bar Deadlift",
+  "Dumbbell Reverse Lunge",
+  "Dumbbell Split Squat",
+  "Dumbbell Single Leg Hip Thrust",
+  "Wide Stance Belt Squat",
+
+  "Stiff-Legged Deadlift",
+  "Low Bar Good Morning",
+  "High Bar Good Morning",
+  "45 Degree Back Raise",
+  "Lying Leg Curl",
+  "Seated Leg Curl",
+  "Single-Leg Leg Curl",
+
+  "Calf Machine",
+  "Stair Calves",
+  "Single-Leg Stair Calves",
+  "Deficit Smith Machine Calves",
+  "Leg Press Calves"
+
+]
