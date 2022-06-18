@@ -7,11 +7,8 @@
         viewBox="0 0 512 512"
         version="1.1"
         id="svg5"
-        inkscape:version="1.2 (dc2aeda, 2022-05-15)"
+        inkscape:version="1.1.2 (b8e25be8, 2022-02-05)"
         sodipodi:docname="icon.svg"
-        inkscape:export-filename="icon.png"
-        inkscape:export-xdpi="192"
-        inkscape:export-ydpi="192"
         xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
         xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
         xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -30,21 +27,19 @@
      showguides="true"
      inkscape:guide-bbox="true"
      inkscape:zoom="1.5367287"
-     inkscape:cx="206.60771"
-     inkscape:cy="251.50829"
-     inkscape:window-width="1842"
+     inkscape:cx="206.60772"
+     inkscape:cy="253.46049"
+     inkscape:window-width="1562"
      inkscape:window-height="1081"
-     inkscape:window-x="77"
-     inkscape:window-y="28"
+     inkscape:window-x="279"
+     inkscape:window-y="193"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer5"
-     inkscape:showpageshadow="0"
-     inkscape:deskcolor="#505050">
+     inkscape:current-layer="g1251-7">
     <inkscape:grid
        type="xygrid"
        id="grid6529" />
     <sodipodi:guide
-       position="256.38878,254.96048"
+       position="250,256"
        orientation="0,1"
        id="guide6611"
        inkscape:label=""
@@ -57,11 +52,6 @@
        inkscape:label=""
        inkscape:locked="false"
        inkscape:color="rgb(0,0,255)" />
-    <sodipodi:guide
-       position="810.81326,460.5921"
-       orientation="0,-1"
-       id="guide781"
-       inkscape:locked="false" />
   </sodipodi:namedview>
   <defs
      id="defs2">
@@ -1224,21 +1214,9 @@
   </defs>
   <g
      inkscape:groupmode="layer"
-     id="layer6"
-     inkscape:label="background ">
-    <rect
-       style="fill:#ffffff;stroke:#000000;stroke-width:0;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
-       id="rect4492"
-       width="512"
-       height="512"
-       x="5e-07"
-       y="5e-07" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="template"
-     style="display:none">
+     style="display:inline">
     <g
        id="g1251-7"
        inkscape:label="ic_product_icon_192px"
@@ -2467,7 +2445,7 @@
          transform="scale(0.93277177,-1.0720736)"><tspan
            sodipodi:role="line"
            id="tspan10678"
-           style="fill:#000000;stroke-width:1.28518"
+           style="stroke-width:1.28518;fill:#000000"
            x="54.817806"
            y="-70.775932">TuT</tspan></text>
       <text
@@ -2509,40 +2487,18 @@
     </g>
   </g>
   <g
+     inkscape:label="Layer 1"
      inkscape:groupmode="layer"
-     id="layer5"
-     inkscape:label="circle">
+     id="layer1"
+     style="display:none">
     <rect
-       style="fill:#000000;stroke:#000000;stroke-width:14.0476;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"
-       id="rect4296"
-       width="75.952423"
-       height="15.952432"
-       x="218.0238"
-       y="30.861904" />
-    <rect
-       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:10.7106;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
-       id="rect4296-9"
-       width="49.289406"
-       height="14.289373"
-       x="348.57574"
-       y="-222.85336"
-       transform="rotate(45)" />
-    <path
-       id="path2783"
-       style="fill:none;stroke:#000000;stroke-width:30;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
-       d="M 456,275 A 200,200 0 0 1 256,475 200,200 0 0 1 56,275 200,200 0 0 1 256,75 200,200 0 0 1 456,275 Z" />
-    <path
-       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:14.048;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
-       id="path9656"
-       sodipodi:type="arc"
-       sodipodi:cx="-264.76947"
-       sodipodi:cy="262.86728"
-       sodipodi:rx="160"
-       sodipodi:ry="160"
-       sodipodi:start="0"
-       sodipodi:end="1.3983914"
-       sodipodi:arc-type="slice"
-       d="M -104.76947,262.86728 A 160,160 0 0 1 -237.32113,420.49529 L -264.76947,262.86728 Z"
-       transform="rotate(-90)" />
+       style="opacity:1;fill:#f9f9f9;stroke:#ffffff;stroke-width:1.251;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect6527"
+       width="469.82919"
+       height="340.98407"
+       x="21.474188"
+       y="84.595284"
+       rx="35.790298"
+       ry="35.790298" />
   </g>
 </svg>
