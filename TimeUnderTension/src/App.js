@@ -65,6 +65,7 @@ function App() {
             activeColor={styles.nav.activeColor}
             inactiveColor={styles.nav.inactiveColor}
             barStyle={styles.nav.bar}
+            initialRouteName={PAGE.main_nav}
             screenOptions={{}}
         >
             {HeaderOption(PAGE.settings, 'Settings', Settings)}
