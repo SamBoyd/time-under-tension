@@ -6,7 +6,7 @@ import {Platform} from "react-native";
 
 const itemSkus = Platform.select({
     ios: [
-        'dev.samboyd.UnderTension.monthly',
+        'dev.samboyd.UnderTension.monthly_1',
         // 'dev.samboyd.UnderTension.quarterly',
         // 'dev.samboyd.UnderTension.6months',
         // 'dev.samboyd.UnderTension.yearly'
