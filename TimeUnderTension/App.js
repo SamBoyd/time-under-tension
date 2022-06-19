@@ -8,8 +8,9 @@ import {Colors,} from 'react-native/Libraries/NewAppScreen';
 import MainApp from './src/App'
 import store, {persistor} from "./src/store";
 import {NavigationContainer} from "@react-navigation/native";
-import type {Node} from 'react';
 import {SelectProvider} from "@mobile-reality/react-native-select-pro/src/components/select-provider";
+import Payments from "./src/payments";
+import type {Node} from 'react';
 
 const App = () => {
     const isDarkMode = useColorScheme() === 'dark';
@@ -22,13 +23,15 @@ const App = () => {
         <React.StrictMode>
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
-                    <NavigationContainer>
-                        <SelectProvider>
-                            <SafeAreaView style={{flex: 1}}>
-                                <MainApp/>
-                            </SafeAreaView>
-                        </SelectProvider>
-                    </NavigationContainer>
+                    <Payments>
+                        <NavigationContainer>
+                            <SelectProvider>
+                                <SafeAreaView style={{flex: 1}}>
+                                    <MainApp/>
+                                </SafeAreaView>
+                            </SelectProvider>
+                        </NavigationContainer>
+                    </Payments>
                 </PersistGate>
             </Provider>
         </React.StrictMode>
