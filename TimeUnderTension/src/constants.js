@@ -20,9 +20,9 @@ export const TIMER_STATE = {
     rest: 'rest'
 }
 
-export const DEFAULT_SETUP_TIME = 2
-export const DEFAULT_WORK_TIME_LOWER = 5
-export const DEFAULT_WORK_TIME_UPPER = 15
+export const DEFAULT_SETUP_TIME = 10
+export const DEFAULT_WORK_TIME_LOWER = 30
+export const DEFAULT_WORK_TIME_UPPER = 45
 export const DEFAULT_REST_TIME = 45
 
 export const AVAILABLE_SOUNDS = [
