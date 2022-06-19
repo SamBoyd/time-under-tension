@@ -29,15 +29,15 @@
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:zoom="1.5367287"
-     inkscape:cx="206.60771"
-     inkscape:cy="251.50829"
+     inkscape:zoom="1.2361708"
+     inkscape:cx="170.28392"
+     inkscape:cy="268.16683"
      inkscape:window-width="1842"
      inkscape:window-height="1081"
      inkscape:window-x="77"
-     inkscape:window-y="28"
+     inkscape:window-y="25"
      inkscape:window-maximized="0"
-     inkscape:current-layer="layer5"
+     inkscape:current-layer="g1768"
      inkscape:showpageshadow="0"
      inkscape:deskcolor="#505050">
     <inkscape:grid
@@ -65,6 +65,22 @@
   </sodipodi:namedview>
   <defs
      id="defs2">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient2222">
+      <stop
+         style="stop-color:#003900;stop-opacity:1;"
+         offset="0.16429684"
+         id="stop2218" />
+      <stop
+         style="stop-color:#004e00;stop-opacity:0.72156863;"
+         offset="0.94275075"
+         id="stop2226" />
+      <stop
+         style="stop-color:#005500;stop-opacity:0.63546801;"
+         offset="1"
+         id="stop2220" />
+    </linearGradient>
     <clipPath
        clipPathUnits="userSpaceOnUse"
        id="clipPath23">
@@ -1221,14 +1237,36 @@
          d="M 0,192 H 192 V 0 H 0 Z"
          id="path2009-5" />
     </clipPath>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient2222"
+       id="linearGradient2224"
+       x1="124.94073"
+       y1="471.13065"
+       x2="348.79285"
+       y2="14.966858"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <g
      inkscape:groupmode="layer"
      id="layer6"
-     inkscape:label="background ">
+     inkscape:label="white background ">
     <rect
        style="fill:#ffffff;stroke:#000000;stroke-width:0;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
        id="rect4492"
+       width="512"
+       height="512"
+       x="5e-07"
+       y="5e-07" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="g1768"
+     inkscape:label="colour background"
+     style="fill:#00ff00;fill-opacity:1">
+    <rect
+       style="fill:url(#linearGradient2224);stroke:#000000;stroke-width:0;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1;fill-opacity:1"
+       id="rect1766"
        width="512"
        height="512"
        x="5e-07"
@@ -2512,7 +2550,8 @@
      inkscape:groupmode="layer"
      id="layer5"
      inkscape:label="circle"
-     transform="matrix(0.88372093,0,0,0.88372093,30.146026,31.111573)">
+     transform="matrix(0.88372093,0,0,0.88372093,30.146026,31.111573)"
+     style="display:none">
     <rect
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:14.0476;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
        id="rect4296"
@@ -2535,6 +2574,45 @@
     <path
        style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:14.048;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
        id="path9656"
+       sodipodi:type="arc"
+       sodipodi:cx="-264.76947"
+       sodipodi:cy="262.86728"
+       sodipodi:rx="160"
+       sodipodi:ry="160"
+       sodipodi:start="0"
+       sodipodi:end="1.3983914"
+       sodipodi:arc-type="slice"
+       d="M -104.76947,262.86728 A 160,160 0 0 1 -237.32113,420.49529 L -264.76947,262.86728 Z"
+       transform="rotate(-90)" />
+  </g>
+  <g
+     inkscape:groupmode="layer"
+     id="g864"
+     inkscape:label="circle white"
+     transform="matrix(0.88372093,0,0,0.88372093,30.146026,31.111573)"
+     style="display:inline;fill:#ffffff;stroke:#ffffff;stroke-opacity:1">
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:14.0476;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect856"
+       width="75.952423"
+       height="15.952432"
+       x="218.0238"
+       y="30.861904" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:10.7106;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+       id="rect858"
+       width="49.289406"
+       height="14.289373"
+       x="348.57574"
+       y="-222.85336"
+       transform="rotate(45)" />
+    <path
+       id="path860"
+       style="fill:none;stroke:#ffffff;stroke-width:30;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+       d="M 456,275 A 200,200 0 0 1 256,475 200,200 0 0 1 56,275 200,200 0 0 1 256,75 200,200 0 0 1 456,275 Z" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#ffffff;stroke-width:14.048;stroke-linecap:round;stroke-dasharray:none;stroke-opacity:1"
+       id="path862"
        sodipodi:type="arc"
        sodipodi:cx="-264.76947"
        sodipodi:cy="262.86728"
