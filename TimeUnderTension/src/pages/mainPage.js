@@ -59,7 +59,7 @@ const MainPage = ({navigation}) => {
 
             <TemplateWorkouts navigation={navigation}/>
 
-            <MainPageButton onPress={purgeStore} title="Purge store"/>
+            {/*<MainPageButton onPress={purgeStore} title="Purge store"/>*/}
         </BasePage>
     )
 }

@@ -19,8 +19,6 @@ import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-nativ
 import {Divider, Input} from "react-native-elements";
 import {Select} from "@mobile-reality/react-native-select-pro";
 import {AVAILABLE_SOUNDS} from "../constants";
-import {resetEntireState} from "../utils/resetState";
-import {Button} from "../components/styled/button";
 
 const Settings = props => {
     const settingsState = useSelector(selectSettings)
@@ -297,10 +295,10 @@ const Settings = props => {
 
                     <Divider/>
 
-                    <Button
-                        onPress={() => resetEntireState(dispatch)}
-                        title="Purge state"
-                        />
+                    {/*<Button*/}
+                    {/*    onPress={() => resetEntireState(dispatch)}*/}
+                    {/*    title="Purge state"*/}
+                    {/*    />*/}
                 </FlexColumnView>
 
             </View>
