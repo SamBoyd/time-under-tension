@@ -1,20 +1,19 @@
 import React, {useState} from 'react'
 import {useDispatch, useSelector} from "react-redux";
-import {Dimensions, StyleSheet, View} from "react-native";
+import {Pressable, StyleSheet, View} from "react-native";
 
 import {editTemplateName, resetTemplate, selectNewTemplateWorkout} from "../reducers/newTemplateWorkoutReducer";
 import TemplateWork from "../components/templateWork";
-import {TextH1, TextNormal} from "../components/styled/text";
+import {TextH1} from "../components/styled/text";
 import {Button} from "../components/styled/button";
 import {FlexRowView} from "../components/styled/view";
-import {Icon, Input} from "react-native-elements";
-import theme, {standardHorizontalPadding, standardVerticalPadding} from "../theme"
+import {Icon, Input, ThemeProvider} from "react-native-elements";
+import theme, {standardVerticalPadding} from "../theme"
 import BasePage from "../components/basePage";
 
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {loadWorkByIds} from "../utils/stateUtils";
 import {selectWork} from "../reducers/workReducer";
-import {ThemeProvider} from "react-native-elements";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import PickExercise, {SAVE_WORK_TO} from "./pickExercise";
 import {addToTemplates} from "../reducers/workoutTemplatesReducer";
@@ -76,15 +75,18 @@ const CreateTemplateWorkout = ({navigation}) => {
         editTitleText: {
             color: theme.colors.white
         },
-        saveTitleContainer: {},
+        saveTitleContainer: {
+            width: wp(10)
+        },
 
         titleWrapper: {
             marginTop: standardVerticalPadding,
             alignItems: "center",
 
+            height: hp(10),
             editIcon: {
                 size: 15,
-                marginLeft: wp(1),
+                marginLeft: wp(2),
             }
         },
 
@@ -101,6 +103,7 @@ const CreateTemplateWorkout = ({navigation}) => {
         {uiState.editingTitle && (
             <FlexRowView viewStyle={styles.editTitleWrapper}>
                 <Input
+                    autoFocus
                     value={newTemplate.name}
                     onChangeText={updateTitle}
                     containerStyle={styles.editTitleContainer}
@@ -115,17 +118,18 @@ const CreateTemplateWorkout = ({navigation}) => {
 
             </FlexRowView>
         ) || (
-            <FlexRowView>
-                <TextH1 id='template-title'>
-                    {newTemplate.name}
-                </TextH1>
-                <Icon name='edit'
-                      onPress={toggleEditTitle}
-                      size={styles.titleWrapper.editIcon.size}
-                      style={styles.titleWrapper.editIcon}
-                      containerStyle={styles.titleWrapper.editIcon}
-                />
-            </FlexRowView>
+            <Pressable onPress={toggleEditTitle}>
+                <FlexRowView>
+                    <TextH1 id='template-title'>
+                        {newTemplate.name}
+                    </TextH1>
+                    <Icon name='edit'
+                          size={styles.titleWrapper.editIcon.size}
+                          style={styles.titleWrapper.editIcon}
+                          containerStyle={styles.titleWrapper.editIcon}
+                    />
+                </FlexRowView>
+            </Pressable>
         )}
     </>
 
