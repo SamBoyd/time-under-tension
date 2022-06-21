@@ -4,8 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {PAGE} from '../constants'
 import {addSetAction} from "../reducers/actions"
 import {selectExercises} from "../reducers/exercisesReducer";
-import {Dimensions, Pressable, StyleSheet, View} from "react-native";
-import {TextNormal} from "../components/styled/text";
+import {Dimensions, Pressable, StyleSheet} from "react-native";
 import {Button} from "../components/styled/button";
 import {ButtonGroup, Divider, ListItem} from "react-native-elements";
 import theme, {standardHorizontalPadding, standardVerticalPadding} from "../theme";
@@ -15,8 +14,8 @@ import {addWork, newWorkForExercise} from "../reducers/workReducer";
 import {addWork as addWorkToWorkout} from "../reducers/workoutReducer";
 import {addWork as addWorkToTemplate} from "../reducers/newTemplateWorkoutReducer";
 import {setActiveWorkIfUndefined} from "../reducers/timerReducer";
-import {FlexColumnView, FlexRowView} from "../components/styled/view";
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import {FlexRowView} from "../components/styled/view";
+import SelectedExercises from "../components/SelectedExercises";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -177,35 +176,6 @@ const PickExercise = ({route, navigation}) => {
                 color: theme.colors.white,
             },
         },
-
-        selected: {
-            container: {
-                rowGap: hp(1),
-                marginTop: hp(3),
-                paddingBottom: standardVerticalPadding,
-            },
-
-            row: {
-                marginLeft: wp(5),
-                // verticalAlign: 'center',
-            },
-
-            removeIcon: {
-                ...theme.Icon
-            },
-
-            iconWrapper: {
-                // marginHorizontal: wp(1),
-                justifyContent: 'center',
-            },
-
-            nameWrapper: {
-                paddingHorizontal: wp(3),
-                justifyContent: 'center',
-            },
-
-            name: {}
-        }
     })
 
 
@@ -222,27 +192,12 @@ const PickExercise = ({route, navigation}) => {
 
             <Divider/>
 
-            {exercisesToSave.length > 0 && (
-                <>
-                    <FlexColumnView viewStyle={styles.selected.container} rowGap={styles.selected.container.rowGap}>
-                        {exercisesToSave.map((ex, i) =>
-                            <FlexRowView key={i} viewStyle={styles.selected.row}>
-                                <Pressable onPress={deselectExercise(ex)}>
-                                    <View style={styles.selected.iconWrapper}>
-                                        <MaterialIcons name="highlight-remove" {...styles.selected.removeIcon}/>
-                                    </View>
-                                </Pressable>
-                                <View style={styles.selected.nameWrapper}>
-                                    < TextNormal style={styles.selected.name}>{ex.name}</TextNormal>
-                                </View>
-                            </FlexRowView>
-                        )}
-                    </FlexColumnView>
+            <SelectedExercises
+                exercises={exercisesToSave}
+                deselectExercise={deselectExercise}
+            />
 
-                    <Divider/>
-                </>
-            )}
-
+            <Divider/>
 
             <ButtonGroup
                 selectedIndex={selectedIndexGroup1}
@@ -261,7 +216,6 @@ const PickExercise = ({route, navigation}) => {
                 textStyle={styles.categoryButtonStyle}
                 selectedButtonStyle={styles.categoryButtonStyleSelected}
             />
-
 
             {selectedCategoryName && sortedExercises[selectedCategoryName].map((item, i) => {
                 return <ListItem
