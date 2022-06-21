@@ -7,9 +7,8 @@ import {selectExercises} from "../reducers/exercisesReducer";
 import {Dimensions, Pressable, StyleSheet, View} from "react-native";
 import {TextNormal} from "../components/styled/text";
 import {Button} from "../components/styled/button";
-import {Divider, ListItem} from "react-native-elements";
+import {ButtonGroup, Divider, ListItem} from "react-native-elements";
 import theme, {standardHorizontalPadding, standardVerticalPadding} from "../theme";
-import {capitalizeFirstLetter} from "../utils/textUtils";
 import BasePage from "../components/basePage";
 import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
 import {addWork, newWorkForExercise} from "../reducers/workReducer";
@@ -29,12 +28,28 @@ export const SAVE_WORK_TO = {
 
 const PickExercise = ({route, navigation}) => {
     const exercises = useSelector(selectExercises)
+    const [selectedIndexGroup1, setSelectedIndexGroup1] = useState(null)
+    const [selectedIndexGroup2, setSelectedIndexGroup2] = useState(null)
+    const [selectedCategoryName, setSelectedCategoryName] = useState(null)
     const dispatch = useDispatch()
 
     const [expandedSection, setExpandedSection] = useState('')
     const [exercisesToSave, setExercisesToSave] = useState([])
 
     const {saveWorkTo} = route.params
+
+
+    const setSelectedCategory = groupIndex => buttonIndex => {
+        if (groupIndex === 1) {
+            setSelectedIndexGroup1(buttonIndex)
+            setSelectedIndexGroup2(null)
+            setSelectedCategoryName(exercises.categories[buttonIndex])
+        } else {
+            setSelectedIndexGroup1(null)
+            setSelectedIndexGroup2(buttonIndex)
+            setSelectedCategoryName(exercises.categories[3 + buttonIndex])
+        }
+    }
 
     const saveToTemplate = exercise => {
         const newWork = newWorkForExercise(exercise)
@@ -97,9 +112,13 @@ const PickExercise = ({route, navigation}) => {
         navigation.navigate(PAGE.addExercise)
     }
 
-    const sortedExercises = []
+    const sortedExercises = {}
     exercises.categories.forEach(cat => {
-        sortedExercises.push({'title': cat, 'data': exercises.exercises.filter(e => e.category === cat)})
+        let ex = [...exercises.exercises.filter(e => e.category === cat)]
+        ex.sort(function (a, b) {
+            return ('' + a.name).localeCompare(b.name);
+        })
+        sortedExercises[cat] = ex
     })
 
     const toggleExpandSection = section => () => {
@@ -112,6 +131,7 @@ const PickExercise = ({route, navigation}) => {
 
 
     const styles = StyleSheet.create({
+        backButton: {},
 
         actionWrapper: {
             paddingVertical: hp(1),
@@ -123,6 +143,16 @@ const PickExercise = ({route, navigation}) => {
         saveWrapper: {
             width: wp(30),
             justifyContent: 'space-between',
+        },
+
+        categoryButtonStyle: {
+            color: theme.colors.white,
+            backgroundColor: theme.colors.tertiary,
+        },
+
+        categoryButtonStyleSelected: {
+            color: theme.colors.grey0,
+            backgroundColor: theme.colors.tertiary,
         },
 
         listWrapper: {
@@ -214,34 +244,42 @@ const PickExercise = ({route, navigation}) => {
             )}
 
 
-            {sortedExercises.map((category, ii) => {
-                return <ListItem.Accordion
-                    key={ii}
-                    noRotation
-                    content={
-                        <ListItem.Content>
-                            <ListItem.Title
-                                style={styles.listHeader.text}>{capitalizeFirstLetter(category.title)}</ListItem.Title>
-                        </ListItem.Content>
-                    }
-                    isExpanded={expandedSection === category.title}
-                    onPress={toggleExpandSection(category.title)}
-                    containerStyle={styles.listHeader}
+            <ButtonGroup
+                selectedIndex={selectedIndexGroup1}
+                onPress={setSelectedCategory(1)}
+                buttons={exercises.categories.slice(0, 3)}
+                buttonStyle={styles.categoryButtonStyle}
+                textStyle={styles.categoryButtonStyle}
+                selectedButtonStyle={styles.categoryButtonStyleSelected}
+            />
+
+            <ButtonGroup
+                selectedIndex={selectedIndexGroup2}
+                onPress={setSelectedCategory(2)}
+                buttons={exercises.categories.slice(3, 6)}
+                buttonStyle={styles.categoryButtonStyle}
+                textStyle={styles.categoryButtonStyle}
+                selectedButtonStyle={styles.categoryButtonStyleSelected}
+            />
+
+
+            {selectedCategoryName && sortedExercises[selectedCategoryName].map((item, i) => {
+                return <ListItem
+                    key={i}
+                    onPress={selectExercise(item)}
+                    bottomDivider
+                    containerStyle={styles.listItem}
                 >
-                    {category.data.map((item, i) => {
-                        return <ListItem
-                            key={i}
-                            onPress={selectExercise(item)}
-                            bottomDivider
-                            containerStyle={styles.listItem}
-                        >
-                            <ListItem.Content>
-                                <ListItem.Title style={styles.listItem.text}>{item.name}</ListItem.Title>
-                            </ListItem.Content>
-                        </ListItem>
-                    })}
-                </ListItem.Accordion>
+                    <Pressable onPress={selectExercise(item)}>
+                        <ListItem.Content>
+                            <ListItem.Title style={styles.listItem.text}>{item.name}</ListItem.Title>
+                        </ListItem.Content>
+                    </Pressable>
+                </ListItem>
             })}
+
+            <Divider/>
+
         </BasePage>
     )
 }
