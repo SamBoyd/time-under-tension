@@ -14,7 +14,6 @@ import {selectTimer} from "../reducers/timerReducer";
 import {PAGE} from "../constants";
 import CircleTimer from "../components/circleTimer";
 import {FlexRowView, ScrollView} from "../components/styled/view";
-import {Shadow} from "react-native-shadow-2";
 import {loadWorkByIds} from "../utils/stateUtils";
 import {finishWorkoutAndCreateHistoryAction} from "../reducers/actions";
 
@@ -50,22 +49,10 @@ const Workout = ({navigation}) => {
         },
 
         timerBanner: {
-            position: 'absolute',
-            top: 0,
-            left: 0,
             width: wp(100),
-            height: hp(40),
+            minHeight: hp(40),
             borderBottomWidth: 1,
             borderBottomColor: theme.colors.grey0,
-
-            shadow: {
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: wp(100),
-                height: hp(40),
-                zIndex: 100,
-            }
         },
 
         actionButtonsContainer: {
@@ -117,20 +104,16 @@ const Workout = ({navigation}) => {
 
     return (
         <SafeAreaView style={styles.wrapper}>
-            <Shadow
-                sides={['bottom']}
-                distance={hp(1)}
-                startColor={theme.colors.white}
-                viewStyle={styles.timerBanner.shadow}
-            >
-                <View style={styles.timerBanner}>
-                    <FlexRowView viewStyle={styles.actionButtonsContainer}>
-                        <Button title="back" onPress={goBack}/>
-                        {finishButton}
-                    </FlexRowView>
-                    <CircleTimer/>
-                </View>
-            </Shadow>
+
+            <FlexRowView viewStyle={styles.actionButtonsContainer}>
+                <Button title="back" onPress={goBack}/>
+                {finishButton}
+            </FlexRowView>
+
+            <View style={styles.timerBanner}>
+                <CircleTimer/>
+            </View>
+
             <View style={styles.bottomView}>
                 <ScrollView contentContainerStyle={styles.scrollContent}>
                     {workoutStarted && <WorkoutDuration startedAt={workout.started_at}/>}
