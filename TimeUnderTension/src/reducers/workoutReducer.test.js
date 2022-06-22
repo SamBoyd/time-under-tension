@@ -92,12 +92,15 @@ describe('For Workout can', () => {
                 started_at: null,
             }
 
+            const time = new Date(1330688329321);
+            tk.freeze(time)
+
             const newState = workoutReducer(previousState, createWorkoutFromTemplate(templateWorkout))
 
             expect(newState).toEqual({
                 name: 'Tuesday workout',
                 id: expect.any(String),
-                created_at: "2022-01-21T17:53:11.336Z",
+                created_at: time.toISOString(),
                 work: [expect.any(String), expect.any(String)],
                 finished_at: null,
                 started_at: null,

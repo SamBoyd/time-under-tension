@@ -37,7 +37,7 @@ const HistoryTile = props => {
         <View style={styles.tile}>
             <FlexRowView>
                 <TextNormal>{props.name}</TextNormal>
-                <TextLighter className="date"> - {dateFormat(props.created_at, 'ddd, dS mmmm yyyy')}</TextLighter>
+                <TextLighter className="date"> - {dateFormat(props.finished_at, 'ddd, dS mmmm yyyyr')}</TextLighter>
             </FlexRowView>
             {work.map((w, i) =>
                 <TextLighter key={i}>{w.exercise.name} - {w.sets.length} sets</TextLighter>
@@ -55,7 +55,7 @@ const NoHistoryTile = <View style={styles.tile}>
 const History = () => {
     const history = useSelector(selectHistory)
 
-    const sortedHistory = [...history].sort((a, b) => new Date(a.created_at) > new Date(b.created_at))
+    const sortedHistory = [...history].sort((a, b) => new Date(a.finished_at) > new Date(b.finished_at)).reverse()
 
     return (
         <BasePage>

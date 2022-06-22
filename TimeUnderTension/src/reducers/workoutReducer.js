@@ -49,6 +49,7 @@ export const workoutSlice = createSlice({
                 key => state[key] = action.payload[key]
             )
             state.id = uuidv4()
+            state.created_at = (new Date()).toISOString()
             state.started_at = null
             state.finished_at = null
         },
