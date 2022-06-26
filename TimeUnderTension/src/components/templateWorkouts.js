@@ -1,7 +1,5 @@
 import React from 'react'
 import {useDispatch, useSelector} from "react-redux";
-
-import {selectNewTemplateWorkout} from "../reducers/newTemplateWorkoutReducer";
 import TemplateWorkoutTile from "./TemplateWorkoutTile";
 import {StyleSheet, View} from "react-native";
 import {TextH1, TextNormal} from "./styled/text";
@@ -41,7 +39,7 @@ const TemplateWorkouts = ({navigation}) => {
         navigation.navigate(PAGE.createTemplateWorkout)
     }
 
-    const moveToWorkout =() => {
+    const moveToWorkout = () => {
         navigation.navigate(PAGE.workout)
     }
 
@@ -50,7 +48,7 @@ const TemplateWorkouts = ({navigation}) => {
     return (
         <View style={styles.wrapper}>
             <View style={styles.header}>
-                <TextH1>Template workouts</TextH1>
+                <TextH1>Workout templates</TextH1>
             </View>
 
             <FlexColumnView viewStyle={styles.templateTile} rowGap={styles.templateTile.rowGap}>
