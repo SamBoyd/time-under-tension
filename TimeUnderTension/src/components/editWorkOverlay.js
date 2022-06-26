@@ -143,7 +143,7 @@ const EditWorkOverlay = props => {
                         itemStyle={styles.picker.item}
 
                     >
-                        {_.range(0, 100, 1).map(i => <Picker.Item testId={`optionRestTime_${i}`} key={i} label={`${i}`} value={i}/>)}
+                        {_.range(0, 500, 1).map(i => <Picker.Item testId={`optionRestTime_${i}`} key={i} label={`${i}`} value={i}/>)}
                     </Picker>
                 </View>
                 <TextNormal>sec</TextNormal>

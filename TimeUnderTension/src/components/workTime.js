@@ -1,12 +1,6 @@
 import {FlexRowView} from "./styled/view";
-import theme from "../theme";
-import {OverlaySlider} from "./styled/input";
 import {TextNormal} from "./styled/text";
 import React from "react";
-import {heightPercentageToDP as hp, widthPercentageToDP as wp} from 'react-native-responsive-screen';
-import {useDispatch} from "react-redux";
-import {Shadow} from "./styled/shadow";
-
 
 
 const WorkTime = props => {
@@ -18,7 +12,7 @@ const WorkTime = props => {
             ...props.styles,
         }}
     >
-        <TextNormal testId={`workTime_${props.workId}`}>Target tension for {props.workTimeStart} to {props.workTimeEnd} sec </TextNormal>
+        <TextNormal testId={`workTime_${props.workId}`}>Target tension for {props.workTimeStart} to {props.workTimeEnd} seconds </TextNormal>
     </FlexRowView>
 }
 
