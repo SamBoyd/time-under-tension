@@ -2,15 +2,28 @@ import {v4 as uuidv4} from 'uuid';
 
 import {createWorkoutFromTemplate, moveWorkDown, resetToInitialWorkout} from "./workoutReducer";
 import {changeActiveWork, moveToRest, reset as resetTimer, resetTimerCount} from "./timerReducer";
-import {addSetToWork, addWork} from "./workReducer";
-import {addSet, changeSetReps, changeSetWeight, finishSet, getNewSet} from "./setReducer";
+import {addSetToWork, addWork, selectWork, updateSetsOnWork} from "./workReducer";
+import {addSet, changeSetReps, changeSetWeight, finishSet, getNewSet, removeSet, selectSet} from "./setReducer";
 import {loadSetsByIds, loadWorkByIds} from "../utils/stateUtils";
 import {addWorkoutToHistory} from "./workoutHistoryReducer";
 import store from '../store'
 
 export const finishWorkoutAndCreateHistoryAction = (dispatch, workout) => {
+    const state = store.getState()
     const w = {...workout}
     w.finished_at = new Date().toISOString()
+
+    const works = loadWorkByIds(w.work, selectWork(state))
+
+    works.forEach(work => {
+        const sets = loadSetsByIds(work.sets, selectSet(state))
+        const finishedSets = [...sets].filter(s => s.finished)
+        const unfinishedSets = [...sets].filter(s => !s.finished)
+
+        unfinishedSets.forEach(set => dispatch(removeSet(set.id)))
+        dispatch(updateSetsOnWork({workId: work.id, sets: finishedSets.map(s => s.id)}))
+    })
+
     dispatch(addWorkoutToHistory({workout: w}))
     dispatch(resetToInitialWorkout())
     dispatch(resetTimer())

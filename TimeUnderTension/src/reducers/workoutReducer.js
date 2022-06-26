@@ -3,28 +3,6 @@ import 'react-native-get-random-values';
 import {v4 as uuidv4} from 'uuid';
 
 
-const getNewSet = () => {
-    return {
-        id: uuidv4(),
-        numberReps: 12,
-        weight: 40,
-        workTime: null,
-        finished: false
-    }
-}
-const getNewWork = (exercise, index) => {
-    return {
-        id: uuidv4(),
-        exercise: exercise,
-        sets: [
-            getNewSet(),
-            getNewSet(),
-            getNewSet()
-        ],
-        index: index
-    }
-}
-
 const getInitialState = () => {
     return {
         name: 'Workout',
