@@ -33,12 +33,17 @@ const historyReducer = createSlice({
         addWorkoutToHistory: (state, action) => {
             const newHistory = structuredClone(action.payload.workout)
             state.push(newHistory)
+        },
+        deleteHistory: (state, action) => {
+            const idToRemove = action.payload.id
+            const indexToRemove = state.findIndex(history => history.id === idToRemove)
+            state.splice(indexToRemove, 1)
         }
     }
 })
 
 export const selectHistory = state => state.history
 export const {
-    reset, addWorkoutToHistory
+    reset, addWorkoutToHistory, deleteHistory
 } = historyReducer.actions
 export default historyReducer.reducer

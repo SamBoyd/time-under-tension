@@ -1,9 +1,5 @@
-import historyReducer, {
-    addWorkout, addWorkoutToHistory
-} from "./workoutHistoryReducer";
-import {exerciseCategory} from "../constants";
+import historyReducer, {addWorkoutToHistory, deleteHistory} from "./workoutHistoryReducer";
 import 'react-native-get-random-values';
-import {v4 as uuidv4} from 'uuid';
 
 
 describe('History reducer can', () => {
@@ -13,6 +9,7 @@ describe('History reducer can', () => {
 
         expect(initialState).toEqual([])
     })
+
     test('add to history', () => {
         const previousState = [
             {
@@ -35,6 +32,29 @@ describe('History reducer can', () => {
                 otherProperty: {test: 'test'},
                 otherArray: [1, 2, 3, 4]
             }
+        ])
+    })
+
+    test('add to history', () => {
+        const previousState = [
+            {
+                id: 'fa2de79b-85f7-4e85-a238-c9e6265cd000'
+            },
+            {
+                id: 'fa2de79b-85f7-4e85-a238-c9e6265cd111'
+            },
+            {
+                id: 'fa2de79b-85f7-4e85-a238-c9e6265cd222'
+            }
+        ]
+
+        const nextState = historyReducer(previousState, deleteHistory({
+                id: 'fa2de79b-85f7-4e85-a238-c9e6265cd111',
+        }))
+
+        expect(nextState).toEqual([
+            {id: 'fa2de79b-85f7-4e85-a238-c9e6265cd000'},
+            {id: 'fa2de79b-85f7-4e85-a238-c9e6265cd222'},
         ])
     })
 })
