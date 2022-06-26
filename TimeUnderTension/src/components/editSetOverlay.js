@@ -159,7 +159,7 @@ const EditSetOverlay = props => {
                     }}
                     itemStyle={styles.picker.item}
                 >
-                    {_.range(0, 100, 1).map(i => <Picker.Item key={i} label={`${i}`} value={i}/>)}
+                    {_.range(0, 500, 1).map(i => <Picker.Item key={i} label={`${i}`} value={i}/>)}
                 </Picker>
             </View>
             <TextBold>.</TextBold>
