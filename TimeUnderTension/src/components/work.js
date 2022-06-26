@@ -4,7 +4,7 @@ import {moveWorkUp as moveWorkUpInWorkout, removeWork as removeWorkInWorkout} fr
 import {Dimensions} from "react-native";
 import GenericWork from "./genericWork";
 import {selectWork, updateRestOnWork, updateSetsOnWork, updateWorkTimeOnWork} from "../reducers/workReducer";
-import {addSetAction, moveWorkDownAction} from "../reducers/actions";
+import {addSetAction, addWarmUpSetAction, moveWorkDownAction} from "../reducers/actions";
 import {loadPreviousSetsForExercise} from "../utils/stateUtils";
 import {selectSet} from "../reducers/setReducer";
 import {selectSettings} from "../reducers/settingsReducer";
@@ -25,6 +25,9 @@ const Work = props => {
 
     const fireAddSet = () => {
         addSetAction(dispatch, props.id)
+    }
+    const fireAddWarmUpSet = () => {
+        addWarmUpSetAction(dispatch, props.id)
     }
 
     const fireRemoveSet = setId => {
@@ -88,6 +91,7 @@ const Work = props => {
             active={props.active}
             workIndex={props.workIndex}
             fireAddSet={fireAddSet}
+            fireAddWarmupSet={fireAddWarmUpSet}
             fireRemoveSet={fireRemoveSet}
             fireChangeRestTime={fireChangeRestTime}
             fireChangeWorkTimeStart={fireChangeWorkTimeStart}

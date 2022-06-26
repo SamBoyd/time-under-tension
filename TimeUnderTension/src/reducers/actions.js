@@ -2,8 +2,17 @@ import {v4 as uuidv4} from 'uuid';
 
 import {createWorkoutFromTemplate, moveWorkDown, resetToInitialWorkout} from "./workoutReducer";
 import {changeActiveWork, moveToRest, reset as resetTimer, resetTimerCount} from "./timerReducer";
-import {addSetToWork, addWork, selectWork, updateSetsOnWork} from "./workReducer";
-import {addSet, changeSetReps, changeSetWeight, finishSet, getNewSet, removeSet, selectSet} from "./setReducer";
+import {addSetToWork, addWarmupSetToWork, addWork, selectWork, updateSetsOnWork} from "./workReducer";
+import {
+    addSet,
+    changeSetReps,
+    changeSetWeight,
+    finishSet,
+    getNewSet,
+    getNewWarmupSet,
+    removeSet,
+    selectSet
+} from "./setReducer";
 import {loadSetsByIds, loadWorkByIds} from "../utils/stateUtils";
 import {addWorkoutToHistory} from "./workoutHistoryReducer";
 import store from '../store'
@@ -46,6 +55,17 @@ export const addSetAction = (dispatch, workId) => {
 
     dispatch(addSet(newSet))
     dispatch(addSetToWork({workId: workId, setId: newSet.id}))
+}
+
+
+export const addWarmUpSetAction = (dispatch, workId) => {
+    const state = store.getState()
+    const work = state.work.find(w => w.id === workId)
+
+    let newSet = getNewWarmupSet()
+
+    dispatch(addSet(newSet))
+    dispatch(addWarmupSetToWork({workId: workId, setId: newSet.id}))
 }
 
 export const finishSetAction = (dispatch, set) => () => {

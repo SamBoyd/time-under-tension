@@ -20,7 +20,16 @@ export const getNewSet = () => {
         weight: 40,
         workTime: null,
         finished: false,
+        warmupSet: false,
     }
+}
+
+export const getNewWarmupSet = () => {
+    let newSet = getNewSet()
+    newSet.numberReps = null
+    newSet.weight = null
+    newSet.warmupSet = true
+    return newSet
 }
 
 const setSlice = createSlice({
@@ -46,6 +55,7 @@ const setSlice = createSlice({
             const weight = action.payload.weight
             const workTime = action.payload.workTime
             const finished = action.payload.finished
+            const warmupSet = 'warmupSet' in action.payload? action.payload.warmupSet: false
 
             state.push({
                 id: id,
@@ -53,6 +63,7 @@ const setSlice = createSlice({
                 weight: weight,
                 workTime: workTime,
                 finished: finished,
+                warmupSet: warmupSet,
             })
         },
         removeSet: (state, action) => {

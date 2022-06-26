@@ -6,7 +6,7 @@ import {
     removeWork as removeWorkInTemplate
 } from "../reducers/newTemplateWorkoutReducer";
 import GenericWork from "./genericWork";
-import {addSetAction} from "../reducers/actions";
+import {addSetAction, addWarmUpSetAction} from "../reducers/actions";
 import {updateRestOnWork, updateSetsOnWork, updateWorkTimeOnWork} from "../reducers/workReducer";
 import {selectSettings} from "../reducers/settingsReducer";
 
@@ -22,6 +22,10 @@ const Work = props => {
 
     const fireAddSet = () => {
         addSetAction(dispatch, work.id)
+    }
+
+    const fireAddWarmUpSet = () => {
+        addWarmUpSetAction(dispatch, work.id)
     }
 
     const fireRemoveSet = setId => {
@@ -71,6 +75,7 @@ const Work = props => {
             {...work}
             workIndex={props.workIndex}
             fireAddSet={fireAddSet}
+            fireAddWarmupSet={fireAddWarmUpSet}
             fireRemoveSet={fireRemoveSet}
             fireChangeRestTime={fireChangeRestTime}
             fireChangeWorkTimeStart={fireChangeWorkTimeStart}

@@ -41,7 +41,49 @@ describe('Test setReducer can', () => {
                     numberReps: 8,
                     weight: 79,
                     workTime: null,
+                    finished: false,
+                    warmupSet: false,
+                }
+            ]
+        )
+    })
+
+    test('add a warmup set', () => {
+        const previousState = [
+            {
+                id: uuidv4(),
+                numberReps: 12,
+                weight: 40,
+                workTime: null,
+                finished: false
+            }
+        ]
+
+        const nextState = setReducer(previousState, addSet({
+            id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
+            numberReps: 8,
+            weight: 79,
+            workTime: null,
+            finished: false,
+            warmupSet: true,
+        }))
+
+        expect(nextState).toEqual(
+            [
+                {
+                    id: expect.any(String),
+                    numberReps: 12,
+                    weight: 40,
+                    workTime: null,
                     finished: false
+                },
+                {
+                    id: 'fa2de79b-85f7-4e85-a238-c9e6265cda2e',
+                    numberReps: 8,
+                    weight: 79,
+                    workTime: null,
+                    finished: false,
+                    warmupSet: true,
                 }
             ]
         )

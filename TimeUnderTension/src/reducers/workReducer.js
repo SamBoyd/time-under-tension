@@ -89,6 +89,23 @@ export const workSlice = createSlice({
             work.sets.push(setId)
             state.push(work)
         },
+        addWarmupSetToWork: (state, action) => {
+            if (
+                !('workId' in action.payload) ||
+                !('setId' in action.payload)
+            ) {
+                throw `Bad addSetToWork action payload: ${JSON.stringify(action.payload)}`
+            }
+
+            const workId = action.payload.workId
+            const setId = action.payload.setId
+
+            const workIndex = state.findIndex(el => el.id === workId)
+            const work = {...state[workIndex]}
+            state.splice(workIndex, 1)
+            work.sets.unshift(setId)
+            state.push(work)
+        },
         updateSetsOnWork: (state, action) => {
             if (
                 !("workId" in action.payload) ||
@@ -134,7 +151,7 @@ export const workSlice = createSlice({
 export const selectWork = state => state.work
 export const {
     reset,
-    addWork, removeWork, addSetToWork, updateSetsOnWork,
+    addWork, removeWork, addSetToWork, addWarmupSetToWork, updateSetsOnWork,
     updateWorkTimeOnWork, updateRestOnWork
 } = workSlice.actions
 

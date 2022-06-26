@@ -16,8 +16,8 @@ import {selectSet} from "../reducers/setReducer";
 import {loadSetsByIds} from "../utils/stateUtils";
 import {changeActiveWork, resetTimerCount, selectTimer} from "../reducers/timerReducer";
 import EditWorkOverlay from "./editWorkOverlay";
-import {isRealValue} from "../utils/utils";
 import {selectSettings} from "../reducers/settingsReducer";
+import WarmupSet from "./warmupSet";
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -29,6 +29,7 @@ const GenericWork = props => {
     const timerState = useSelector(selectTimer)
     const setState = useSelector(selectSet)
     const sets = loadSetsByIds(props.sets, setState)
+    const numWarmupSets = sets.filter(s => s.warmupSet).length
 
     const restTime = props.restTime !== null ? props.restTime : settingsState.defaultRestTime;
     const workTimeStart = props.restTime !== null ? props.workTimeStart : settingsState.defaultWorkTimeStart;
@@ -97,8 +98,19 @@ const GenericWork = props => {
             justifyContent: 'space-between',
         },
 
+        addSetButtonContainers: {
+            width: '100%',
+            justifyContent: 'space-around'
+        },
+
         addSet: {
             width: '60%',
+            alignSelf: 'center',
+            marginTop: 10,
+        },
+
+        addWarmUpSet: {
+            width: '20%',
             alignSelf: 'center',
             marginTop: 10,
         }
@@ -113,6 +125,36 @@ const GenericWork = props => {
     }
 
     const showChangeActiveButton = props.displayChangeActiveWork && !props.active && sets.some(s => !s.finished)
+
+    const getSet = (index, set) => {
+        if (set.warmupSet) {
+            return <WarmupSet
+                key={index}
+                index={index + 1}
+                {...set}
+                workId={props.id}
+                workName={props.exercise.name}
+                workTimeStart={workTimeStart}
+                workTimeEnd={workTimeEnd}
+                active={props.active && active === index}
+                fireRemoveSet={props.fireRemoveSet}
+                previousSet={props.previousSets[index]}
+            />
+        }
+
+        return <Set
+            key={index}
+            index={index + 1 - numWarmupSets}
+            {...set}
+            workId={props.id}
+            workName={props.exercise.name}
+            workTimeStart={workTimeStart}
+            workTimeEnd={workTimeEnd}
+            active={props.active && active === index}
+            fireRemoveSet={props.fireRemoveSet}
+            previousSet={props.previousSets[index]}
+        />
+    }
 
     return (
         <ThemeProvider theme={theme}>
@@ -153,22 +195,14 @@ const GenericWork = props => {
 
                 <View style={styles.setsContainer}>
                     {sets.map((set, index) => {
-                        return <Set
-                            key={index}
-                            index={index + 1}
-                            {...set}
-                            workId={props.id}
-                            workName={props.exercise.name}
-                            workTimeStart={workTimeStart}
-                            workTimeEnd={workTimeEnd}
-                            active={props.active && active === index}
-                            fireRemoveSet={props.fireRemoveSet}
-                            previousSet={props.previousSets[index]}
-                        />
+                        return getSet(index, set)
                     })}
                 </View>
 
-                <Button onPress={props.fireAddSet} title="Add Set" containerStyle={styles.addSet}/>
+                <FlexRowView viewStyle={styles.addSetButtonContainers}>
+                    <Button onPress={props.fireAddSet} title="Add Set" containerStyle={styles.addSet}/>
+                    <Button onPress={props.fireAddWarmupSet} title="+WU" containerStyle={styles.addWarmUpSet}/>
+                </FlexRowView>
 
 
                 {showActionsOverlay && (

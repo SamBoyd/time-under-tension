@@ -1,5 +1,6 @@
 import workReducer, {
     addSetToWork,
+    addWarmupSetToWork,
     addWork,
     newWorkForExercise,
     removeWork,
@@ -163,6 +164,50 @@ describe("Work reducer can", () => {
                         expect.any(String),
                         expect.any(String),
                         "set-id-1111",
+                    ],
+                },
+            ]
+        )
+    })
+
+    test('add warmup set to work', () => {
+        const previousState = [
+            {
+                id: "fa2de79b-85f7-4e85-a238-c9e6265cda2e",
+                exercise: "fa2de79b-85f7-4e85-a238-c9e6265cd111",
+                sets: [
+                    "fa2de79b-85f7-4e85-a238-c9e6265cd222",
+                    "fa2de79b-85f7-4e85-a238-c9e6265cd333",
+                ],
+            },
+            {
+                id: 'workId-11111',
+                exercise: uuidv4(),
+                sets: [
+                    uuidv4(),
+                    uuidv4(),
+                ],
+            },
+        ]
+
+        const nextState = workReducer(previousState, addWarmupSetToWork({workId: "workId-11111", setId: "set-id-1111"}))
+
+        expect(nextState).toEqual([
+                {
+                    id: "fa2de79b-85f7-4e85-a238-c9e6265cda2e",
+                    exercise: "fa2de79b-85f7-4e85-a238-c9e6265cd111",
+                    sets: [
+                        "fa2de79b-85f7-4e85-a238-c9e6265cd222",
+                        "fa2de79b-85f7-4e85-a238-c9e6265cd333",
+                    ],
+                },
+                {
+                    id: 'workId-11111',
+                    exercise: expect.any(String),
+                    sets: [
+                        "set-id-1111",
+                        expect.any(String),
+                        expect.any(String),
                     ],
                 },
             ]
