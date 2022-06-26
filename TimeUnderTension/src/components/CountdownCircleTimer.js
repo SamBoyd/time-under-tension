@@ -54,7 +54,7 @@ const CountdownCircleTimer = props => {
         colors: 'url(#your-unique-id)',
         strokeWidth: CIRCLE_STROKE_WIDTH,
         children: props.children,
-        onComplete:props.onComplete,
+        onComplete: () => {},
         onUpdate: props.onUpdate
     })
 
